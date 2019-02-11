@@ -1,6 +1,5 @@
 
 ### PT ----
-
 #' The main function to read Peaks-Over-Threshold (POT) data contained in .PT files
 #'
 #' The function reads .PT files and checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
