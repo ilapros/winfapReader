@@ -1,0 +1,14 @@
+Package: winfapReader
+Type: Package
+Title: Reader for 'WINFAP-FEH' Files
+Version: 0.1.0
+Author: Ilaria Prosdocimi, Luke Shaw
+Maintainer: Ilaria Prosdocimi <Prosdocimi.Ilaria@gmail.com>
+Description: Read into R the WINFAP-FEH files provided on the National River Flow Archive <http://nrfa.ceh.ac.uk/winfap-feh-files> once these have been downloaded to the users' computer.
+License: GPL-3
+Imports: lubridate
+Suggests: knitr, testthat
+Depends: R (>= 3.1)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1

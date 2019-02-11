@@ -1,0 +1,9 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^.Rhistory
+^.*\.Rproj
+winfapReader.Rproj
+.Rhistory
+.Rproj.user
+README.md
+
