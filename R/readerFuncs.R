@@ -1,5 +1,6 @@
 
 ### PT ----
+
 #' The main function to read Peaks-Over-Threshold (POT) data contained in .PT files
 #'
 #' The function reads .PT files and checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
@@ -14,12 +15,13 @@
 #' @return a list of three objects \code{tablePOT}, \code{WaterYearInfo} and \code{dateRange}.
 #' @return \code{tablePOT} contains a table with all the peaks above the threshold present in the .PT file
 #' @return \code{WaterYearInfo} a table containing the information on the percentage of missing values
-#' in any water year for which some data is available in the POT record (based on the dates indicated in [POT REJECTED] or [POT GAPS]). This is useful to assess
+#' in any water year for which some data is available in the POT record. This is useful to assess
 #' whether the lack of exceedances is genuine or the result of missing data and to assess whether the threshold
 #' exceedances present in \code{tablePOT} can be deemed to be representative of the whole year
 #' @return \code{dateRange} a vector with the first and last date of recording for the POT record as provided in the [POT Details] field.
 #' Note that this period might be different than the period for which annual maxima records are available
 #' @seealso Information on the .PT files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+#' @importFrom utils read.csv
 #' @export
 read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
   # , rangeOut = FALSE # @param rangeOut logical, if TRUE and additional element is provided in the output containing a range of Water Year for the Record Period provied in the [POT Details] field

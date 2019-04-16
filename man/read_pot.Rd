@@ -21,7 +21,7 @@ a list of three objects \code{tablePOT}, \code{WaterYearInfo} and \code{dateRang
 \code{tablePOT} contains a table with all the peaks above the threshold present in the .PT file
 
 \code{WaterYearInfo} a table containing the information on the percentage of missing values
-in any water year for which some data is available in the POT record (based on the dates indicated in [POT REJECTED] or [POT GAPS]). This is useful to assess
+in any water year for which some data is available in the POT record. This is useful to assess
 whether the lack of exceedances is genuine or the result of missing data and to assess whether the threshold
 exceedances present in \code{tablePOT} can be deemed to be representative of the whole year
 
