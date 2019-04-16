@@ -36,9 +36,21 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(46006, as.Date("2010-10-01"), 2009
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(39036, as.Date("2006-10-01"), 2005)
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(47011, as.Date("2010-10-01"), 2009)
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(69024, as.Date("1967-10-01"), 1966)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(205008, as.Date("1975-10-01"), 1974)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(72014, as.Date("1967-10-01"), 1966)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84014, as.Date("1970-10-01"), 1969)
+# known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84011, as.Date("1985-10-01"), 1984)
 
-########
-# The code used to identify the stations for which issues on the 1st of October happen is given below
+#
+# ########
+# # The code used to identify the stations for which issues on the 1st of October happen is given below
+# library(lubridate)
+# water_year <- function(date, start_month = 10){
+#   # Given a date in ymd lubridate form, returns the WY that date is in.
+#   # The XXXX Water year starts 01st start_month XXXX and ends on the last day of the month before the start_month (XXXX+1)
+#   year(date) + ifelse(month(date) < start_month,-1,0)
+# }
+#
 # read_amax <- function(station, loc_WinFapFiles = getwd()){
 #   whereAM <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".AM"),full.names=TRUE)
 #   rr <- readLines(whereAM)
@@ -74,19 +86,24 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(69024, as.Date("1967-10-01"), 1966
 #
 # allAmax <- data.frame(Station = -999, WaterYear = 3000, Date = as.Date("3000-01-01"),Flow = -999, Stage = -999, Rejected = FALSE)[-1,]
 #
-# suitPool <- unlist(strsplit(list.files(path = "../v6/Suitable for Pooling/", pattern = ".AM"),split = ".AM"))
-# suitQMED <- unlist(strsplit(list.files(path = "../v6/Suitable for QMED//", pattern = ".AM"),split = ".AM"))
-# suitNO   <- unlist(strsplit(list.files(path = "../v6/Not suitable for QMED or Pooling/", pattern = ".AM"),split = ".AM"))
+# suitPool <- unlist(strsplit(list.files(path = "../v70/Suitable for Pooling/", pattern = ".AM"),split = ".AM"))
+# suitQMED <- unlist(strsplit(list.files(path = "../v70/Suitable for QMED//", pattern = ".AM"),split = ".AM"))
+# suitNO   <- unlist(strsplit(list.files(path = "../v70/Not suitable for QMED or Pooling/", pattern = ".AM"),split = ".AM"))
 #
-# for(whichFold in c("../v6/Not suitable for QMED or Pooling/","../v6/Suitable for QMED/","../v6/Suitable for Pooling/")){
+# for(whichFold in c("../v70/Not suitable for QMED or Pooling/","../v70/Suitable for QMED/","../v70/Suitable for Pooling/")){
 #   print(whichFold)
 #   for(i in unlist(strsplit(list.files(path = whichFold, pattern = ".AM"),split = ".AM"))){
 #     allAmax <- rbind(allAmax, read_amax(i,whichFold))
 #   }
 # }
-
-
-##### check if any station has two events per water years - probably due to 1-Oct issues
+#
+#
+# ##### check if any station has two eevnts per water years - probably due to 1-Oct issues
 # tt <- tapply(allAmax$WaterYear, factor(allAmax$Station), function(x) any(table(x) != 1))
 # tt[tt]
-#### after this manual check on the NRFA websites were carried out
+# ### after this manual check on the NRFA websites were carried out
+# sort(as.numeric(names(tt[tt])))
+# sort(unique(known_Oct1$Station))
+# all.equal(sort(as.numeric(names(tt[tt]))), sort(unique(known_Oct1$Station)))
+
+### all in there
