@@ -33,3 +33,50 @@ test_that("read_amax works", {
   expect_equal(sum(!amaxTable$Rejected), 57)
 })
 
+cdtrue <-
+  data.frame(Station = "12345",
+          River = "Name",
+          Location = "The Location",
+          Nominal_Easting = 2800,
+          Nominal_Northing = 2800,
+          Easting = 280000,
+          Northing = 280000,
+          Ceasting = 123456,
+          Cnorthing = 123456,
+          Grid = "GB",
+          DTM_Area = 100,
+          ALTBAR = 500,
+          ASPBAR =100,
+          ASPVAR =0.5,
+          BFIHOST =0.4,
+          DPLBAR =  3,
+          DPSBAR = 192.4,
+          FARL =1.000,
+          FPEXT =0.0164,
+          LDP =  5.89,
+          PROPWET =0.66,
+          RMED1H = 13.2,
+          RMED1D = 75.3,
+          RMED2D =101.4,
+          SAAR =2457,
+          SAAR4170 =2392,
+          SPRHOST =48.38,
+          URBCONC1990 =-9999.000,
+          URBEXT1990 =0.0000,
+          URBLOC1990 =-9999.000,
+          URBCONC2000 =-9999.000,
+          URBEXT2000 =0.0000,
+          URBLOC2000 =-9999.000,
+          suitQMED = "NO",
+          suitPool = "NO")
+
+test_that("read_cd3 works", {
+  site_id <- 12345
+  cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
+  expect_is(cd3Out,"data.frame") ## basic check
+  ### can have troubles with factorsv
+  testthat::expect_type(cd3Out$Location,"character")
+  testthat::expect_type(cd3Out$River,"character")
+  expect_identical(cd3Out, cdtrue) ## is everything read in correctly?
+})
+
