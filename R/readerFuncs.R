@@ -202,7 +202,9 @@ read_cd3 <- function(station, loc_WinFapFiles = getwd()){
   oo <- c(oo,split_or_NA(grep("URBCONC2000",rr,value = TRUE),ind = 2))
   oo <- c(oo,split_or_NA(grep("URBEXT2000",rr,value = TRUE),ind = 2))
   oo <- c(oo,split_or_NA(grep("URBLOC2000",rr,value = TRUE),ind = 2))
-  catchDesc <- data.frame(data.frame(matrix(rep("Nothing",3),ncol = 3)),data.frame(matrix(rep(-3,30),ncol = 30)))
+  catchDesc <- data.frame(data.frame(matrix(rep("Nothing",3),ncol = 3),stringsAsFactors = FALSE),
+                          data.frame(matrix(rep(-3,30),ncol = 30)),
+                          stringsAsFactors = FALSE)
   names(catchDesc) <- c("Station","River","Location","Nominal_Easting", "Nominal_Northing",
                         "Easting","Northing", "Ceasting", "Cnorthing", "Grid", "DTM_Area", "ALTBAR",
                         "ASPBAR", "ASPVAR", "BFIHOST","DPLBAR", "DPSBAR", "FARL",
