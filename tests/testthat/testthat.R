@@ -13,6 +13,16 @@ test_that("read_pot works", {
   expect_gt(potOut$WaterYearInfo[potOut$WaterYearInfo$WaterYear == 2000,"potPercComplete"], 13)
   expect_lt(potOut$WaterYearInfo[potOut$WaterYearInfo$WaterYear == 2000,"potPercComplete"], 14)
   expect_lt(potOut$WaterYearInfo[potOut$WaterYearInfo$WaterYear == 2008,"potPercComplete"], 1)
+  expect_error(read_pot(c(12),loc_WinFapFiles = "../.."))
+})
+
+
+test_that("read_pot works with multiple stations", {
+  site_id <- c(12345,54321)
+  potOut <- read_pot(site_id,loc_WinFapFiles = "../..")
+  expect_is(potOut,"list") ## basic check
+  expect_identical(names(potOut), c("12345","54321")) ## naming is correct?
+  expect_warning(read_pot(c(12,12345),loc_WinFapFiles = "../.."))
 })
 
 
@@ -31,7 +41,17 @@ test_that("read_amax works", {
   expect_is(amaxTable$Date,"Date") ## in case things get messy with lubridate
   expect_true(amaxTable$Rejected[amaxTable$WaterYear == 1974]) ## check rejections are read in correcty
   expect_equal(sum(!amaxTable$Rejected), 57)
+  expect_error(read_amax(c(12),loc_WinFapFiles = "../.."))
 })
+
+test_that("read_amax works with multiple stations", {
+  site_id <- c(12345,54321)
+  amaxTable <- read_amax(site_id,loc_WinFapFiles = "../..")
+  expect_is(amaxTable,"list") ## basic check
+  expect_identical(names(amaxTable), c("12345","54321")) ## naming is correct?
+  expect_warning(read_amax(c(12,12345),loc_WinFapFiles = "../.."))
+})
+
 
 cdtrue <-
   data.frame(Station = "12345",
@@ -75,8 +95,21 @@ test_that("read_cd3 works", {
   cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
   expect_is(cd3Out,"data.frame") ## basic check
   ### can have troubles with factorsv
-  testthat::expect_type(cd3Out$Location,"character")
-  testthat::expect_type(cd3Out$River,"character")
+  expect_type(cd3Out$Location,"character")
+  expect_type(cd3Out$River,"character")
   expect_identical(cd3Out, cdtrue) ## is everything read in correctly?
+  ### if station number doesn't have a file - give error
+  expect_error(read_cd3(72,loc_WinFapFiles = "../.."))
 })
+
+
+test_that("read_cd3 works for multiple stations", {
+  site_id <- c(12345,54321)
+  cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
+  expect_is(cd3Out,"list") ## basic check
+  expect_identical(names(cd3Out), c("12345","54321")) ## naming is correct?
+  ### if the stations doesn't exist give a warning
+  expect_warning(read_cd3(c(72,12345),loc_WinFapFiles = "../.."))
+})
+
 
