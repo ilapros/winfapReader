@@ -7,7 +7,7 @@
 read_pot(station, loc_WinFapFiles = getwd(), getAmax = FALSE)
 }
 \arguments{
-\item{station}{the NRFA station number for which the .PT file (names \code{station.PT}) should be read}
+\item{station}{the NRFA station number for which the .PT file (names \code{station.PT}) should be read. It can also be a vector of station numbers}
 
 \item{loc_WinFapFiles}{the file.path of the WinFap files, i.e. the location in which the
 \code{station.PT} file can be found. Default is the working directory}

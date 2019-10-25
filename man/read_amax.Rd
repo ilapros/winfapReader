@@ -15,7 +15,7 @@ read_amax(station, loc_WinFapFiles = getwd())
 \value{
 a data.frame with information on the annual maxima for the station and the following columns
 \describe{
- \item{Station}{NRFA station number}
+ \item{Station}{NRFA station number (can be a vector of station numbers)}
  \item{WaterYear}{the correct water year for the peak flow}
  \item{Date}{date of maximum flow}
  \item{Flow}{the maximum flow in m3/s}

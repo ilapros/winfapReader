@@ -1,3 +1,4 @@
+# utils::globalVariables("read_amax")
 
 ### PT ----
 
@@ -5,7 +6,7 @@
 #'
 #' The function reads .PT files and checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
 #'
-#' @param station the NRFA station number for which the .PT file (names \code{station.PT}) should be read
+#' @param station the NRFA station number for which the .PT file (names \code{station.PT}) should be read. It can also be a vector of station numbers
 #' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
 #' \code{station.PT} file can be found. Default is the working directory
 #' @param getAmax logical. If \code{TRUE} the annual maxima values (extracted from a \code{station.AM}
@@ -24,12 +25,39 @@
 #' @importFrom utils read.csv
 #' @export
 read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
-  # , rangeOut = FALSE # @param rangeOut logical, if TRUE and additional element is provided in the output containing a range of Water Year for the Record Period provied in the [POT Details] field
-  ### read the station.PT file wherever it is in the loc_WinFapFiles folder
-  wherePOT <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".PT"),full.names=TRUE)
-  POTtable <- read.csv(file = as.character(wherePOT[1]),header=FALSE,stringsAsFactors = FALSE)
+  ## need to have a way to specify if the amax should be found locally or obtained from API
+  ## this overloads the getAmax which if a path becomes the path where files are
+  typeget <- ifelse(getAmax,loc_WinFapFiles,"none")
+
+  if(length(station) == 1){
+    ### read the station.PT file wherever it is in the loc_WinFapFiles folder
+    wherePOT <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".PT"),full.names=TRUE)
+    if(length(wherePOT) < 1) stop("Station does not have PT files in the loc_WinFapFiles folder")
+    out <- read_pot_int(wherePOT, getAmax = typeget)
+  }
+  if(length(station) > 1) {
+    wherePOT <- lapply(X = as.list(station),
+                       FUN = function(x) list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",x,".PT"),full.names=TRUE))
+    lwhere <- sapply(wherePOT, length)
+    if(all(lwhere < 1)){
+      stop(paste("Stations do not have POT files in the loc_WinFapFiles folder \n"))
+    }
+    if(any(lwhere < 1)){
+      warning(paste("Some stations do not have POT files in the loc_WinFapFiles folder:",station[lwhere < 1]," \n"))
+      wherePOT <- wherePOT[lwhere > 0]
+      station <- station[lwhere > 0]
+    }
+    out <- lapply(wherePOT, read_pot_int, getAmax = typeget)
+    names(out) <- station
+  }
+  out
+}
+
+
+read_pot_int <- function(filetext, getAmax){
+  POTtable <- read.csv(file = filetext,header=FALSE,stringsAsFactors = FALSE)
   statno <- as.character(POTtable[2,1])
-  ########
+
   ##Create table shell using beginning and ending record periods
   beg <- POTtable$V2[POTtable$V1 == "Record Period"]
   end <- POTtable$V3[POTtable$V1 == "Record Period"]
@@ -81,18 +109,28 @@ read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
   tablePOT$Stage <- as.numeric(tablePOT$Stage)
   tablePOT$Station <- as.numeric(statno)
   tablePOT$WaterYear <- water_year(tablePOT$Date)
-  if(getAmax){
-    amax <- read_amax(station = statno, loc_WinFapFiles = loc_WinFapFiles)
-    names(amax) <- c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected")
-    WY_table <- merge(amax,WY_table,all=TRUE)
-    WY_table <- WY_table[,c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected","potPercComplete","potThreshold")]
-    WY_table$Station <- statno
+  if(getAmax != "none"){
+    if(getAmax != "get"){
+      amax <- read_amax(station = statno, loc_WinFapFiles = getAmax)
+      names(amax) <- c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected")
+      WY_table <- merge(amax,WY_table,all=TRUE)
+      WY_table <- WY_table[,c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected","potPercComplete","potThreshold")]
+      WY_table$Station <- statno
+    }
+    # if(getAmax == "get"){
+    #   amax <- get_amax(station = statno)
+    #   names(amax) <- c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected")
+    #   WY_table <- merge(amax,WY_table,all=TRUE)
+    #   WY_table <- WY_table[,c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected","potPercComplete","potThreshold")]
+    #   WY_table$Station <- statno
+    # }
   }
   out <- list(tablePOT = tablePOT[,c("Station","Date","WaterYear","Flow","Stage")],
               WaterYearInfo = WY_table,
               dateRange = dateRange)
   out
 }
+
 
 ### AM ----
 
@@ -106,7 +144,7 @@ read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
 #'
 #' @return a data.frame with information on the annual maxima for the station and the following columns
 #' \describe{
-#'  \item{Station}{NRFA station number}
+#'  \item{Station}{NRFA station number (can be a vector of station numbers)}
 #'  \item{WaterYear}{the correct water year for the peak flow}
 #'  \item{Date}{date of maximum flow}
 #'  \item{Flow}{the maximum flow in m3/s}
@@ -116,8 +154,34 @@ read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
 #' @seealso Information on the .AM files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
 #' @export
 read_amax <- function(station, loc_WinFapFiles = getwd()){
-  whereAM <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".AM"),full.names=TRUE)
-  rr <- readLines(whereAM)
+  if(length(station) == 1){
+    whereAM <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".AM"),full.names=TRUE)
+    if(length(whereAM) < 1) stop("Station does not have AMAX files in the loc_WinFapFiles folder")
+    out <- read_amax_int(whereAM)
+  }
+  if(length(station) > 1) {
+    whereAM <- lapply(X = as.list(station),
+                      FUN = function(x) list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",x,".AM"),full.names=TRUE))
+    lwhere <- sapply(whereAM, length)
+    if(all(lwhere < 1)){
+      stop(paste("Stations do not have AMAX files in the loc_WinFapFiles folder"))
+    }
+    if(any(lwhere < 1)){
+      warning(paste("Some stations do not have AMAX files in the loc_WinFapFiles folder:",station[lwhere < 1]," \n"))
+      whereAM <- whereAM[lwhere > 0]
+      station <- station[lwhere > 0]
+    }
+    out <- lapply(whereAM, read_amax_int)
+    names(out) <- station
+  }
+  out
+}
+
+read_amax_int <- function(filetext){
+  rr <- readLines(filetext)
+  rr <- rr[nchar(rr) > 0]
+  station <- rr[(which(rr == "[STATION NUMBER]")+1)]
+  if((which(rr == "[AM Values]")+1) == length(rr)) stop(sprintf("no amax recorded at station %s", station), call. = FALSE)
   aa <- rr[(which(rr == "[AM Values]")+1):(length(rr)-1)]
   out <- cbind(station,read.csv(textConnection(aa),header=FALSE))
   names(out) <- c("Station","Date","Flow","Stage")
@@ -149,7 +213,6 @@ read_amax <- function(station, loc_WinFapFiles = getwd()){
 }
 
 
-
 ### CD3 ----
 
 split_or_NA <- function(x,ind=2) {
@@ -170,9 +233,33 @@ split_or_NA <- function(x,ind=2) {
 #' @seealso Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}.
 #' Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/feh-catchment-descriptors}
 #' @export
+#'
 read_cd3 <- function(station, loc_WinFapFiles = getwd()){
-  whereCD <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".CD3"),full.names=TRUE)
-  rr <- readLines(whereCD )
+  if(length(station) == 1){
+    whereCD <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".CD3"),full.names=TRUE)
+    if(length(whereCD) < 1) stop("Station does not have CD3 files in the loc_WinFapFiles folder")
+    out <- read_cd3_int(whereCD)
+  }
+  if(length(station) > 1) {
+    whereCD <- lapply(X = as.list(station),
+                      FUN = function(x) list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",x,".CD3"),full.names=TRUE))
+    lwhere <- sapply(whereCD, length)
+    if(all(lwhere < 1)){
+      stop(paste("Stations do not have CD3 files in the loc_WinFapFiles folder"))
+    }
+    if(any(lwhere < 1)){
+      warning(paste("Some stations do not have AMAX files in the loc_WinFapFiles folder:",station[lwhere < 1]," \n"))
+      whereCD <- whereCD[lwhere > 0]
+      station <- station[lwhere > 0]
+    }
+    out <- lapply(whereCD, read_cd3_int)
+    names(out) <- station
+  }
+  out
+}
+
+read_cd3_int <- function(filetext){
+  rr <- readLines(filetext)
   oo <- rr[(which(rr == "[STATION NUMBER]")+1)]
   zz <- rr[(which(rr == "[CDS DETAILS]")+1):(which(rr == "[CDS DETAILS]")+2)]
   oo <- c(oo,unlist(lapply(strsplit(zz,","), function(x) x[[2]])))
