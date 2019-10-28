@@ -2,18 +2,18 @@
 % Please edit documentation in R/readerFuncs.R
 \name{read_amax}
 \alias{read_amax}
-\title{The main function to read annual maxima (AMAX) data contained in .AM files}
+\title{A function to read .AM files}
 \usage{
 read_amax(station, loc_WinFapFiles = getwd())
 }
 \arguments{
-\item{station}{the NRFA station number for which the .AM file (names \code{station.AM}) should be read}
+\item{station}{NRFA station number(s) for which the .AM file (named \code{station.AM}) should be read.}
 
 \item{loc_WinFapFiles}{the file.path of the WinFap files, i.e. the location in which the
 \code{station.AM} file can be found. Default is the working directory}
 }
 \value{
-a data.frame with information on the annual maxima for the station and the following columns
+a data.frame with information on the annual maxima for the station with the following columns
 \describe{
  \item{Station}{NRFA station number (can be a vector of station numbers)}
  \item{WaterYear}{the correct water year for the peak flow}
@@ -24,7 +24,8 @@ a data.frame with information on the annual maxima for the station and the follo
 }
 }
 \description{
-The funtion reads .AM files while checking for the presence of any [AM Rejected] information
+The function reads .AM files once these are in a local folder: these files contain information on annual maxima (AMAX) records extracted from the instantaneous river flow measuraments.
+The function checks for the presence of any [AM Rejected] information and includes it in the output.
 }
 \seealso{
 Information on the .AM files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}

@@ -95,21 +95,57 @@ test_that("read_cd3 works", {
   cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
   expect_is(cd3Out,"data.frame") ## basic check
   ### can have troubles with factorsv
-  expect_type(cd3Out$Location,"character")
-  expect_type(cd3Out$River,"character")
+  testthat::expect_type(cd3Out$Location,"character")
+  testthat::expect_type(cd3Out$River,"character")
   expect_identical(cd3Out, cdtrue) ## is everything read in correctly?
-  ### if station number doesn't have a file - give error
-  expect_error(read_cd3(72,loc_WinFapFiles = "../.."))
 })
-
 
 test_that("read_cd3 works for multiple stations", {
   site_id <- c(12345,54321)
   cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
   expect_is(cd3Out,"list") ## basic check
   expect_identical(names(cd3Out), c("12345","54321")) ## naming is correct?
-  ### if the stations doesn't exist give a warning
-  expect_warning(read_cd3(c(72,12345),loc_WinFapFiles = "../.."))
+})
+
+test_that("get_amax works", {
+  a40003 <- get_amax(40003) # the Medway at Teston / East Farleigh
+  multipleStations <- get_amax(c(40003, 42003))
+  expect_is(a40003,"data.frame") ## basic check
+  expect_identical(as.character(sapply(a40003, class)), c("numeric","numeric","Date","numeric","numeric","logical"))
+  ## multiple stations
+  expect_equal(length(multipleStations), 2)
+  expect_identical(names(multipleStations), c("40003", "42003"))
+  ### if the stations doesn't exist give an error
+  expect_error(get_amax(c(72,72014)))
+})
+
+test_that("get_pot works", {
+  p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
+  expect_is(p40003,"list") ## basic check
+  expect_equal(length(p40003), 3)
+  expect_identical(names(p40003),
+                   c("tablePOT","WaterYearInfo","dateRange"))
+  expect_equal(nrow(p40003$tablePOT[p40003$tablePOT$WaterYear == 1971,]) , 0)
+  multipleStations <- get_pot(c(40003, 42003))
+  ## multiple stations
+  expect_equal(length(multipleStations), 2)
+  expect_identical(names(multipleStations), c("40003", "42003"))
+  ### if the stations doesn't exist give an error
+  expect_error(get_amax(c(72,72014)))
+})
+
+
+test_that("get_cd works", {
+  cd40003 <- get_cd(40003) # the Medway at Teston / East Farleigh
+  expect_is(cd40003,"data.frame") ## basic check
+  expect_equal(nrow(cd40003), 1)
+  expect_equal(cd40003$id, 40003)
+  multipleStations <- get_cd(c(40003, 42003))
+  ## multiple stations
+  expect_equal(length(multipleStations), 2)
+  expect_identical(names(multipleStations), c("40003", "42003"))
+  ### if the stations doesn't exist give an error
+  expect_error(get_cd(c(72,72014)))
 })
 
 

@@ -2,12 +2,12 @@
 % Please edit documentation in R/readerFuncs.R
 \name{read_cd3}
 \alias{read_cd3}
-\title{The main function to read the FEH catchment descriptors contained in .CD3 files}
+\title{A function to read .CD3 files}
 \usage{
 read_cd3(station, loc_WinFapFiles = getwd())
 }
 \arguments{
-\item{station}{the NRFA station number for which the .CD3 file (names \code{station.CD3}) should be read}
+\item{station}{the NRFA station number(s) for which the .CD3 file (names \code{station.CD3}) should be read}
 
 \item{loc_WinFapFiles}{the file.path of the WinFap files, i.e. the location in which the
 \code{station.CD3} file can be found. Default is the working directory}
@@ -16,7 +16,7 @@ read_cd3(station, loc_WinFapFiles = getwd())
 a data.frame with information on the catchment descriptors for the station
 }
 \description{
-The funtion reads .CD3 files and makes a data frame with the main catchment descriptors and information
+The function reads .CD3 files once these are in a local folder: these files contain information on the gauging station and on the catchment upstream the station.
 }
 \seealso{
 Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}.

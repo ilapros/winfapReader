@@ -2,12 +2,12 @@
 % Please edit documentation in R/readerFuncs.R
 \name{read_pot}
 \alias{read_pot}
-\title{The main function to read Peaks-Over-Threshold (POT) data contained in .PT files}
+\title{A function to read .PT files}
 \usage{
 read_pot(station, loc_WinFapFiles = getwd(), getAmax = FALSE)
 }
 \arguments{
-\item{station}{the NRFA station number for which the .PT file (names \code{station.PT}) should be read. It can also be a vector of station numbers}
+\item{station}{NRFA station number(s) for which the .PT file (names \code{station.PT}) should be read.}
 
 \item{loc_WinFapFiles}{the file.path of the WinFap files, i.e. the location in which the
 \code{station.PT} file can be found. Default is the working directory}
@@ -29,7 +29,9 @@ exceedances present in \code{tablePOT} can be deemed to be representative of the
 Note that this period might be different than the period for which annual maxima records are available
 }
 \description{
-The function reads .PT files and checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
+The function reads .PT files once these are in a local folder: these files contain information on Peaks-Over-Threshold (POT) records from the instantaneous river flow measuraments.
+The function checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
+If these are present, they are merged and information on the proportion of days with missing records in each water year is provided.
 }
 \seealso{
 Information on the .PT files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}

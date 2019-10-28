@@ -2,11 +2,12 @@
 
 ### PT ----
 
-#' The main function to read Peaks-Over-Threshold (POT) data contained in .PT files
+#' A function to read .PT files
 #'
-#' The function reads .PT files and checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
-#'
-#' @param station the NRFA station number for which the .PT file (names \code{station.PT}) should be read. It can also be a vector of station numbers
+#' The function reads .PT files once these are in a local folder: these files contain information on Peaks-Over-Threshold (POT) records from the instantaneous river flow measuraments.
+#' The function checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
+#' If these are present, they are merged and information on the proportion of days with missing records in each water year is provided.
+#' @param station NRFA station number(s) for which the .PT file (names \code{station.PT}) should be read.
 #' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
 #' \code{station.PT} file can be found. Default is the working directory
 #' @param getAmax logical. If \code{TRUE} the annual maxima values (extracted from a \code{station.AM}
@@ -22,7 +23,6 @@
 #' @return \code{dateRange} a vector with the first and last date of recording for the POT record as provided in the [POT Details] field.
 #' Note that this period might be different than the period for which annual maxima records are available
 #' @seealso Information on the .PT files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
-#' @importFrom utils read.csv
 #' @export
 read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
   ## need to have a way to specify if the amax should be found locally or obtained from API
@@ -55,7 +55,7 @@ read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
 
 
 read_pot_int <- function(filetext, getAmax){
-  POTtable <- read.csv(file = filetext,header=FALSE,stringsAsFactors = FALSE)
+  POTtable <- utils::read.csv(file = filetext,header=FALSE,stringsAsFactors = FALSE)
   statno <- as.character(POTtable[2,1])
 
   ##Create table shell using beginning and ending record periods
@@ -117,13 +117,13 @@ read_pot_int <- function(filetext, getAmax){
       WY_table <- WY_table[,c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected","potPercComplete","potThreshold")]
       WY_table$Station <- statno
     }
-    # if(getAmax == "get"){
-    #   amax <- get_amax(station = statno)
-    #   names(amax) <- c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected")
-    #   WY_table <- merge(amax,WY_table,all=TRUE)
-    #   WY_table <- WY_table[,c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected","potPercComplete","potThreshold")]
-    #   WY_table$Station <- statno
-    # }
+    if(getAmax == "get"){
+      amax <- get_amax(station = statno)
+      names(amax) <- c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected")
+      WY_table <- merge(amax,WY_table,all=TRUE)
+      WY_table <- WY_table[,c("Station","WaterYear","amaxDate","amaxFlow","amaxStage","amaxRejected","potPercComplete","potThreshold")]
+      WY_table$Station <- statno
+    }
   }
   out <- list(tablePOT = tablePOT[,c("Station","Date","WaterYear","Flow","Stage")],
               WaterYearInfo = WY_table,
@@ -134,15 +134,16 @@ read_pot_int <- function(filetext, getAmax){
 
 ### AM ----
 
-#' The main function to read annual maxima (AMAX) data contained in .AM files
+#' A function to read .AM files
 #'
-#' The funtion reads .AM files while checking for the presence of any [AM Rejected] information
+#' The function reads .AM files once these are in a local folder: these files contain information on annual maxima (AMAX) records extracted from the instantaneous river flow measuraments.
+#' The function checks for the presence of any [AM Rejected] information and includes it in the output.
 #'
-#' @param station the NRFA station number for which the .AM file (names \code{station.AM}) should be read
+#' @param station NRFA station number(s) for which the .AM file (named \code{station.AM}) should be read.
 #' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
 #' \code{station.AM} file can be found. Default is the working directory
 #'
-#' @return a data.frame with information on the annual maxima for the station and the following columns
+#' @return a data.frame with information on the annual maxima for the station with the following columns
 #' \describe{
 #'  \item{Station}{NRFA station number (can be a vector of station numbers)}
 #'  \item{WaterYear}{the correct water year for the peak flow}
@@ -180,10 +181,10 @@ read_amax <- function(station, loc_WinFapFiles = getwd()){
 read_amax_int <- function(filetext){
   rr <- readLines(filetext)
   rr <- rr[nchar(rr) > 0]
-  station <- rr[(which(rr == "[STATION NUMBER]")+1)]
+  station <- as.numeric(as.character(rr[(which(rr == "[STATION NUMBER]")+1)]))
   if((which(rr == "[AM Values]")+1) == length(rr)) stop(sprintf("no amax recorded at station %s", station), call. = FALSE)
   aa <- rr[(which(rr == "[AM Values]")+1):(length(rr)-1)]
-  out <- cbind(station,read.csv(textConnection(aa),header=FALSE))
+  out <- cbind(station, utils::read.csv(textConnection(aa),header=FALSE, stringsAsFactors = FALSE))
   names(out) <- c("Station","Date","Flow","Stage")
   out$Date <- as.Date(out$Date,format = "%d %B %Y")
   out$WaterYear <- water_year(out$Date)
@@ -214,18 +215,18 @@ read_amax_int <- function(filetext){
 
 
 ### CD3 ----
-
 split_or_NA <- function(x,ind=2) {
   ## needed because some catchment descriptors are missing in the cd3 files
   if(length(x) == 0) return(rep(NA,length(ind)))
   if(length(x) > 0) strsplit(x,",")[[1]][ind]
 }
 
-#' The main function to read the FEH catchment descriptors contained in .CD3 files
+
+#' A function to read .CD3 files
 #'
-#' The funtion reads .CD3 files and makes a data frame with the main catchment descriptors and information
+#' The function reads .CD3 files once these are in a local folder: these files contain information on the gauging station and on the catchment upstream the station.
 #'
-#' @param station the NRFA station number for which the .CD3 file (names \code{station.CD3}) should be read
+#' @param station the NRFA station number(s) for which the .CD3 file (names \code{station.CD3}) should be read
 #' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
 #' \code{station.CD3} file can be found. Default is the working directory
 #'
@@ -233,7 +234,7 @@ split_or_NA <- function(x,ind=2) {
 #' @seealso Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}.
 #' Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/feh-catchment-descriptors}
 #' @export
-#'
+#' @aliases read_cd3
 read_cd3 <- function(station, loc_WinFapFiles = getwd()){
   if(length(station) == 1){
     whereCD <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".CD3"),full.names=TRUE)
