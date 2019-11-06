@@ -2,3 +2,6 @@
 .RData
 .Rproj.user
 *.svx
+inst/doc
+doc
+Meta

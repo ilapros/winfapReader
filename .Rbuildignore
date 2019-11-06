@@ -8,3 +8,5 @@ winfapReader.Rproj
 README.md
 
 
+^doc$
+^Meta$
