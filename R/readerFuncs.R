@@ -125,6 +125,7 @@ read_pot_int <- function(filetext, getAmax){
       WY_table$Station <- statno
     }
   }
+  rownames(tablePOT) <- NULL
   out <- list(tablePOT = tablePOT[,c("Station","Date","WaterYear","Flow","Stage")],
               WaterYearInfo = WY_table,
               dateRange = dateRange)

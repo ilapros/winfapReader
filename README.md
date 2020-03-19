@@ -8,19 +8,24 @@ The functions in the package rework the information of the WINFAP files and the 
 
 
 
-One can install `winfapReader` from github using `devtools`: 
+One can install `winfapReader` from github using the `remotes` package: 
  
 ```
-devtools:: install_github("ilapros/winfapReader")
+remotes::install_github("ilapros/winfapReader")
 ```
 
 
-By default the functions assume that the winfap files are saved in the working directory, but this can be overwritten as in
-
+When reading files saved locally, by default the package assume that the winfap files are saved in the working directory, but this can be overwritten as in
 
 ```
-read_amax(72014, loc_WinFapFiles = "locationWhereWINFAPfilesAre")
+max <- read_amax(72014, loc_WinFapFiles = "locationWhereWINFAPfilesAre")
 ```
 
+
+When accessing the files via the API simply ask for one or more station to obtain the information requested
+
+```
+max <- get_amax(c(70005,72014))
+```
 
 

@@ -6,7 +6,9 @@ winfapReader.Rproj
 .Rhistory
 .Rproj.user
 README.md
+^.*\.svx
 
 
 ^doc$
 ^Meta$
+^appveyor\.yml$

@@ -1,6 +1,7 @@
 .Rhistory
 .RData
 .Rproj.user
+.Rproj
 *.svx
 inst/doc
 doc
