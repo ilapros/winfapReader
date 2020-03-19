@@ -185,15 +185,15 @@ To obtain the POT records in `rnrfa` use `type = "pot-flow"`: using the `full_in
 
 ```{r}
 par(mfrow=c(1,1))
-### the pot records for 75001 from rnrfa
-# pot75001 <- rnrfa::get_ts(75001, type = "pot-flow", full_info = TRUE) 
-# pot75001[9:12,]
-# ## using winfapReader
-# p75001 <- get_pot(75001)
+## the pot records for 75001 from rnrfa
+#pot75001 <- rnrfa::get_ts(75001, type = "pot-flow", full_info = TRUE)
+#pot75001[9:12,]
+## using winfapReader
+#p75001 <- get_pot(75001)
 #p75001$tablePOT[9:12,]
-### the same peaks are identified 
+## the same peaks are identified
 #p75001$WaterYearInfo[1:5,] ### but notice that 1975 had a low proportion missing records
-###  the lack of data in 1975 is due to all flow being low 
+##  the lack of data in 1975 is due to all flow being low
 ```
 
 The two packages can be used together to retrieve different type of information about river flow: in the example below daily gauged flow for the Conder at Galgate (station 72014) is displayed together with annual maxima (which are extracted from the instantaneous river flow). The latter are typically larger and can be seen to start further in the past than the daily flow data. 

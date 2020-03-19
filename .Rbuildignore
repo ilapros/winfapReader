@@ -12,3 +12,6 @@ README.md
 ^doc$
 ^Meta$
 ^appveyor\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
