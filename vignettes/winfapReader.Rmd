@@ -32,7 +32,7 @@ Consequently, the NRFA publishes and routinely updates files which are suitable 
 The `winfapReader` package allows you to read into your R session the `.AM`, `.CD3` and`.PT` files. Importantly it is aware of the typical structure of the files in which rejected annual maxima and missing period of records for the  peaks over threshold are recorded, and merges this information with the flow records. This allows the user to have all useful information to decide which parts of the record to include in the analysis. 
 
 Recently the NRFA has developed an [API](https://nrfa.ceh.ac.uk/news-and-media/news/nrfa-releases-api-improve-data-access) which allows for a programmatic interaction with their datasets: the information about annual maxima, catchment descriptors and peaks over threshold can also be retrieved using this API. 
-Beside the information on extremes for flood frequency estimation the NRFA maintains and distributes daily river flow records and several other river flow related variables, such as catchment averaged rainfall: the `rnrfa` package allows one to retrieve these information and more with its `rnrfa::get_ts` function (see more on this at the end of the vignette). The `winfapReader` package focuses only on handling river flow extremes information and has two sets of functions: 
+Beside the information on extremes for flood frequency estimation the NRFA maintains and distributes daily river flow records and several other river flow related variables, such as catchment averaged rainfall: the [`rnrfa`](https://cran.r-project.org/web/packages/rnrfa/index.html) package allows one to retrieve these information and more with its `rnrfa::get_ts` function (see more on this at the end of the vignette). The `winfapReader` package focuses only on handling river flow extremes information and has two sets of functions: 
 
 + the `read_amax`, `read_cd3` and `read_pot` functions read the information from the `.AM`, `.CD3` and `.PT` files *once these have been dowloaded into a local folder*
 
@@ -51,7 +51,7 @@ library(winfapReader)
 
 ### The `get_amax`function
 
-The `read_amax` function will produce the same output as the `get_amax` function.
+The `get_amax` function allows one to obtain information on annual maxima from the NRFA. The `read_amax` function will produce the same output as the `get_amax` function but is based on the locally saved files.
 
 ```{r showAmax, eval=TRUE}
 if(curl::has_internet()) amaxEx <- get_amax(c(42003,72014)) 
@@ -67,7 +67,7 @@ The function can query the API for more than one station at the time: in that ca
 
 ### The `get_pot`function
 
-The `read_pot` function will produce the same output as the `get_pot` function.
+The `get_pot` function allows one to obtain information on peaks over threshold data from the NRFA. The `read_pot` function will produce the same output as the `get_pot` function but is based on the locally saved files.
 
 ```{r showPOT, eval=TRUE}
 if(curl::has_internet()) potEx <- get_pot(c(42003,72014)) 
@@ -157,7 +157,7 @@ names(amaxLanc)
 ```
 Now display the stations all together in a panel. 
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 par(mfrow=c(2,3))
 invisible(
   sapply(amaxLanc, 
@@ -181,19 +181,19 @@ which(xx$Rejected) ## but two years should be rejected
 which(maxflow72014$rejected == 1) ## same two years
 ```
 
-To obtain the POT records in `rnrfa` use `type = "pot-flow"`: using the `full_info = TRUE` option ensures that a rejected flag is given for the periods in which the POT records have been found to be unreliable or missing (see the NRFA website for more details on this). The `rejected` flag is build using the same information used to build the `WaterYearInfo` table in the `winfapReader::get_pot` function. The additional information provided in `WaterYearInfo` is useful to idetify the years in which no POT record is found because the records are missing/unreliable and not because the threshold was never exceeded.  
+To obtain the POT records in `rnrfa` use `type = "pot-flow"`: using the `full_info = TRUE` option ensures that a rejected flag is given for the periods in which the POT records have been found to be unreliable or missing (see the NRFA website for more details on this). The `rejected` flag is built using the same information used to build the `WaterYearInfo` table in the `winfapReader::get_pot` function. The additional information provided in `WaterYearInfo` is useful to idetify the years in which no POT record is found because the records are missing/unreliable and not because the threshold was never exceeded.  
 
 ```{r}
 par(mfrow=c(1,1))
-## the pot records for 75001 from rnrfa
-#pot75001 <- rnrfa::get_ts(75001, type = "pot-flow", full_info = TRUE)
-#pot75001[9:12,]
-## using winfapReader
-#p75001 <- get_pot(75001)
-#p75001$tablePOT[9:12,]
-## the same peaks are identified
-#p75001$WaterYearInfo[1:5,] ### but notice that 1975 had a low proportion missing records
-##  the lack of data in 1975 is due to all flow being low
+# the pot records for 75001 from rnrfa
+pot75001 <- rnrfa::get_ts(75001, type = "pot-flow", full_info = TRUE)
+pot75001[9:12,]
+# using winfapReader
+p75001 <- get_pot(75001)
+p75001$tablePOT[9:12,]
+# the same peaks are identified
+p75001$WaterYearInfo[1:5,] ### but notice that 1975 had a low proportion missing records
+#  the lack of data in 1975 is due to all flow being low
 ```
 
 The two packages can be used together to retrieve different type of information about river flow: in the example below daily gauged flow for the Conder at Galgate (station 72014) is displayed together with annual maxima (which are extracted from the instantaneous river flow). The latter are typically larger and can be seen to start further in the past than the daily flow data. 
