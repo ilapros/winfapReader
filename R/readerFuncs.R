@@ -61,6 +61,8 @@ read_pot_int <- function(filetext, getAmax){
   ##Create table shell using beginning and ending record periods
   beg <- POTtable$V2[POTtable$V1 == "Record Period"]
   end <- POTtable$V3[POTtable$V1 == "Record Period"]
+  #error if table is empty
+  if(is.null(beg)) stop(sprintf("no pot recorded at station %s", statno), call. = FALSE)
   # find beginning and eng year of record
   beg <- dmy(beg); end <- dmy(end)
   dateRange <- c(beg,end)
