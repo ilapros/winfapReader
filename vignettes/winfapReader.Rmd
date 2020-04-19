@@ -168,7 +168,7 @@ invisible(
 
 The large events which have hit the area in 2015 can be seen in the flow series plots. 
 
-The `rnrfa` package also allows to pull the annual maximum flow recorded at any station. To also obtain the infrormation about the water year which the NRFA has deemed to be of poor quality and therefore rejected set the `full_info` argument to `TRUE`. 
+The `rnrfa` package also allows to pull the annual maximum flow recorded at any station. To also obtain the information about the water year which the NRFA has deemed to be of poor quality and therefore rejected set the `full_info` argument to `TRUE`. 
 
 ```{r}
 par(mfrow=c(1,1))
@@ -181,7 +181,7 @@ which(xx$Rejected) ## but two years should be rejected
 which(maxflow72014$rejected == 1) ## same two years
 ```
 
-To obtain the POT records in `rnrfa` use `type = "pot-flow"`: using the `full_info = TRUE` option ensures that a rejected flag is given for the periods in which the POT records have been found to be unreliable or missing (see the NRFA website for more details on this). The `rejected` flag is built using the same information used to build the `WaterYearInfo` table in the `winfapReader::get_pot` function. The additional information provided in `WaterYearInfo` is useful to idetify the years in which no POT record is found because the records are missing/unreliable and not because the threshold was never exceeded.  
+To obtain the POT records in `rnrfa` use `type = "pot-flow"`: using the `full_info = TRUE` option ensures that a rejected flag is given for the periods in which the POT records have been found to be unreliable or missing (see the NRFA website for more details on this). The `rejected` flag is built using the same information used to build the `WaterYearInfo` table in the `winfapReader::get_pot` function. The additional information provided in `WaterYearInfo` is useful to identify the years in which no POT record is found because the records are missing/unreliable and not because the threshold was never exceeded.  
 
 ```{r}
 par(mfrow=c(1,1))
