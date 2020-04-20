@@ -115,8 +115,9 @@ test_that("get_amax works", {
   ## multiple stations
   expect_equal(length(multipleStations), 2)
   expect_identical(names(multipleStations), c("40003", "42003"))
-  ### if the stations doesn't exist give an error
-  expect_error(get_amax(c(72,72014)))
+  ### if the stations doesn't exist don't retrieve it
+  expect_is(get_amax(c(72,72014)),"list")
+  expect_length(get_amax(c(72,72014)),1)
 })
 
 test_that("get_pot works", {
@@ -130,8 +131,9 @@ test_that("get_pot works", {
   ## multiple stations
   expect_equal(length(multipleStations), 2)
   expect_identical(names(multipleStations), c("40003", "42003"))
-  ### if the stations doesn't exist give an error
-  expect_error(get_amax(c(72,72014)))
+  ### if the stations doesn't exist don't retrieve it
+  expect_is(get_pot(c(72,72014)),"list")
+  expect_length(get_pot(c(72,72014)),1)
 })
 
 
@@ -144,8 +146,9 @@ test_that("get_cd works", {
   ## multiple stations
   expect_equal(length(multipleStations), 2)
   expect_identical(names(multipleStations), c("40003", "42003"))
-  ### if the stations doesn't exist give an error
-  expect_error(get_cd(c(72,72014)))
+  ### if the stations doesn't exist don't retrieve it
+  expect_is(get_cd(c(72,72014)),"list")
+  expect_length(get_cd(c(72,72014)),1)
 })
 
 

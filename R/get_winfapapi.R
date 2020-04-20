@@ -21,8 +21,9 @@ get_cd_int <- function(stid, fields){
   # Check response
   if (httr::http_error(resp)) {
     if(resp$status_code == 400) print(sprintf("maybe station %s does not exist", stid))
-    stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
-                 call. = FALSE)
+    # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
+    #              call. = FALSE)
+    return(NULL)
   }
 
   # Check output format
@@ -114,6 +115,7 @@ get_cd <- function(station,fields = "feh"){
   if(length(id) > 1) {
     out <- lapply(X = as.list(id), FUN = get_cd_int, fields = fields)
     names(out) <- station
+    out <- out[!sapply(out,is.null)]
   }
   return(out)
 }
@@ -138,8 +140,9 @@ get_amax_int <-function(stid){
   # Check response
   if (httr::http_error(resp)) {
     if(resp$status_code == 400) print(sprintf("maybe station %s does not exist", stid))
-    stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
-         call. = FALSE)
+    # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
+    #      call. = FALSE)
+    return(NULL)
   }
   # Check output format
   if (httr::http_type(resp) != "text/csv") {
@@ -185,6 +188,7 @@ get_amax <- function(station){
   if(length(id) > 1) {
     out <- lapply(X = as.list(id), FUN = get_amax_int)
     names(out) <- station
+    out <- out[!sapply(out,is.null)]
   }
   return(out)
 }
@@ -206,8 +210,9 @@ get_pot_int <-function(stid, getAmax){
   # Check response
   if (httr::http_error(resp)) {
     if(resp$status_code == 400) print(sprintf("maybe station %s does not exist", stid))
-    stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
-         call. = FALSE)
+    # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
+    #      call. = FALSE)
+    return(NULL)
   }
   # Check output format
   if (httr::http_type(resp) != "text/csv") {
@@ -265,6 +270,7 @@ get_pot <- function(station, getAmax = FALSE){
   if(length(id) > 1) {
     out <- lapply(X = as.list(id), FUN = get_pot_int, getAmax = getAmax)
     names(out) <- station
+    out <- out[!sapply(out,is.null)]
   }
   return(out)
 }
