@@ -9,7 +9,7 @@ get_pot(station, getAmax = FALSE)
 \arguments{
 \item{station}{the NRFA station number for which peaks over threshold information should be obtained. It can also be a vector of station numbers}
 
-\item{getAmax}{logical. If \code{TRUE} inforamtion on the annual maxima values will be retrieved and attached to the \code{WaterYearInfo} table}
+\item{getAmax}{logical. If \code{TRUE} information on the annual maxima values will be retrieved and attached to the \code{WaterYearInfo} table}
 }
 \value{
 Like \code{\link{read_pot}} a list of three objects \code{tablePOT}, \code{WaterYearInfo} and \code{dateRange}.
@@ -28,7 +28,7 @@ Note that this period might be different than the period for which annual maxima
 The function queries the NRFA API for the .PT file similar to the WINFAP file for a given stations. It then processes the file in a fashion similar to \code{\link{read_pot}}.
 }
 \examples{
-\dontrun{
+\donttest{
   p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
   p40003$tablePOT[p40003$tablePOT$WaterYear > 1969 &
         p40003$tablePOT$WaterYear < 1977,]
@@ -38,6 +38,7 @@ The function queries the NRFA API for the .PT file similar to the WINFAP file fo
   # in 1971 all records are valid,
   # in 1975 no exceedances
   # might be due to the fact that almost no valid record are available
+
   p40003 <- get_pot(40003, getAmax = TRUE)
   p40003$WaterYearInfo[p40003$WaterYearInfo$WaterYear > 1969 &
        p40003$WaterYearInfo$WaterYear < 1977,]
@@ -46,5 +47,5 @@ The function queries the NRFA API for the .PT file similar to the WINFAP file fo
 }
 }
 \seealso{
-\code{\link{read_pot}}. Information on the peaks over threshold records and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+\code{\link{read_pot}}. Information on the peaks over threshold records and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 }

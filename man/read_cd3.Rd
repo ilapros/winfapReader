@@ -9,7 +9,7 @@ read_cd3(station, loc_WinFapFiles = getwd())
 \arguments{
 \item{station}{the NRFA station number(s) for which the .CD3 file (names \code{station.CD3}) should be read}
 
-\item{loc_WinFapFiles}{the file.path of the WinFap files, i.e. the location in which the
+\item{loc_WinFapFiles}{the file.path of the WINFAP files, i.e. the location in which the
 \code{station.CD3} file can be found. Default is the working directory}
 }
 \value{
@@ -19,6 +19,6 @@ a data.frame with information on the catchment descriptors for the station
 The function reads .CD3 files once these are in a local folder: these files contain information on the gauging station and on the catchment upstream the station.
 }
 \seealso{
-Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}.
+Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}.
 Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/feh-catchment-descriptors}
 }

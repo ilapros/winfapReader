@@ -85,13 +85,12 @@ get_cd_int <- function(stid, fields){
 #'
 #' The function queries the NRFA API for for information of a given station. Unlike \code{\link{get_amax}} and \code{\link{get_pot}}, the output of this function is not exactly the same from the output of the \code{\link{read_cd3}} function due to differences in the information made available by the NRFA API
 #'
-#' @param station the NRFA station(s) number for which the the information is reuired
+#' @param station the NRFA station(s) number for which the the information is required
 #' @param fields the type of information which is required. Can be "feh" (default), which outputs a subset of information typically used when applying the flood estimation handbook methods, or "all", which output all information made available in the NRFA API.
 #' @return a data.frame of one row with different columns depending on whether fields = "all" or fields = "feh" was selected.
-#' @seealso \code{\link{read_cd3}}. Information on catchment descriptors river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+#' @seealso \code{\link{read_cd3}}. Information on catchment descriptors river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 #'
 #' @examples
-#' \dontrun{
 #'  cdMult <- get_cd(c(40003,42003), fields = "all")
 #'  ### lots of information on the catchment/station
 #'  ### including information on rejected annual maxima
@@ -101,7 +100,7 @@ get_cd_int <- function(stid, fields){
 #'  # less information, mostly the FEH descriptors
 #'  dim(cd40003)
 #'  sapply(cdMult, ncol)
-#' }
+#'
 #' @export
 get_cd <- function(station,fields = "feh"){
   if (!requireNamespace("httr", quietly = TRUE)) {
@@ -125,7 +124,7 @@ get_cd <- function(station,fields = "feh"){
 
 ### zz <- httr::GET("https://nrfaapps.ceh.ac.uk/nrfa/ws/time-series/39001.am?format=feh-data&data-type=amax-stage", httr::write_disk(file.path("wffls","thef4.txt"), overwrite = TRUE))
 ### the code above downloads the files into the specified path
-## could be an additinal functionality - not for the moment
+## could be an additional functionality - not for the moment
 get_amax_int <-function(stid){
   # Set a user agent
   ua <- httr::user_agent("https://github.com/ilapros/winfaReader")
@@ -168,14 +167,12 @@ get_amax_int <-function(stid){
 #'  \item{Stage}{the stage (height) reached by the river - this information is used to derive the flow via a rating curve}
 #'  \item{Rejected}{logical, if TRUE the water year has been flagged as rejected by the NRFA}
 #' }
-#' @seealso \code{\link{read_amax}}. Information on river flow gauging in the UK and the annual maxima can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+#' @seealso \code{\link{read_amax}}. Information on river flow gauging in the UK and the annual maxima can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 #' @examples
-#' \dontrun{
 #'   a40003 <- get_amax(40003) # the Medway at Teston / East Farleigh
 #'   multipleStations <- get_amax(c(40003, 42003))
 #'   names(multipleStations)
 #'   summary(multipleStations$`42003`)
-#'   }
 #' @export
 get_amax <- function(station){
   if (!requireNamespace("httr", quietly = TRUE)) {
@@ -229,7 +226,7 @@ get_pot_int <-function(stid, getAmax){
 #' The function queries the NRFA API for the .PT file similar to the WINFAP file for a given stations. It then processes the file in a fashion similar to \code{\link{read_pot}}.
 #'
 #' @param station the NRFA station number for which peaks over threshold information should be obtained. It can also be a vector of station numbers
-#' @param getAmax logical. If \code{TRUE} inforamtion on the annual maxima values will be retrieved and attached to the \code{WaterYearInfo} table
+#' @param getAmax logical. If \code{TRUE} information on the annual maxima values will be retrieved and attached to the \code{WaterYearInfo} table
 #'
 #' @return Like \code{\link{read_pot}} a list of three objects \code{tablePOT}, \code{WaterYearInfo} and \code{dateRange}.
 #' @return \code{tablePOT} contains a table with all the peaks above the threshold present in the record
@@ -239,10 +236,11 @@ get_pot_int <-function(stid, getAmax){
 #' exceedances present in \code{tablePOT} can be deemed to be representative of the whole year
 #' @return \code{dateRange} a vector with the first and last date of recording for the POT record as provided in the [POT Details] field.
 #' Note that this period might be different than the period for which annual maxima records are available
-#' @seealso \code{\link{read_pot}}. Information on the peaks over threshold records and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+#' @seealso \code{\link{read_pot}}. Information on the peaks over threshold records and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#'   ### the example take longer than 5 seconds to run
 #'   p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
 #'   p40003$tablePOT[p40003$tablePOT$WaterYear > 1969 &
 #'         p40003$tablePOT$WaterYear < 1977,]
@@ -252,6 +250,7 @@ get_pot_int <-function(stid, getAmax){
 #'   # in 1971 all records are valid,
 #'   # in 1975 no exceedances
 #'   # might be due to the fact that almost no valid record are available
+#'
 #'   p40003 <- get_pot(40003, getAmax = TRUE)
 #'   p40003$WaterYearInfo[p40003$WaterYearInfo$WaterYear > 1969 &
 #'        p40003$WaterYearInfo$WaterYear < 1977,]

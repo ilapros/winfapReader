@@ -7,7 +7,7 @@
 get_cd(station, fields = "feh")
 }
 \arguments{
-\item{station}{the NRFA station(s) number for which the the information is reuired}
+\item{station}{the NRFA station(s) number for which the the information is required}
 
 \item{fields}{the type of information which is required. Can be "feh" (default), which outputs a subset of information typically used when applying the flood estimation handbook methods, or "all", which output all information made available in the NRFA API.}
 }
@@ -18,7 +18,6 @@ a data.frame of one row with different columns depending on whether fields = "al
 The function queries the NRFA API for for information of a given station. Unlike \code{\link{get_amax}} and \code{\link{get_pot}}, the output of this function is not exactly the same from the output of the \code{\link{read_cd3}} function due to differences in the information made available by the NRFA API
 }
 \examples{
-\dontrun{
  cdMult <- get_cd(c(40003,42003), fields = "all")
  ### lots of information on the catchment/station
  ### including information on rejected annual maxima
@@ -28,8 +27,8 @@ The function queries the NRFA API for for information of a given station. Unlike
  # less information, mostly the FEH descriptors
  dim(cd40003)
  sapply(cdMult, ncol)
-}
+
 }
 \seealso{
-\code{\link{read_cd3}}. Information on catchment descriptors river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+\code{\link{read_cd3}}. Information on catchment descriptors river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 }

@@ -3,11 +3,11 @@ options(stringsAsFactors = FALSE)
 #' Known events which happened on October 1st before 9am
 #'
 #' The Water Year in the UK runs from 9am of the 1st October of a given year
-#' to 8:59am of the 1st October of the next year. Since the WinFap files contain
+#' to 8:59am of the 1st October of the next year. Since the WINFAP files contain
 #' information only on the date of the annual maximum (and not time) it is possible that an event is
 #' mis-classified when using the \code{water_year} function. This dataset lists the events which are
 #' known to have happened to October 1st before 9am. This is used to correct the \code{WaterYear}
-#' information in these known cases in the \code{read_amax} function
+#' information in these known cases in the \code{read_amax} and \code{get_amax} functions.
 #'
 #'
 #' @format A data frame with 17 rows and 3 variables:
@@ -16,7 +16,7 @@ options(stringsAsFactors = FALSE)
 #'   \item{Date}{date of maximum flow (always the 1st October)}
 #'   \item{WaterYear}{the correct water year for the peak flow}
 #' }
-#' @source Derived manually by identifying events which happened on Oct. 1st and comparing it with information on \url{nrfa.ceh.ac.uk}
+#' @source Derived manually by identifying events which happened on Oct. 1st and comparing it with information on \url{https://nrfa.ceh.ac.uk}
 "known_Oct1"
 ############# events which happened before 9am on 1st October - and therefore of the previous Water Year
 known_Oct1 <- data.frame(Station = 6008, Date = as.Date("1985-10-01"), WaterYear = 1984)

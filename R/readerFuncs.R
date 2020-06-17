@@ -4,11 +4,11 @@
 
 #' A function to read .PT files
 #'
-#' The function reads .PT files once these are in a local folder: these files contain information on Peaks-Over-Threshold (POT) records from the instantaneous river flow measuraments.
+#' The function reads .PT files once these are in a local folder: these files contain information on Peaks-Over-Threshold (POT) records from the instantaneous river flow measurements.
 #' The function checks for the presence of any [POT GAPS] and [POT REJECTED] periods.
 #' If these are present, they are merged and information on the proportion of days with missing records in each water year is provided.
 #' @param station NRFA station number(s) for which the .PT file (names \code{station.PT}) should be read.
-#' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
+#' @param loc_WinFapFiles the file.path of the WINFAP files, i.e. the location in which the
 #' \code{station.PT} file can be found. Default is the working directory
 #' @param getAmax logical. If \code{TRUE} the annual maxima values (extracted from a \code{station.AM}
 #' file) will be attached to the \code{WaterYearInfo} table
@@ -22,7 +22,7 @@
 #' exceedances present in \code{tablePOT} can be deemed to be representative of the whole year
 #' @return \code{dateRange} a vector with the first and last date of recording for the POT record as provided in the [POT Details] field.
 #' Note that this period might be different than the period for which annual maxima records are available
-#' @seealso Information on the .PT files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+#' @seealso Information on the .PT files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 #' @export
 read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
   ## need to have a way to specify if the amax should be found locally or obtained from API
@@ -139,11 +139,11 @@ read_pot_int <- function(filetext, getAmax){
 
 #' A function to read .AM files
 #'
-#' The function reads .AM files once these are in a local folder: these files contain information on annual maxima (AMAX) records extracted from the instantaneous river flow measuraments.
+#' The function reads .AM files once these are in a local folder: these files contain information on annual maxima (AMAX) records extracted from the instantaneous river flow measurements.
 #' The function checks for the presence of any [AM Rejected] information and includes it in the output.
 #'
 #' @param station NRFA station number(s) for which the .AM file (named \code{station.AM}) should be read.
-#' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
+#' @param loc_WinFapFiles the file.path of the WINFAP files, i.e. the location in which the
 #' \code{station.AM} file can be found. Default is the working directory
 #'
 #' @return a data.frame with information on the annual maxima for the station with the following columns
@@ -155,7 +155,7 @@ read_pot_int <- function(filetext, getAmax){
 #'  \item{Stage}{the stage (height) reached by the river - this information is used to derive the flow via a rating curve}
 #'  \item{Rejected}{logical, if TRUE the water year has been flagged as rejected by the NRFA}
 #' }
-#' @seealso Information on the .AM files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+#' @seealso Information on the .AM files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 #' @export
 read_amax <- function(station, loc_WinFapFiles = getwd()){
   if(length(station) == 1){
@@ -230,11 +230,11 @@ split_or_NA <- function(x,ind=2) {
 #' The function reads .CD3 files once these are in a local folder: these files contain information on the gauging station and on the catchment upstream the station.
 #'
 #' @param station the NRFA station number(s) for which the .CD3 file (names \code{station.CD3}) should be read
-#' @param loc_WinFapFiles the file.path of the WinFap files, i.e. the location in which the
+#' @param loc_WinFapFiles the file.path of the WINFAP files, i.e. the location in which the
 #' \code{station.CD3} file can be found. Default is the working directory
 #'
 #' @return a data.frame with information on the catchment descriptors for the station
-#' @seealso Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}.
+#' @seealso Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}.
 #' Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/feh-catchment-descriptors}
 #' @export
 #' @aliases read_cd3

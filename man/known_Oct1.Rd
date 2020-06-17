@@ -4,24 +4,26 @@
 \name{known_Oct1}
 \alias{known_Oct1}
 \title{Known events which happened on October 1st before 9am}
-\format{A data frame with 17 rows and 3 variables:
+\format{
+A data frame with 17 rows and 3 variables:
 \describe{
   \item{Station}{NRFA station number}
   \item{Date}{date of maximum flow (always the 1st October)}
   \item{WaterYear}{the correct water year for the peak flow}
-}}
+}
+}
 \source{
-Derived manually by identifying events which happened on Oct. 1st and comparing it with information on \url{nrfa.ceh.ac.uk}
+Derived manually by identifying events which happened on Oct. 1st and comparing it with information on \url{https://nrfa.ceh.ac.uk}
 }
 \usage{
 known_Oct1
 }
 \description{
 The Water Year in the UK runs from 9am of the 1st October of a given year
-to 8:59am of the 1st October of the next year. Since the WinFap files contain
+to 8:59am of the 1st October of the next year. Since the WINFAP files contain
 information only on the date of the annual maximum (and not time) it is possible that an event is
 mis-classified when using the \code{water_year} function. This dataset lists the events which are
 known to have happened to October 1st before 9am. This is used to correct the \code{WaterYear}
-information in these known cases in the \code{read_amax} function
+information in these known cases in the \code{read_amax} and \code{get_amax} functions.
 }
 \keyword{datasets}

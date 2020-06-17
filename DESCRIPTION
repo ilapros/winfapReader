@@ -1,31 +1,32 @@
 Package: winfapReader
 Type: Package
-Title: Interact with peak flow data in the UK
-Version: 0.1.0
+Title: Interact with Peak Flow Data in the United Kingdom
+Version: 0.1-1
 Authors@R: c(person("Ilaria", "Prosdocimi", 
                     email = "prosdocimi.ilaria@gmail.com",
                     role = c("aut", "cre"),
                     comment = c(ORCID = "https://orcid.org/0000-0001-8565-094X")),
              person("Luke", "Shaw", 
                      role = c("aut"),
-                     comment = "Luke developped the code to handle the missing and gap periods for POT records."))
+                     comment = "Luke developped the code to handle the missing and gap periods for Peaks over threshold records."))
 Maintainer: Ilaria Prosdocimi <prosdocimi.ilaria@gmail.com>
 URL: http://ilapros.github.io/winfapReader/
 BugReports: https://github.com/ilapros/winfapReader/issues
-Description: Obtain information on peak flow data from the National River Flow Archive in the UK, either from the Peak Flow Dataset files <https://nrfa.ceh.ac.uk/peak-flow-dataset> once these have been downloaded to the users' computer or using the NRFA's API.
+Description: Obtain information on peak flow data from the National River Flow Archive (NRFA) in the United Kingdom, either from the Peak Flow Dataset files <https://nrfa.ceh.ac.uk/peak-flow-dataset> once these have been downloaded to the user's computer or using the NRFA's API. These files are in a format suitable for direct use in the 'WINFAP' software, hence the name of the package. 
 License: GPL-3
 Imports: lubridate
-Depends: utils, R (>= 2.10)
+Depends: utils
 Suggests: 
     testthat,
     rnrfa, 
-    httr (>= 1.4.0),
-    jsonlite (>= 1.6),
-    curl (>= 3.3),
+    httr,
+    jsonlite,
+    curl,
     knitr,
     rmarkdown, 
     zoo 
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr
+Language: en-GB

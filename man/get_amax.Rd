@@ -24,13 +24,11 @@ a data.frame with information on the annual maxima for the station with the foll
 The function queries the NRFA API for the .AM file similar to the WINFAP file for a given stations. It then processes the file in a fashion similar to \code{read_amax}.
 }
 \examples{
-\dontrun{
   a40003 <- get_amax(40003) # the Medway at Teston / East Farleigh
   multipleStations <- get_amax(c(40003, 42003))
   names(multipleStations)
   summary(multipleStations$`42003`)
-  }
 }
 \seealso{
-\code{\link{read_amax}}. Information on river flow gauging in the UK and the annual maxima can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+\code{\link{read_amax}}. Information on river flow gauging in the UK and the annual maxima can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 }

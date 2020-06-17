@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">winfapReader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -138,16 +138,26 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='read_amax.html'>read_amax</a></code>. Information on river flow gauging in the UK and the annual maxima can be found at the National River Flow Archive website <a href='nrfa.ceh.ac.uk'>nrfa.ceh.ac.uk</a></p></div>
+    <div class='dont-index'><p><code><a href='read_amax.html'>read_amax</a></code>. Information on river flow gauging in the UK and the annual maxima can be found at the National River Flow Archive website <a href='https://nrfa.ceh.ac.uk'>https://nrfa.ceh.ac.uk</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-  <span class='no'>a40003</span> <span class='kw'>&lt;-</span> <span class='fu'>get_amax</span>(<span class='fl'>40003</span>) <span class='co'># the Medway at Teston / East Farleigh</span>
+    <pre class="examples"><div class='input'>  <span class='no'>a40003</span> <span class='kw'>&lt;-</span> <span class='fu'>get_amax</span>(<span class='fl'>40003</span>) <span class='co'># the Medway at Teston / East Farleigh</span>
   <span class='no'>multipleStations</span> <span class='kw'>&lt;-</span> <span class='fu'>get_amax</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40003</span>, <span class='fl'>42003</span>))
-  <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>multipleStations</span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>multipleStations</span>$<span class='no'>`42003`</span>)
-  }</div></pre>
+  <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>multipleStations</span>)</div><div class='output co'>#&gt; [1] "40003" "42003"</div><div class='input'>  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>multipleStations</span>$<span class='no'>`42003`</span>)</div><div class='output co'>#&gt;     Station        WaterYear         Date                 Flow      
+#&gt;  Min.   :42003   Min.   :1975   Min.   :1976-09-30   Min.   : 4.16  
+#&gt;  1st Qu.:42003   1st Qu.:1986   1st Qu.:1986-10-20   1st Qu.:15.25  
+#&gt;  Median :42003   Median :1996   Median :1996-11-20   Median :21.00  
+#&gt;  Mean   :42003   Mean   :1996   Mean   :1997-01-19   Mean   :23.85  
+#&gt;  3rd Qu.:42003   3rd Qu.:2006   3rd Qu.:2007-09-05   3rd Qu.:27.55  
+#&gt;  Max.   :42003   Max.   :2017   Max.   :2018-02-15   Max.   :80.83  
+#&gt;      Stage            Rejected      
+#&gt;  Min.   :-9999.000   Mode :logical  
+#&gt;  1st Qu.:    1.240   FALSE:23       
+#&gt;  Median :    1.383   TRUE :20       
+#&gt;  Mean   :-1626.499                  
+#&gt;  3rd Qu.:    1.615                  
+#&gt;  Max.   :    2.131                  </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

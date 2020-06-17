@@ -9,7 +9,7 @@ read_amax(station, loc_WinFapFiles = getwd())
 \arguments{
 \item{station}{NRFA station number(s) for which the .AM file (named \code{station.AM}) should be read.}
 
-\item{loc_WinFapFiles}{the file.path of the WinFap files, i.e. the location in which the
+\item{loc_WinFapFiles}{the file.path of the WINFAP files, i.e. the location in which the
 \code{station.AM} file can be found. Default is the working directory}
 }
 \value{
@@ -24,9 +24,9 @@ a data.frame with information on the annual maxima for the station with the foll
 }
 }
 \description{
-The function reads .AM files once these are in a local folder: these files contain information on annual maxima (AMAX) records extracted from the instantaneous river flow measuraments.
+The function reads .AM files once these are in a local folder: these files contain information on annual maxima (AMAX) records extracted from the instantaneous river flow measurements.
 The function checks for the presence of any [AM Rejected] information and includes it in the output.
 }
 \seealso{
-Information on the .AM files and river flow gauging in the UK can be found at the National River Flow Archive website \url{nrfa.ceh.ac.uk}
+Information on the .AM files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 }

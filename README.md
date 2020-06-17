@@ -8,7 +8,7 @@ The functions in the package rework the information of the WINFAP files and the 
 
 
 
-One can install `winfapReader` from github using the `remotes` package: 
+One can install the latest version of `winfapReader` from github using the `remotes` package: 
  
 ```
 remotes::install_github("ilapros/winfapReader")

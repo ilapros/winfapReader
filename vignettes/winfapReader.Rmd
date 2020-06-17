@@ -19,22 +19,22 @@ knitr::opts_chunk$set(
 #'arg' should be one of “default”, “cerulean”, “journal”, “flatly”, “darkly”, “readable”, “spacelab”, “united”, “cosmo”, “lumen”, “paper”, “sandstone”, “simplex”, “yeti”
 ```
 
-The `winfapReader` package contains functions to interact with the information on extremes of instantaneous river flow in the UK made available by the [National River Flow Archive](nrfa.ceh.ac.uk) (NRFA).
+The `winfapReader` package contains functions to interact with the information on extremes of instantaneous river flow in the United Kingdom (UK) made available by the [National River Flow Archive](https://nrfa.ceh.ac.uk) (NRFA). 
 These information underlie most flood risk estimation projects in the UK, which are typically carried out using the [Flood Estimation Handbook](https://www.ceh.ac.uk/services/flood-estimation-handbook) (FEH) statistical method and their [updates](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/291096/scho0608boff-e-e.pdf) as implemented by the software [WINFAP](https://www.hydrosolutions.co.uk/software/winfap-4/). 
 Consequently, the NRFA publishes and routinely updates files which are suitable to be read by WINFAP: the collection of these files is referred to as the peak flow dataset and can be found [here](https://nrfa.ceh.ac.uk/peak-flow-dataset). The winfapReader package allows the user to interact with three different file-types: 
 
-+ The .AM files which contain the Annual Maximum peaks: these correspond to the largest river flow event in any given water year (which runs from October 1st to September 30th)
++ The .AM files which contain the Annual Maximum (AMAX) peaks: these correspond to the largest river flow event in any given water year (which runs from October 1st to September 30th)
 
 + The .CD3 files which contain the Catchment Descriptors: these correspond to a set of descriptors for the catchment upstream the gauging station and for the station itself. 
 
-+ The .PT files which contain the peaks over threshold: these correspond to all peaks which are larger than a given threshold. The threshold is fixed by the NRFA and it should be such that there is an average of 3 to 5 events per water year. It has often been reported that the POT records in different stations have varying reliability: since most flood frequency estimation methods used in the UK rely on annual maxima the AMAX records go trough a higher scrutiny than then POT records. Users should treat the information about peaks over threshold with caution and thorough quality checks should be performed before analysing them.  
++ The .PT files which contain the peaks over threshold: these correspond to all peaks which are larger than a given threshold. The threshold is fixed by the NRFA and it should be such that there is an average of 3 to 5 peaks over threshold (POT) events per water year. It has often been reported that the POT records in different stations have varying reliability: since most flood frequency estimation methods used in the UK rely on annual maxima the AMAX records go trough a higher scrutiny than then POT records. Users should treat the information about peaks over threshold with caution and thorough quality checks should be performed before analysing them.  
 
 The `winfapReader` package allows you to read into your R session the `.AM`, `.CD3` and`.PT` files. Importantly it is aware of the typical structure of the files in which rejected annual maxima and missing period of records for the  peaks over threshold are recorded, and merges this information with the flow records. This allows the user to have all useful information to decide which parts of the record to include in the analysis. 
 
 Recently the NRFA has developed an [API](https://nrfa.ceh.ac.uk/news-and-media/news/nrfa-releases-api-improve-data-access) which allows for a programmatic interaction with their datasets: the information about annual maxima, catchment descriptors and peaks over threshold can also be retrieved using this API. 
-Beside the information on extremes for flood frequency estimation the NRFA maintains and distributes daily river flow records and several other river flow related variables, such as catchment averaged rainfall: the [`rnrfa`](https://cran.r-project.org/web/packages/rnrfa/index.html) package allows one to retrieve these information and more with its `rnrfa::get_ts` function (see more on this at the end of the vignette). The `winfapReader` package focuses only on handling river flow extremes information and has two sets of functions: 
+Beside the information on extremes for flood frequency estimation the NRFA maintains and distributes daily river flow records and several other river flow related variables, such as catchment averaged rainfall: the [`rnrfa`](https://cran.r-project.org/package=rnrfa) package allows one to retrieve these information and more with its `rnrfa::get_ts` function (see more on this at the end of the vignette). The `winfapReader` package focuses only on handling river flow extremes information and has two sets of functions: 
 
-+ the `read_amax`, `read_cd3` and `read_pot` functions read the information from the `.AM`, `.CD3` and `.PT` files *once these have been dowloaded into a local folder*
++ the `read_amax`, `read_cd3` and `read_pot` functions read the information from the `.AM`, `.CD3` and `.PT` files *once these have been downloaded into a local folder*
 
 + the `get_amax`, `get_cd` and `get_pot` functions get the information from the API: these functions therefore only work when an internet connection is available 
 
@@ -93,7 +93,7 @@ head(p42003$tablePOT)
 head(p42003$WaterYearInfo)
 ```
 
-* `dateRange` gives the range of dates spanned by the POT record. This range might be wider than the range of the dates in the tablePOT table since it records the period in which the station was operational and no threshold exceedances occurred.  
+* `dateRange` gives the range of dates spanned by the POT record. This range might be wider than the range of the dates in the `tablePOT` table since it records the period in which the station was operational and no threshold exceedances occurred.  
 
 ```{r showdateRange, eval=TRUE}
 (p42003$dateRange)
@@ -106,7 +106,7 @@ p42003withAmax <- get_pot(42003, getAmax = TRUE)
 head(p42003withAmax$WaterYearInfo, 10)
 ```
 
-Notice that in the period when no POT records are available all POT related information are set to NA. On the other hand, the fact that the annual maximum in water year 1983 is below the threshold confirms that the fact that no POT record are present for that water year is related to low flows throughout the water year rather than a mistake in the POT record. Notice also that for several of the first years in the record the annual maxima values are rejected and the proportion of valid POT records (as shown by `potPercComplete`) is null: the early part of the record for this station has indeed been deemed by the NRFA to be unreliable and any analysis of this flow record should probably discard the information till water year 1995. 
+Notice that in the period when no POT records are available all POT related information are set to NA. On the other hand, the fact that the annual maximum in water year 1983 is below the threshold confirms that the fact that no POT record are present for that water year is related to low flows throughout the water year rather than a mistake in the POT record. Notice also that for several of the first years in the record the annual maxima values are rejected and the proportion of valid POT records (as shown by `potPercComplete`) is null: the early part of the record for this station has been deemed by the NRFA to be unreliable and any analysis of this flow record should probably discard the information till water year 1995. 
 
 
 ### The `get_cd`function
