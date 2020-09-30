@@ -29,6 +29,7 @@ The function queries the NRFA API for the .PT file similar to the WINFAP file fo
 }
 \examples{
 \donttest{
+  ### the example take longer than 5 seconds to run
   p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
   p40003$tablePOT[p40003$tablePOT$WaterYear > 1969 &
         p40003$tablePOT$WaterYear < 1977,]

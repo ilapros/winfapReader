@@ -1,7 +1,7 @@
 Package: winfapReader
 Type: Package
 Title: Interact with Peak Flow Data in the United Kingdom
-Version: 0.1-1
+Version: 0.1-2
 Authors@R: c(person("Ilaria", "Prosdocimi", 
                     email = "prosdocimi.ilaria@gmail.com",
                     role = c("aut", "cre"),
@@ -10,12 +10,12 @@ Authors@R: c(person("Ilaria", "Prosdocimi",
                      role = c("aut"),
                      comment = "Luke developped the code to handle the missing and gap periods for Peaks over threshold records."))
 Maintainer: Ilaria Prosdocimi <prosdocimi.ilaria@gmail.com>
-URL: http://ilapros.github.io/winfapReader/
+URL: https://ilapros.github.io/winfapReader/
 BugReports: https://github.com/ilapros/winfapReader/issues
 Description: Obtain information on peak flow data from the National River Flow Archive (NRFA) in the United Kingdom, either from the Peak Flow Dataset files <https://nrfa.ceh.ac.uk/peak-flow-dataset> once these have been downloaded to the user's computer or using the NRFA's API. These files are in a format suitable for direct use in the 'WINFAP' software, hence the name of the package. 
 License: GPL-3
 Imports: lubridate
-Depends: utils
+Depends: utils, R (>= 3.5.0)
 Suggests: 
     testthat,
     rnrfa, 
@@ -27,6 +27,6 @@ Suggests:
     zoo 
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Language: en-GB

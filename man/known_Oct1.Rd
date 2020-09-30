@@ -5,7 +5,7 @@
 \alias{known_Oct1}
 \title{Known events which happened on October 1st before 9am}
 \format{
-A data frame with 17 rows and 3 variables:
+A data frame with 33 rows and 3 variables:
 \describe{
   \item{Station}{NRFA station number}
   \item{Date}{date of maximum flow (always the 1st October)}

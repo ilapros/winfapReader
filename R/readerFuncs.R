@@ -31,13 +31,12 @@ read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
 
   if(length(station) == 1){
     ### read the station.PT file wherever it is in the loc_WinFapFiles folder
-    wherePOT <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".PT"),full.names=TRUE)
+    wherePOT <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = ".pt")
     if(length(wherePOT) < 1) stop("Station does not have PT files in the loc_WinFapFiles folder")
     out <- read_pot_int(wherePOT, getAmax = typeget)
   }
   if(length(station) > 1) {
-    wherePOT <- lapply(X = as.list(station),
-                       FUN = function(x) list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",x,".PT"),full.names=TRUE))
+    wherePOT <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = ".pt")
     lwhere <- sapply(wherePOT, length)
     if(all(lwhere < 1)){
       stop(paste("Stations do not have POT files in the loc_WinFapFiles folder \n"))
@@ -159,13 +158,12 @@ read_pot_int <- function(filetext, getAmax){
 #' @export
 read_amax <- function(station, loc_WinFapFiles = getwd()){
   if(length(station) == 1){
-    whereAM <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".AM"),full.names=TRUE)
+    whereAM <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = ".am")
     if(length(whereAM) < 1) stop("Station does not have AMAX files in the loc_WinFapFiles folder")
     out <- read_amax_int(whereAM)
   }
   if(length(station) > 1) {
-    whereAM <- lapply(X = as.list(station),
-                      FUN = function(x) list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",x,".AM"),full.names=TRUE))
+    whereAM <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = ".am")
     lwhere <- sapply(whereAM, length)
     if(all(lwhere < 1)){
       stop(paste("Stations do not have AMAX files in the loc_WinFapFiles folder"))
@@ -179,6 +177,16 @@ read_amax <- function(station, loc_WinFapFiles = getwd()){
     names(out) <- station
   }
   out
+}
+
+findfile <- function(station, loc_WinFapFiles, whichFile = ".am"){
+  zerost <- station
+  while(nchar(zerost) < 6) zerost <- paste0("0",zerost)
+  list.files(loc_WinFapFiles,recursive=TRUE,
+             pattern =paste0("^",station,toupper(whichFile),"|",
+                             "^",station,tolower(whichFile),"|",
+                             "^",zerost,toupper(whichFile),"|",
+                             "^",zerost,tolower(whichFile)),full.names=TRUE)
 }
 
 read_amax_int <- function(filetext){
@@ -240,13 +248,12 @@ split_or_NA <- function(x,ind=2) {
 #' @aliases read_cd3
 read_cd3 <- function(station, loc_WinFapFiles = getwd()){
   if(length(station) == 1){
-    whereCD <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".CD3"),full.names=TRUE)
+    whereCD <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = ".cd3")
     if(length(whereCD) < 1) stop("Station does not have CD3 files in the loc_WinFapFiles folder")
     out <- read_cd3_int(whereCD)
   }
   if(length(station) > 1) {
-    whereCD <- lapply(X = as.list(station),
-                      FUN = function(x) list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",x,".CD3"),full.names=TRUE))
+    whereCD <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = ".cd3")
     lwhere <- sapply(whereCD, length)
     if(all(lwhere < 1)){
       stop(paste("Stations do not have CD3 files in the loc_WinFapFiles folder"))

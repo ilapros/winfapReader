@@ -10,7 +10,7 @@ options(stringsAsFactors = FALSE)
 #' information in these known cases in the \code{read_amax} and \code{get_amax} functions.
 #'
 #'
-#' @format A data frame with 17 rows and 3 variables:
+#' @format A data frame with 33 rows and 3 variables:
 #' \describe{
 #'   \item{Station}{NRFA station number}
 #'   \item{Date}{date of maximum flow (always the 1st October)}
@@ -39,11 +39,25 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(69024, as.Date("1967-10-01"), 1966
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(205008, as.Date("1975-10-01"), 1974)
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(72014, as.Date("1967-10-01"), 1966)
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84014, as.Date("1970-10-01"), 1969)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28052, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(30015, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28009, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28015, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28022, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28024, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28056, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(31005, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(54114, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(30017, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(31010, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(31025, as.Date("2019-10-01"), 2018)
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(32003, as.Date("2019-10-01"), 2018)
 # known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84011, as.Date("1985-10-01"), 1984)
 
 #
-# ########
-# # The code used to identify the stations for which issues on the 1st of October happen is given below
+########
+########
+# The code used to identify the stations for which issues on the 1st of October happen is given below
 # library(lubridate)
 # water_year <- function(date, start_month = 10){
 #   # Given a date in ymd lubridate form, returns the WY that date is in.
@@ -52,7 +66,7 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84014, as.Date("1970-10-01"), 1969
 # }
 #
 # read_amax <- function(station, loc_WinFapFiles = getwd()){
-#   whereAM <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".AM"),full.names=TRUE)
+#   whereAM <- list.files(loc_WinFapFiles,recursive=TRUE,pattern = paste0("^",station,".am|.AM"),full.names=TRUE)
 #   rr <- readLines(whereAM)
 #   aa <- rr[(which(rr == "[AM Values]")+1):(length(rr)-1)]
 #   out <- cbind(station,read.csv(textConnection(aa),header=FALSE))
@@ -86,24 +100,34 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84014, as.Date("1970-10-01"), 1969
 #
 # allAmax <- data.frame(Station = -999, WaterYear = 3000, Date = as.Date("3000-01-01"),Flow = -999, Stage = -999, Rejected = FALSE)[-1,]
 #
-# suitPool <- unlist(strsplit(list.files(path = "../v70/Suitable for Pooling/", pattern = ".AM"),split = ".AM"))
-# suitQMED <- unlist(strsplit(list.files(path = "../v70/Suitable for QMED//", pattern = ".AM"),split = ".AM"))
-# suitNO   <- unlist(strsplit(list.files(path = "../v70/Not suitable for QMED or Pooling/", pattern = ".AM"),split = ".AM"))
+# ### v90 changed the names of folders
+# suitPool <- "../v90/suitable-for-pooling/"
+# suitQMED <- "../v90/suitable-for-qmed/"
+# suitNO   <- "../v90/suitable-for-neither/"
 #
-# for(whichFold in c("../v70/Not suitable for QMED or Pooling/","../v70/Suitable for QMED/","../v70/Suitable for Pooling/")){
+# for(whichFold in c(suitPool,suitQMED,suitNO)){
 #   print(whichFold)
-#   for(i in unlist(strsplit(list.files(path = whichFold, pattern = ".AM"),split = ".AM"))){
+#   for(i in unlist(strsplit(list.files(path = whichFold, pattern = ".AM|.am"),split = ".AM|.am"))){
 #     allAmax <- rbind(allAmax, read_amax(i,whichFold))
 #   }
 # }
+# allAmax <- allAmax[order(allAmax$Station,allAmax$Date),]
 #
-#
-# ##### check if any station has two eevnts per water years - probably due to 1-Oct issues
+# ##### check if any station has two events per water years - probably due to 1-Oct issues
 # tt <- tapply(allAmax$WaterYear, factor(allAmax$Station), function(x) any(table(x) != 1))
 # tt[tt]
+#
+# ## 8 events on Oct 1 after 9:00 so they get assigned the right WY
+# dim(known_Oct1[order(known_Oct1$Station, known_Oct1$Date),]) ## 20
+# dim(allAmax[allAmax$Station %in% names(tt[tt]) &
+#               month(allAmax$Date) == 10 &
+#               day(allAmax$Date) == 1,]) ## 28
+# ## any recent event on Oct 1st
+# sort(allAmax[allAmax$Station %in% names(tt[tt]) &
+#                month(allAmax$Date) == 10 &
+#                day(allAmax$Date) == 1,"WaterYear"])
 # ### after this manual check on the NRFA websites were carried out
 # sort(as.numeric(names(tt[tt])))
 # sort(unique(known_Oct1$Station))
 # all.equal(sort(as.numeric(names(tt[tt]))), sort(unique(known_Oct1$Station)))
-
-### all in there
+## all in there
