@@ -1,0 +1,11 @@
+citHeader("To cite 'winfapReader' in publications, please use:")
+
+citEntry(entry = "manual",
+  year  = "2020",
+  month = "10",
+  author = "Prosdocimi, Ilaria and Shaw, Luke",
+  title = "winfapReader: an R package to interact with Peak Flow Data in the {United Kingdom} (version 0.1-2)",
+  journal = "{Zenodo}",
+  doi = "{https://doi.org/10.5281/zenodo.4138993}",
+textVersion = "Prosdocimi, I. and Shaw, L. (2020, October). winfapReader: an R package to interact with Peak Flow Data in the {United Kingdom} (version 0.1-2). Zenodo. https://doi.org/10.5281/zenodo.4138993")
+0
