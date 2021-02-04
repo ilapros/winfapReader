@@ -20,7 +20,7 @@ get_cd_int <- function(stid, fields){
   resp <- httr::GET(url = url, query = params, ua)
   # Check response
   if (httr::http_error(resp)) {
-    if(resp$status_code == 400) print(sprintf("maybe station %s does not exist", stid))
+    if(resp$status_code == 400) message(sprintf("maybe station %s does not exist", stid))
     # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
     #              call. = FALSE)
     return(NULL)
@@ -28,11 +28,17 @@ get_cd_int <- function(stid, fields){
 
   # Check output format
   if (httr::http_type(resp) != "application/json") {
-    stop("API did not return json", call. = FALSE)
+    message("API did not return json")
+    return(NULL)
   }
 
   # Parse content
-  page_content <- httr::content(resp, "text", encoding = "UTF-8")
+  page_content <- try(httr::content(resp, "text", encoding = "UTF-8"), silent=TRUE)
+  if(class(page_content) == "try-error") {
+    errs <- geterrmessage()
+    message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
+    return(NULL)
+  }
   parsed <- jsonlite::fromJSON(page_content, simplifyDataFrame = TRUE, flatten = TRUE)$data
   #
   if(fields == "all") {
@@ -104,10 +110,10 @@ get_cd_int <- function(stid, fields){
 #' @export
 get_cd <- function(station,fields = "feh"){
   if (!requireNamespace("httr", quietly = TRUE)) {
-    stop("Package \"httr\" is needed for this function to work. Please install it or use the read_cd3 function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.",
-         call. = FALSE)
+    message("Package \"httr\" is needed for this function to work. Please install it or use the read_cd3 function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.")
+    return(NULL)
   }
-  if (!curl::has_internet()) stop("no internet")
+  if (!curl::has_internet()){message("There appears to be no internet connection"); return(NULL)}
 
   id <- station
   if(length(id) == 1) out <- get_cd_int(stid=id, fields = fields)
@@ -138,16 +144,22 @@ get_amax_int <-function(stid){
   resp <- httr::GET(url = url, query = params, ua)
   # Check response
   if (httr::http_error(resp)) {
-    if(resp$status_code == 400) print(sprintf("maybe station %s does not exist", stid))
+    if(resp$status_code == 400) message(sprintf("maybe station %s does not exist", stid))
     # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
     #      call. = FALSE)
     return(NULL)
   }
   # Check output format
   if (httr::http_type(resp) != "text/csv") {
-    stop("API did not return text", call. = FALSE)
+    message("API did not return text", call. = FALSE)
+    return(NULL)
   }
-  page_content <- httr::content(resp, "text", encoding = "UTF-8")
+  page_content <- try(httr::content(resp, "text", encoding = "UTF-8"))
+  if(class(page_content) == "try-error") {
+    errs <- geterrmessage()
+    message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
+    return(NULL)
+  }
   read_amax_int(textConnection(page_content))
 }
 
@@ -176,10 +188,11 @@ get_amax_int <-function(stid){
 #' @export
 get_amax <- function(station){
   if (!requireNamespace("httr", quietly = TRUE)) {
-    stop("Package \"httr\" is needed for this function to work. Please install it or use the read_amax function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.",
+    message("Package \"httr\" is needed for this function to work. Please install it or use the read_amax function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.",
          call. = FALSE)
+    return(NULL)
   }
-  if (!curl::has_internet()) stop("no internet")
+  if (!curl::has_internet()){message("There appears to be no internet connection"); return(NULL)}
   id <- station
   if(length(id) == 1) out <- get_amax_int(stid=id)
   if(length(id) > 1) {
@@ -206,16 +219,22 @@ get_pot_int <-function(stid, getAmax){
   resp <- httr::GET(url = url, query = params, ua)
   # Check response
   if (httr::http_error(resp)) {
-    if(resp$status_code == 400) print(sprintf("maybe station %s does not exist", stid))
+    if(resp$status_code == 400) message(sprintf("maybe station %s does not exist", stid))
     # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
     #      call. = FALSE)
     return(NULL)
   }
   # Check output format
   if (httr::http_type(resp) != "text/csv") {
-    stop("API did not return text", call. = FALSE)
+    message("API did not return text", call. = FALSE)
+    return(NULL)
   }
-  page_content <- httr::content(resp, "text", encoding = "UTF-8")
+  page_content <- try(httr::content(resp, "text", encoding = "UTF-8"))
+  if(class(page_content) == "try-error") {
+    errs <- geterrmessage()
+    message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
+    return(NULL)
+  }
   read_pot_int(textConnection(page_content), getAmax = typeget)
 }
 
@@ -260,10 +279,10 @@ get_pot_int <-function(stid, getAmax){
 #' @export
 get_pot <- function(station, getAmax = FALSE){
   if (!requireNamespace("httr", quietly = TRUE)) {
-    stop("Package \"httr\" is needed for this function to work. Please install it or use the read_pot function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.",
-         call. = FALSE)
+    message("Package \"httr\" is needed for this function to work. Please install it or use the read_pot function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.")
+    return(NULL)
   }
-  if (!curl::has_internet()) stop("no internet")
+  if (!curl::has_internet()){message("There appears to be no internet connection"); return(NULL)}
   id <- station
   if(length(id) == 1) out <- get_pot_int(stid=id, getAmax = getAmax)
   if(length(id) > 1) {

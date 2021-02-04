@@ -18,15 +18,16 @@ Imports: lubridate
 Depends: utils, R (>= 3.5.0)
 Suggests: 
     testthat,
+    utf8,
     rnrfa, 
     httr,
     jsonlite,
     curl,
     knitr,
     rmarkdown, 
-    zoo 
-Encoding: UTF-8
+    zoo
 LazyData: true
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Encoding: UTF-8
 Language: en-GB

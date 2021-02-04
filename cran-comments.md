@@ -1,3 +1,29 @@
+### not a CRAN comment - in rhub, use devtools::check_rhub(env_vars=c(R_COMPILE_AND_INSTALL_PACKAGES = "always")) 
+## R CMD check --as-cran winfapReader_0.1-2.tar.gz gave Status: OK 
+## I keep getting an error (which is related to linux builds) 
+## The problem is caused by rgdal (on which rnrfa depends) 
+#> checking GDAL version >= 1.11.4... no
+# 2469#> configure: error: upgrade GDAL to 1.11.4 or later
+# 2470#> ERROR: configuration failed for package ‘rgdal’
+# 2471#> * removing ‘/home/docker/R/rgdal’
+
+## comments for submission of 0.1-2
+
+## CRAN email on 24/01/2021
+*and replies* 
+
+Cran Message (prof Ripley: 
+
+It seems we need to remind you of the CRAN policy:
+
+'Packages which use Internet resources should fail gracefully with an informative message
+if the resource is not available or has changed (and not give a check warning nor error).'
+
+*The resource on which the package relies had some issues: this highlighted that the package was indeed not complying with the policy. I apologize for not noticing this issue before. The package should now fail gracefully and give informative messages*  
+
+
+##comments for submission of 0.1-1
+
 This is a resubmission of a new submission 
 
 ## CRAN comments on 6/6/2020 
