@@ -73,16 +73,18 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
+
+<!-- badges: end -->
 <p><code>winfapReader</code> allows a user to obtain data on long-term annual maxima and peaks over threshold for instantaneous river flow measurements in the UK. The user can also access the corollary catchment descriptors files which characterise the catchments upstream the gauging stations.</p>
 <p>Two sets of functions are available: the <code>read_*</code> functions and the <code>get_*</code> functions. Both these sets of functions interact with annual maxima information (<code>read_amax</code> and <code>get_amax</code>), peaks over threshold information (<code>read_pot</code> and <code>get_pot</code>) and information on the catchment descriptors (<code>read_cd3</code> and <code>get_cd</code>).</p>
 <p>The read_* functions allow the user to read into their R console the data from the .AMAX, .PT and .CD3 files made available by the NRFA <em>once these have been downloaded</em> into the users’ computer. At time of writing, Version 8 and previous versions of the winfap files can be downloaded from the <a href="https://nrfa.ceh.ac.uk/peak-flow-dataset">NRFA website</a>. This means that users who have compiled information for sites not included in the NRFA in the form of WINFAP files will be able to load these into R. The get_* functions allow the user to interact the the NRFA data API (<a href="http://nrfa.ceh.ac.uk/costs-terms-and-conditions">terms and conditions</a>).</p>
 <p>The functions in the package rework the information of the WINFAP files and the NRFA API to provide user-friendly R data.frames derived from the original information.</p>
 <p>One can install the latest version of <code>winfapReader</code> from github using the <code>remotes</code> package:</p>
-<pre><code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("ilapros/winfapReader")</a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ilapros/winfapReader"</span>)</span></code></pre></div>
 <p>When reading files saved locally, by default the package assume that the winfap files are saved in the working directory, but this can be overwritten as in</p>
-<pre><code>max &lt;- read_amax(72014, loc_WinFapFiles = "locationWhereWINFAPfilesAre")</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">read_amax</span>(<span class="dv">72014</span>, <span class="at">loc_WinFapFiles =</span> <span class="st">"locationWhereWINFAPfilesAre"</span>)</span></code></pre></div>
 <p>When accessing the files via the API simply ask for one or more station to obtain the information requested</p>
-<pre><code>max &lt;- get_amax(c(70005,72014))</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">get_amax</span>(<span class="fu">c</span>(<span class="dv">70005</span>,<span class="dv">72014</span>))</span></code></pre></div>
 
   </div>
 
@@ -119,7 +121,16 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://doi.org/10.5281/zenodo.4138993"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4138993.svg" alt="DOI"></a></li>
+<li><a href="https://cran.r-project.org/package=winfapReader"><img src="http://www.r-pkg.org/badges/version/winfapReader" alt="CRAN Status Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=winfapReader"><img src="http://cranlogs.r-pkg.org/badges/grand-total/winfapReader" alt="CRAN Total Downloads"></a></li>
+<li><a href="https://github.com/ilapros/winfapReader/actions"><img src="https://github.com/ilapros/winfapReader/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

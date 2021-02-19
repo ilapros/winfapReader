@@ -7,12 +7,20 @@
 # 2470#> ERROR: configuration failed for package ‘rgdal’
 # 2471#> * removing ‘/home/docker/R/rgdal’
 
-## comments for submission of 0.1-2
+## CRAN email on 08/02/2021
+*and replies* 
+
+Cran Message (prof Ripley): 
+
+Packages in Suggests should be used conditionally: see 'Writing R Extensions'.
+This needs to be corrected even if the missing package becomes available.
+
+*Packages in Suggests are now used conditionally. This was caused by a decision taken after writing the vignette to move some packages from Imports to Suggests. I apologise for not catching this.* 
 
 ## CRAN email on 24/01/2021
 *and replies* 
 
-Cran Message (prof Ripley: 
+Cran Message (prof Ripley): 
 
 It seems we need to remind you of the CRAN policy:
 

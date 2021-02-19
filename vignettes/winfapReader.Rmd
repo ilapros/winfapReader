@@ -21,15 +21,12 @@ is2 <- (is1 & isRNRFA & isZOO)
 ```
 
 
-```{r,echo=FALSE,eval=TRUE}
-# if(!(any(rownames(installed.packages()) == "rnrfa"))) install.packages("rnrfa")
-# if(!(any(rownames(installed.packages()) == "utf8"))) install.packages("utf8")
-# library(rnrfa)
+```{r,echo=FALSE,eval=isUTF8}
 library(utf8)
 ```
 
 
-```{r, include = FALSE}
+```{r,echo=FALSE,eval=TRUE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
