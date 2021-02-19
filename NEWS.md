@@ -1,5 +1,14 @@
 
-Updated to v0.1-2 and submitted to CRAN.
+Updated to v0.1-2 and submitted to CRAN (4-Feb-21).
+----------------------------------------
+
+Minor changes:
+
+1. In compliance with CRAN's request: changes made in the vignette to ensure that packages in Suggests should be used conditionally. This was caused by a decision taken after writing the vignette to move some pacjages from Imports to Suggests. 
+
+
+
+Updated to v0.1-2 and submitted to CRAN (4-Feb-21).
 ----------------------------------------
 
 Major changes:

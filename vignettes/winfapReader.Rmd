@@ -5,16 +5,26 @@ output:
     theme: cerulean 
     toc: TRUE 
 vignette: >
-  %\VignetteIndexEntry{getFunctions}
+  %\VignetteIndexEntry{IntroVignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 
+```{r,echo=FALSE}
+isRNRFA <- requireNamespace("rnrfa", quietly = TRUE)
+isZOO <- requireNamespace("zoo", quietly = TRUE)
+isHTTR <- requireNamespace("httr", quietly = TRUE)
+isUTF8 <- requireNamespace("utf8", quietly = TRUE)
+is1 <- (isHTTR & isUTF8)
+is2 <- (is1 & isRNRFA & isZOO)
+```
+
+
 ```{r,echo=FALSE,eval=TRUE}
 # if(!(any(rownames(installed.packages()) == "rnrfa"))) install.packages("rnrfa")
 # if(!(any(rownames(installed.packages()) == "utf8"))) install.packages("utf8")
-library(rnrfa)
+# library(rnrfa)
 library(utf8)
 ```
 
@@ -61,7 +71,7 @@ library(winfapReader)
 
 The `get_amax` function allows one to obtain information on annual maxima from the NRFA. The `read_amax` function will produce the same output as the `get_amax` function but is based on the locally saved files.
 
-```{r showAmax, eval=TRUE}
+```{r showAmax, eval=is1}
 if(curl::has_internet()) amaxEx <- get_amax(c(42003,72014)) 
 names(amaxEx); class(amaxEx)
 # let's look at only one of these
@@ -69,6 +79,7 @@ a42003 <- amaxEx[["42003"]]
 ## what is the output
 head(a42003)
 ```
+
 For each station the function outputs a `data.frame` with information on the station number, the water year, the date in which the highest flow in the water year was recorded, the river flow value and the river stage value (when available) for all annual maxima recorded at a station. 
 Moreover it gives the information on whether the NRFA has deemed the maximum in a given year to be reliable or whether this has been rejected.
 The function can query the API for more than one station at the time: in that case the output is a named list with each element corresponding to a station id. 
@@ -77,7 +88,7 @@ The function can query the API for more than one station at the time: in that ca
 
 The `get_pot` function allows one to obtain information on peaks over threshold data from the NRFA. The `read_pot` function will produce the same output as the `get_pot` function but is based on the locally saved files.
 
-```{r showPOT, eval=TRUE}
+```{r showPOT, eval=is1}
 if(curl::has_internet()) potEx <- get_pot(c(42003,72014)) 
 names(potEx); class(potEx)
 # let's look at only one of these
@@ -90,26 +101,26 @@ For each station the function outputs a list with three elements:
 
 * `tablePOT`: a `data.frame` with all the recorded exceedances above the threshold in the NRFA record. In particular information on the exceedance date, water year, peak flow and river stage are given. 
 
-```{r showtablePOT, eval=TRUE}
+```{r showtablePOT, eval=is1}
 head(p42003$tablePOT)
 ## notice: several events in the 1982 no events in 1983
 ```
 
 * `WaterYearInfo`: a `data.frame` with information on the percentage of valid record in each water year in the record. The potPercComplete column is derived by calculating the percentage of days which are not included in the POT Gaps or the POT rejected headers in the NRFA .PT files. The column potThreshold gives the information of the flow threshold used to extract the peaks for the station: this is a constant for each station. 
 
-```{r showWaterYearInfo, eval=TRUE}
+```{r showWaterYearInfo, eval=is1}
 head(p42003$WaterYearInfo)
 ```
 
 * `dateRange` gives the range of dates spanned by the POT record. This range might be wider than the range of the dates in the `tablePOT` table since it records the period in which the station was operational and no threshold exceedances occurred.  
 
-```{r showdateRange, eval=TRUE}
+```{r showdateRange, eval=is1}
 (p42003$dateRange)
 ```
 
 The function has an argument `getAmax` which defaults to `FALSE`.  If `getAmax = TRUE` then information on the annual maxima is included in the `WaterYearInfo` table. 
 
-```{r showWaterYearInfowithAmax, eval=TRUE}
+```{r showWaterYearInfowithAmax, eval=is1}
 p42003withAmax <- get_pot(42003, getAmax = TRUE)
 head(p42003withAmax$WaterYearInfo, 10)
 ```
@@ -122,7 +133,7 @@ Notice that in the period when no POT records are available all POT related info
 The `get_cd` function allows the user to obtain information on the station (for example its location) and on the catchment upstream the station itself (for example the catchment area and the annual mean altitude for the catchment). More detail on several of the catchment descriptors can be found on the [NRFA website](https://nrfa.ceh.ac.uk/about-data) and in the FEH. 
 The function gives a slightly different set of information than the `read_cd3` function, due to the difference in information made available by the NRFA API. 
 
-```{r showCD, eval=TRUE}
+```{r showCD, eval=is1}
 if(curl::has_internet()) cdEx <- get_cd(c(42003,72014)) 
 names(cdEx); class(cdEx)
 # let's look at only one of these
@@ -133,10 +144,11 @@ class(c42003); names(c42003)
 
 The function has an argument `fields` which governs the amount of information obtained from the API. If `fields = "feh"` (the default) only the basic information used in the FEH methods is output. If `fields="all"` a data.frame with 104 columns is output. This contains several information about the station and the catchment, including data availability, land cover information and much more. 
 
-```{r showCDall, eval=TRUE}
+```{r showCDall, eval=is1}
 if(curl::has_internet()) cd42003all <- get_cd(42003, fields = "all") 
 names(cd42003all)
 ```
+
 
 ### Combining the `winfapReader` and `rnrfa` packages 
 
@@ -145,15 +157,16 @@ The `rnrfa` package provides a unique way to query several types of data from th
 <!-- When it comes to river extremes though, the `winfapReader` functions leverage the additional information available about rejected records and periods of missing records, thus giving the user a more complete information on which parts of the extremes series are reliable. The two packages can be used in combination by those who are interested in investigating in depth the behaviour of river flow extremes in the UK.  -->
 
 
-The `rnrfa::catalogue` function allows one to  pull the list of stations (and related metadata), falling within a given bounding box. The metadata retrieved by the function are similar to the ones derived from `winfapReader::get_cd`. This function can be used to identify the stations in an area for which peak flow information can be obtained with `winfapReader`. 
-The code below for example identifies stations surrounding the city of Lancaster and then displays the annual maxima flow with red lines indicating Rejected flow values. 
+The `rnrfa::catalogue` function allows one to pull the list of stations (and related metadata), falling within a given bounding box. The metadata retrieved by the function are similar to the ones derived from `winfapReader::get_cd`. This function can be used to identify the stations in an area for which peak flow information can be obtained with `winfapReader`. 
+The code below for example identifies stations surrounding the city of Lancaster and then displays the annual maxima flow with red lines indicating Rejected flow values. Notice that you would need to have the `rnrfa` package installed for the code below to work. 
 
 
-```{r}
+
+```{r, eval=is2}
 ## Lancaster coordinates:  54.04, -2.8
 ## let's look around the city
 rivLanc <- rnrfa::catalogue(bbox = list(lat_min = 54.04-0.2, lat_max = 54.04+0.2, 
-                                       lon_min = -2.8-0.2, lon_max = -2.8+0.2))
+                                        lon_min = -2.8-0.2, lon_max = -2.8+0.2))
 ### let's select stations which have been deemed to be suitable for pooling
 ### that's the highest quality flag for annual maxima 
 table(rivLanc[,"feh-pooling"]) ### 5 stations are suitable for pooling
@@ -164,9 +177,10 @@ idLanc <- rivLanc[,"id",drop=TRUE] ## a vector of ids
 amaxLanc <- winfapReader::get_amax(idLanc)
 names(amaxLanc)
 ```
+
 Now display the stations all together in a panel. 
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=is2}
 par(mfrow=c(2,3))
 invisible(
   sapply(amaxLanc, 
@@ -179,7 +193,7 @@ The large events which have hit the area in 2015 can be seen in the flow series 
 
 The `rnrfa` package also allows to pull the annual maximum flow recorded at any station. To also obtain the information about the water year which the NRFA has deemed to be of poor quality and therefore rejected set the `full_info` argument to `TRUE`. 
 
-```{r}
+```{r, eval=is2}
 par(mfrow=c(1,1))
 ### the annual maxima for 72014 from rnrfa
 maxflow72014 <- rnrfa::get_ts(72014, type = "amax-flow", full_info = TRUE) 
@@ -192,7 +206,7 @@ which(maxflow72014$rejected == 1) ## same two years
 
 To obtain the POT records in `rnrfa` use `type = "pot-flow"`: using the `full_info = TRUE` option ensures that a rejected flag is given for the periods in which the POT records have been found to be unreliable or missing (see the NRFA website for more details on this). The `rejected` flag is built using the same information used to build the `WaterYearInfo` table in the `winfapReader::get_pot` function. The additional information provided in `WaterYearInfo` is useful to identify the years in which no POT record is found because the records are missing/unreliable and not because the threshold was never exceeded.  
 
-```{r}
+```{r, eval=is2}
 par(mfrow=c(1,1))
 # the pot records for 75001 from rnrfa
 pot75001 <- rnrfa::get_ts(75001, type = "pot-flow", full_info = TRUE)
@@ -207,7 +221,7 @@ p75001$WaterYearInfo[1:5,] ### but notice that 1975 had a low proportion missing
 
 The two packages can be used together to retrieve different type of information about river flow: in the example below daily gauged flow for the Conder at Galgate (station 72014) is displayed together with annual maxima (which are extracted from the instantaneous river flow). The latter are typically larger and can be seen to start further in the past than the daily flow data. 
 
-```{r dayAndAmax}
+```{r dayAndAmax, eval=is2}
 ### get daily data from NRFA 
 daily72014 <- rnrfa::get_ts(72014, type = "gdf") 
 ## make daily data into data.frame 

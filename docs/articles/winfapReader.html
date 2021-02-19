@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">winfapReader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1-3</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -49,11 +49,14 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ilapros/winfapReader/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -67,7 +70,7 @@
 
       
 
-      </header><script src="winfapReader_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="winfapReader_files/header-attrs-2.6/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An introduction to winfapReader</h1>
@@ -87,7 +90,7 @@
 <li><p>The .PT files which contain the peaks over threshold: these correspond to all peaks which are larger than a given threshold. The threshold is fixed by the NRFA and it should be such that there is an average of 3 to 5 peaks over threshold (POT) events per water year. It has often been reported that the POT records in different stations have varying reliability: since most flood frequency estimation methods used in the UK rely on annual maxima the AMAX records go trough a higher scrutiny than then POT records. Users should treat the information about peaks over threshold with caution and thorough quality checks should be performed before analysing them.</p></li>
 </ul>
 <p>The <code>winfapReader</code> package allows you to read into your R session the <code>.AM</code>, <code>.CD3</code> and<code>.PT</code> files. Importantly it is aware of the typical structure of the files in which rejected annual maxima and missing period of records for the peaks over threshold are recorded, and merges this information with the flow records. This allows the user to have all useful information to decide which parts of the record to include in the analysis.</p>
-<p>Recently the NRFA has developed an <a href="https://nrfa.ceh.ac.uk/news-and-media/news/nrfa-releases-api-improve-data-access">API</a> which allows for a programmatic interaction with their datasets: the information about annual maxima, catchment descriptors and peaks over threshold can also be retrieved using this API. Beside the information on extremes for flood frequency estimation the NRFA maintains and distributes daily river flow records and several other river flow related variables, such as catchment averaged rainfall: the <a href="https://cran.r-project.org/package=rnrfa"><code>rnrfa</code></a> package allows one to retrieve these information and more with its <code><a href="http://cvitolo.github.io/rnrfa/reference/get_ts.html">rnrfa::get_ts</a></code> function (see more on this at the end of the vignette). The <code>winfapReader</code> package focuses only on handling river flow extremes information and has two sets of functions:</p>
+<p>Recently the NRFA has developed an <a href="https://nrfa.ceh.ac.uk/news-and-media/news/nrfa-releases-api-improve-data-access">API</a> which allows for a programmatic interaction with their datasets: the information about annual maxima, catchment descriptors and peaks over threshold can also be retrieved using this API. Beside the information on extremes for flood frequency estimation the NRFA maintains and distributes daily river flow records and several other river flow related variables, such as catchment averaged rainfall: the <a href="https://cran.r-project.org/package=rnrfa"><code>rnrfa</code></a> package allows one to retrieve these information and more with its <code><a href="http://cvitolo.github.io/rnrfa/reference/gdf.html">rnrfa::gdf</a></code> and <code><a href="http://cvitolo.github.io/rnrfa/reference/get_ts.html">rnrfa::get_ts</a></code> functions (see more on this at the end of the vignette). The <code>winfapReader</code> package focuses only on handling river flow extremes information and has two sets of functions:</p>
 <ul>
 <li><p>the <code>read_amax</code>, <code>read_cd3</code> and <code>read_pot</code> functions read the information from the <code>.AM</code>, <code>.CD3</code> and <code>.PT</code> files <em>once these have been downloaded into a local folder</em></p></li>
 <li><p>the <code>get_amax</code>, <code>get_cd</code> and <code>get_pot</code> functions get the information from the API: these functions therefore only work when an internet connection is available</p></li>
@@ -286,12 +289,12 @@
 <a href="#combining-the-winfapreader-and-rnrfa-packages" class="anchor"></a>Combining the <code>winfapReader</code> and <code>rnrfa</code> packages</h3>
 <p>The <code>rnrfa</code> package provides a unique way to query several types of data from the NRFA. Information about extremes can also be retrieved using the <code>rnrfa</code> package, although there are some differences in the output provided when the data of interest are the peaks over threshold records.</p>
 <!-- When it comes to river extremes though, the `winfapReader` functions leverage the additional information available about rejected records and periods of missing records, thus giving the user a more complete information on which parts of the extremes series are reliable. The two packages can be used in combination by those who are interested in investigating in depth the behaviour of river flow extremes in the UK.  -->
-<p>The <code><a href="http://cvitolo.github.io/rnrfa/reference/catalogue.html">rnrfa::catalogue</a></code> function allows one to pull the list of stations (and related metadata), falling within a given bounding box. The metadata retrieved by the function are similar to the ones derived from <code><a href="../reference/get_cd.html">winfapReader::get_cd</a></code>. This function can be used to identify the stations in an area for which peak flow information can be obtained with <code>winfapReader</code>. The code below for example identifies stations surrounding the city of Lancaster and then displays the annual maxima flow with red lines indicating Rejected flow values.</p>
+<p>The <code><a href="http://cvitolo.github.io/rnrfa/reference/catalogue.html">rnrfa::catalogue</a></code> function allows one to pull the list of stations (and related metadata), falling within a given bounding box. The metadata retrieved by the function are similar to the ones derived from <code><a href="../reference/get_cd.html">winfapReader::get_cd</a></code>. This function can be used to identify the stations in an area for which peak flow information can be obtained with <code>winfapReader</code>. The code below for example identifies stations surrounding the city of Lancaster and then displays the annual maxima flow with red lines indicating Rejected flow values. Notice that you would need to have the <code>rnrfa</code> package installed for the code below to work.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co">## Lancaster coordinates:  54.04, -2.8</span>
 <span class="co">## let's look around the city</span>
 <span class="va">rivLanc</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu"><a href="http://cvitolo.github.io/rnrfa/reference/catalogue.html">catalogue</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>lat_min <span class="op">=</span> <span class="fl">54.04</span><span class="op">-</span><span class="fl">0.2</span>, lat_max <span class="op">=</span> <span class="fl">54.04</span><span class="op">+</span><span class="fl">0.2</span>, 
-                                       lon_min <span class="op">=</span> <span class="op">-</span><span class="fl">2.8</span><span class="op">-</span><span class="fl">0.2</span>, lon_max <span class="op">=</span> <span class="op">-</span><span class="fl">2.8</span><span class="op">+</span><span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
+                                        lon_min <span class="op">=</span> <span class="op">-</span><span class="fl">2.8</span><span class="op">-</span><span class="fl">0.2</span>, lon_max <span class="op">=</span> <span class="op">-</span><span class="fl">2.8</span><span class="op">+</span><span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">### let's select stations which have been deemed to be suitable for pooling</span>
 <span class="co">### that's the highest quality flag for annual maxima </span>
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">rivLanc</span><span class="op">[</span>,<span class="st">"feh-pooling"</span><span class="op">]</span><span class="op">)</span> <span class="co">### 5 stations are suitable for pooling</span>
@@ -321,7 +324,7 @@
        <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">WaterYear</span>,<span class="va">Flow</span>,
                                type<span class="op">=</span><span class="st">"h"</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">Rejected</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>, 
                                main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">Station</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
-<p><img src="winfapReader_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="winfapReader_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>The large events which have hit the area in 2015 can be seen in the flow series plots.</p>
 <p>The <code>rnrfa</code> package also allows to pull the annual maximum flow recorded at any station. To also obtain the information about the water year which the NRFA has deemed to be of poor quality and therefore rejected set the <code>full_info</code> argument to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
@@ -331,7 +334,7 @@
 <span class="co">### the annual maxima for 72014 from winfapReader</span>
 <span class="va">xx</span> <span class="op">&lt;-</span> <span class="va">amaxLanc</span><span class="op">[[</span><span class="st">"72014"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Date"</span>,<span class="st">"Flow"</span>,<span class="st">"Rejected"</span><span class="op">)</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">xx</span><span class="op">[</span>,<span class="st">"Flow"</span><span class="op">]</span>, <span class="va">maxflow72014</span><span class="op">[</span>,<span class="st">"amax-flow"</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">### same information </span></pre></div>
-<p><img src="winfapReader_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="winfapReader_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">xx</span><span class="op">$</span><span class="va">Rejected</span><span class="op">)</span> <span class="co">## but two years should be rejected</span>
 <span class="co">#&gt; [1]  1 25</span>
