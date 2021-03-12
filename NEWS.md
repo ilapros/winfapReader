@@ -1,3 +1,9 @@
+# winfapReader 0.1-4
+
+## Minor changes:
+
+1.  read_amax and get_amax could give trouble when the user R locale was different from English as dates would not be parsed correctly. This is now fixed (relying on lubridate to do the right thing automatically). 
+
 # winfapReader 0.1-3
 
 ## Minor changes:

@@ -197,7 +197,7 @@ read_amax_int <- function(filetext){
   aa <- rr[(which(rr == "[AM Values]")+1):(length(rr)-1)]
   out <- cbind(station, utils::read.csv(textConnection(aa),header=FALSE, stringsAsFactors = FALSE))
   names(out) <- c("Station","Date","Flow","Stage")
-  out$Date <- as.Date(out$Date,format = "%d %B %Y")
+  out$Date <- lubridate::dmy(out$Date)
   out$WaterYear <- water_year(out$Date)
   #### Check if any amax should be rejected
   rejStart <- grep("[AM Rejected]",rr,fixed = TRUE)
