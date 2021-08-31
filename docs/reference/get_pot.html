@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/winfapReader.html">Get started</a>
 </li>
 <li>
@@ -123,7 +125,7 @@
     <p>The function queries the NRFA API for the .PT file similar to the WINFAP file for a given stations. It then processes the file in a fashion similar to <code><a href='read_pot.html'>read_pot</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_pot</span><span class='op'>(</span><span class='va'>station</span>, getAmax <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>get_pot</span><span class='op'>(</span><span class='va'>station</span>, getAmax <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,58 +155,61 @@ Note that this period might be different than the period for which annual maxima
     <div class='dont-index'><p><code><a href='read_pot.html'>read_pot</a></code>. Information on the peaks over threshold records and river flow gauging in the UK can be found at the National River Flow Archive website <a href='https://nrfa.ceh.ac.uk'>https://nrfa.ceh.ac.uk</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-  <span class='co'>### the example take longer than 5 seconds to run</span>
-  <span class='va'>p40003</span> <span class='op'>&lt;-</span> <span class='fu'>get_pot</span><span class='op'>(</span><span class='fl'>40003</span><span class='op'>)</span> <span class='co'># the Medway at Teston / East Farleigh</span>
-  <span class='va'>p40003</span><span class='op'>$</span><span class='va'>tablePOT</span><span class='op'>[</span><span class='va'>p40003</span><span class='op'>$</span><span class='va'>tablePOT</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&gt;</span> <span class='fl'>1969</span> <span class='op'>&amp;</span>
-        <span class='va'>p40003</span><span class='op'>$</span><span class='va'>tablePOT</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&lt;</span> <span class='fl'>1977</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt;    Station       Date WaterYear    Flow Stage
-#&gt; 30   40003 1971-01-24      1970 125.000  0.00
-#&gt; 31   40003 1973-01-29      1972 150.153  7.04
-#&gt; 32   40003 1974-02-12      1973 234.527  8.36
-#&gt; 33   40003 1974-02-15      1973 148.985  7.02
-#&gt; 34   40003 1974-11-14      1974 147.821  7.00
-#&gt; 35   40003 1974-11-23      1974 229.496  8.30
-#&gt; 36   40003 1975-01-21      1974 177.825  7.50
-#&gt; 37   40003 1975-01-27      1974 143.768  6.93
-#&gt; 38   40003 1975-05-17      1974 150.738  7.05
-#&gt; 39   40003 1976-12-01      1976 151.323  7.06
-#&gt; 40   40003 1977-01-15      1976 160.199  7.21</div><div class='input'>  <span class='co'>### no events in 1971 nor 1975</span>
-  <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>[</span><span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&gt;</span> <span class='fl'>1969</span> <span class='op'>&amp;</span>
-        <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&lt;</span> <span class='fl'>1977</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt;    WaterYear potPercComplete potThreshold
-#&gt; 15      1970      100.000000      122.571
-#&gt; 16      1971      100.000000      122.571
-#&gt; 17      1972      100.000000      122.571
-#&gt; 18      1973       37.534247      122.571
-#&gt; 19      1974       29.041096      122.571
-#&gt; 20      1975        2.185792      122.571
-#&gt; 21      1976       26.575342      122.571</div><div class='input'>  <span class='co'># in 1971 all records are valid,</span>
-  <span class='co'># in 1975 no exceedances</span>
-  <span class='co'># might be due to the fact that almost no valid record are available</span>
-
-  <span class='va'>p40003</span> <span class='op'>&lt;-</span> <span class='fu'>get_pot</span><span class='op'>(</span><span class='fl'>40003</span>, getAmax <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-  <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>[</span><span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&gt;</span> <span class='fl'>1969</span> <span class='op'>&amp;</span>
-       <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&lt;</span> <span class='fl'>1977</span>,<span class='op'>]</span>
-</div><div class='output co'>#&gt;    Station WaterYear   amaxDate amaxFlow amaxStage amaxRejected potPercComplete
-#&gt; 15   40003      1970 1971-01-24  125.000      0.00        FALSE      100.000000
-#&gt; 16   40003      1971 1972-01-11   71.120      2.80        FALSE      100.000000
-#&gt; 17   40003      1972 1973-01-29  150.153      7.04        FALSE      100.000000
-#&gt; 18   40003      1973 1974-02-12  234.527      8.36        FALSE       37.534247
-#&gt; 19   40003      1974 1974-11-23  229.496      8.30        FALSE       29.041096
-#&gt; 20   40003      1975 1975-12-02  114.864      6.41        FALSE        2.185792
-#&gt; 21   40003      1976 1977-01-15  160.199      7.21        FALSE       26.575342
-#&gt;    potThreshold
-#&gt; 15      122.571
-#&gt; 16      122.571
-#&gt; 17      122.571
-#&gt; 18      122.571
-#&gt; 19      122.571
-#&gt; 20      122.571
-#&gt; 21      122.571</div><div class='input'>  <span class='co'># the annual maximum in 1971 and 1975 was below the threshold</span>
-  <span class='co'># no events exceeded the threshold</span>
-<span class='co'># }</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'>  <span class='co'>### the example take longer than 5 seconds to run</span></span>
+<span class='r-in'>  <span class='va'>p40003</span> <span class='op'>&lt;-</span> <span class='fu'>get_pot</span><span class='op'>(</span><span class='fl'>40003</span><span class='op'>)</span> <span class='co'># the Medway at Teston / East Farleigh</span></span>
+<span class='r-in'>  <span class='va'>p40003</span><span class='op'>$</span><span class='va'>tablePOT</span><span class='op'>[</span><span class='va'>p40003</span><span class='op'>$</span><span class='va'>tablePOT</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&gt;</span> <span class='fl'>1969</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>        <span class='va'>p40003</span><span class='op'>$</span><span class='va'>tablePOT</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&lt;</span> <span class='fl'>1977</span>,<span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Station       Date WaterYear    Flow Stage</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30   40003 1971-01-24      1970 125.000  0.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31   40003 1973-01-29      1972 150.153  7.04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32   40003 1974-02-12      1973 234.527  8.36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33   40003 1974-02-15      1973 148.985  7.02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34   40003 1974-11-14      1974 147.821  7.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35   40003 1974-11-23      1974 229.496  8.30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36   40003 1975-01-21      1974 177.825  7.50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37   40003 1975-01-27      1974 143.768  6.93</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 38   40003 1975-05-17      1974 150.738  7.05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 39   40003 1976-12-01      1976 151.323  7.06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40   40003 1977-01-15      1976 160.199  7.21</span>
+<span class='r-in'>  <span class='co'>### no events in 1971 nor 1975</span></span>
+<span class='r-in'>  <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>[</span><span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&gt;</span> <span class='fl'>1969</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>        <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&lt;</span> <span class='fl'>1977</span>,<span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    WaterYear potPercComplete potThreshold</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15      1970      100.000000      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16      1971      100.000000      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17      1972      100.000000      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18      1973       37.534247      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19      1974       29.041096      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20      1975        2.185792      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21      1976       26.575342      122.571</span>
+<span class='r-in'>  <span class='co'># in 1971 all records are valid,</span></span>
+<span class='r-in'>  <span class='co'># in 1975 no exceedances</span></span>
+<span class='r-in'>  <span class='co'># might be due to the fact that almost no valid record are available</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>p40003</span> <span class='op'>&lt;-</span> <span class='fu'>get_pot</span><span class='op'>(</span><span class='fl'>40003</span>, getAmax <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>[</span><span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&gt;</span> <span class='fl'>1969</span> <span class='op'>&amp;</span></span>
+<span class='r-in'>       <span class='va'>p40003</span><span class='op'>$</span><span class='va'>WaterYearInfo</span><span class='op'>$</span><span class='va'>WaterYear</span> <span class='op'>&lt;</span> <span class='fl'>1977</span>,<span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Station WaterYear   amaxDate amaxFlow amaxStage amaxRejected potPercComplete</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15   40003      1970 1971-01-24  125.000      0.00        FALSE      100.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16   40003      1971 1972-01-11   71.120      2.80        FALSE      100.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17   40003      1972 1973-01-29  150.153      7.04        FALSE      100.000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18   40003      1973 1974-02-12  234.527      8.36        FALSE       37.534247</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19   40003      1974 1974-11-23  229.496      8.30        FALSE       29.041096</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20   40003      1975 1975-12-02  114.864      6.41        FALSE        2.185792</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21   40003      1976 1977-01-15  160.199      7.21        FALSE       26.575342</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    potThreshold</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20      122.571</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21      122.571</span>
+<span class='r-in'>  <span class='co'># the annual maximum in 1971 and 1975 was below the threshold</span></span>
+<span class='r-in'>  <span class='co'># no events exceeded the threshold</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -216,11 +221,11 @@ Note that this period might be different than the period for which annual maxima
 
       <footer>
       <div class="copyright">
-  <p>Developed by Ilaria Prosdocimi, Luke Shaw.</p>
+  <p><p>Developed by Ilaria Prosdocimi, Luke Shaw.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -228,6 +233,8 @@ Note that this period might be different than the period for which annual maxima
 
   
 
+
+  
 
   </body>
 </html>

@@ -5,7 +5,7 @@ Version: 0.1-4
 Authors@R: c(person("Ilaria", "Prosdocimi", 
                     email = "prosdocimi.ilaria@gmail.com",
                     role = c("aut", "cre"),
-                    comment = c(ORCID = "https://orcid.org/0000-0001-8565-094X")),
+                    comment = c(ORCID = "0000-0001-8565-094X")),
              person("Luke", "Shaw", 
                      role = c("aut"),
                      comment = "Luke developped the code to handle the missing and gap periods for Peaks over threshold records."))

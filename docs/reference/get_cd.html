@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/winfapReader.html">Get started</a>
 </li>
 <li>
@@ -123,7 +125,7 @@
     <p>The function queries the NRFA API for for information of a given station. Unlike <code><a href='get_amax.html'>get_amax</a></code> and <code><a href='get_pot.html'>get_pot</a></code>, the output of this function is not exactly the same from the output of the <code><a href='read_cd3.html'>read_cd3</a></code> function due to differences in the information made available by the NRFA API</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_cd</span><span class='op'>(</span><span class='va'>station</span>, fields <span class='op'>=</span> <span class='st'>"feh"</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>get_cd</span><span class='op'>(</span><span class='va'>station</span>, fields <span class='op'>=</span> <span class='st'>"feh"</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,18 +148,22 @@
     <div class='dont-index'><p><code><a href='read_cd3.html'>read_cd3</a></code>. Information on catchment descriptors river flow gauging in the UK can be found at the National River Flow Archive website <a href='https://nrfa.ceh.ac.uk'>https://nrfa.ceh.ac.uk</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='va'>cdMult</span> <span class='op'>&lt;-</span> <span class='fu'>get_cd</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40003</span>,<span class='fl'>42003</span><span class='op'>)</span>, fields <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
- <span class='co'>### lots of information on the catchment/station</span>
- <span class='co'>### including information on rejected annual maxima</span>
- <span class='va'>cdMult</span><span class='op'>$</span><span class='va'>`40003`</span><span class='op'>$</span><span class='va'>`peak-flow-rejected-amax-years`</span> <span class='co'>## no rejections</span>
-</div><div class='output co'>#&gt; [1] "NA"</div><div class='input'> <span class='va'>cdMult</span><span class='op'>$</span><span class='va'>`42003`</span><span class='op'>$</span><span class='va'>`peak-flow-rejected-amax-years`</span> <span class='co'>## several rejections</span>
-</div><div class='output co'>#&gt; [1] "1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994"</div><div class='input'> <span class='va'>cd40003</span> <span class='op'>&lt;-</span> <span class='fu'>get_cd</span><span class='op'>(</span><span class='fl'>40003</span>, fields <span class='op'>=</span> <span class='st'>"feh"</span><span class='op'>)</span>
- <span class='co'># less information, mostly the FEH descriptors</span>
- <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>cd40003</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  1 28</div><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>cdMult</span>, <span class='va'>ncol</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 40003 42003 
-#&gt;   104   104 </div><div class='input'>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'> <span class='va'>cdMult</span> <span class='op'>&lt;-</span> <span class='fu'>get_cd</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40003</span>,<span class='fl'>42003</span><span class='op'>)</span>, fields <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span></span>
+<span class='r-in'> <span class='co'>### lots of information on the catchment/station</span></span>
+<span class='r-in'> <span class='co'>### including information on rejected annual maxima</span></span>
+<span class='r-in'> <span class='va'>cdMult</span><span class='op'>$</span><span class='va'>`40003`</span><span class='op'>$</span><span class='va'>`peak-flow-rejected-amax-years`</span> <span class='co'>## no rejections</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "NA"</span>
+<span class='r-in'> <span class='va'>cdMult</span><span class='op'>$</span><span class='va'>`42003`</span><span class='op'>$</span><span class='va'>`peak-flow-rejected-amax-years`</span> <span class='co'>## several rejections</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994"</span>
+<span class='r-in'> <span class='va'>cd40003</span> <span class='op'>&lt;-</span> <span class='fu'>get_cd</span><span class='op'>(</span><span class='fl'>40003</span>, fields <span class='op'>=</span> <span class='st'>"feh"</span><span class='op'>)</span></span>
+<span class='r-in'> <span class='co'># less information, mostly the FEH descriptors</span></span>
+<span class='r-in'> <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>cd40003</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  1 28</span>
+<span class='r-in'> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>cdMult</span>, <span class='va'>ncol</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40003 42003 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   104   104 </span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -169,11 +175,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Ilaria Prosdocimi, Luke Shaw.</p>
+  <p><p>Developed by Ilaria Prosdocimi, Luke Shaw.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -181,6 +187,8 @@
 
   
 
+
+  
 
   </body>
 </html>
