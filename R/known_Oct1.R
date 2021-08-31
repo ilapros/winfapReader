@@ -52,13 +52,11 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(31010, as.Date("2019-10-01"), 2018
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(31025, as.Date("2019-10-01"), 2018)
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(32003, as.Date("2019-10-01"), 2018)
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28015, as.Date("2019-10-01"), 2018) ## no longer on Oct1st in v10, leave in case somebody uses this to read files from v9.0
-known_Oct1[nrow(known_Oct1)+1,] <- data.frame(54102, as.Date("2019-10-01"), 2018) ## appeared in v10 
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(54102, as.Date("2019-10-01"), 2018) ## appeared in v10
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(11002, as.Date("1976-10-01"), 1975) ## changed in v10
 
-
 # known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84011, as.Date("1985-10-01"), 1984)
-
-
+# usethis::use_data(known_Oct1)
 
 #
 ########
