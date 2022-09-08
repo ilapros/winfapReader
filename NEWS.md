@@ -1,3 +1,7 @@
+# winfapReader 0.1-5
+- internal function changes to please R CMD check --as-cran 
+- changes in known_Oct1 to include new events which occurred on Oct 1st which have been identified in version 11 of the winfap files 
+
 # winfapReader 0.1-4
 
 ## Minor changes:

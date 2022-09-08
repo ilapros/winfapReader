@@ -34,7 +34,7 @@ get_cd_int <- function(stid, fields){
 
   # Parse content
   page_content <- try(httr::content(resp, "text", encoding = "UTF-8"), silent=TRUE)
-  if(class(page_content) == "try-error") {
+  if(inherits(page_content,"try-error")) {
     errs <- geterrmessage()
     message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
     return(NULL)
@@ -155,7 +155,7 @@ get_amax_int <-function(stid){
     return(NULL)
   }
   page_content <- try(httr::content(resp, "text", encoding = "UTF-8"))
-  if(class(page_content) == "try-error") {
+  if(inherits(page_content,"try-error")) {
     errs <- geterrmessage()
     message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
     return(NULL)
@@ -230,7 +230,7 @@ get_pot_int <-function(stid, getAmax){
     return(NULL)
   }
   page_content <- try(httr::content(resp, "text", encoding = "UTF-8"))
-  if(class(page_content) == "try-error") {
+  if(inherits(page_content,"try-error")) {
     errs <- geterrmessage()
     message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
     return(NULL)
