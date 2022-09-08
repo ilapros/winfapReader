@@ -1,6 +1,6 @@
 <!-- badges: start -->
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4138993.svg)](https://doi.org/10.5281/zenodo.4138993) [![CRAN Status Badge](http://www.r-pkg.org/badges/version/winfapReader)](https://cran.r-project.org/package=winfapReader) [![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/winfapReader)](https://cran.r-project.org/package=winfapReader) [![R-CMD-check](https://github.com/ilapros/winfapReader/workflows/R-CMD-check/badge.svg)](https://github.com/ilapros/winfapReader/actions)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4138993.svg)](https://doi.org/10.5281/zenodo.4138992) [![CRAN Status Badge](http://www.r-pkg.org/badges/version/winfapReader)](https://cran.r-project.org/package=winfapReader) [![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/winfapReader)](https://cran.r-project.org/package=winfapReader) [![R-CMD-check](https://github.com/ilapros/winfapReader/workflows/R-CMD-check/badge.svg)](https://github.com/ilapros/winfapReader/actions)
 
 <!-- badges: end -->
 
