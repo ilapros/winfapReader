@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">winfapReader</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1-5.1</span>
       </span>
     </div>
 
@@ -76,11 +76,11 @@
 <p>The read_* functions allow the user to read into their R console the data from the .AMAX, .PT and .CD3 files made available by the NRFA <em>once these have been downloaded</em> into the users’ computer. At time of writing, Version 8 and previous versions of the winfap files can be downloaded from the <a href="https://nrfa.ceh.ac.uk/peak-flow-dataset" class="external-link">NRFA website</a>. This means that users who have compiled information for sites not included in the NRFA in the form of WINFAP files will be able to load these into R. The get_* functions allow the user to interact the the NRFA data API (<a href="http://nrfa.ceh.ac.uk/costs-terms-and-conditions" class="external-link">terms and conditions</a>).</p>
 <p>The functions in the package rework the information of the WINFAP files and the NRFA API to provide user-friendly R data.frames derived from the original information.</p>
 <p>One can install the latest version of <code>winfapReader</code> from github using the <code>remotes</code> package:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ilapros/winfapReader"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ilapros/winfapReader"</span>)</span></code></pre></div>
 <p>When reading files saved locally, by default the package assume that the winfap files are saved in the working directory, but this can be overwritten as in</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">read_amax</span>(<span class="dv">72014</span>, <span class="at">loc_WinFapFiles =</span> <span class="st">"locationWhereWINFAPfilesAre"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">read_amax</span>(<span class="dv">72014</span>, <span class="at">loc_WinFapFiles =</span> <span class="st">"locationWhereWINFAPfilesAre"</span>)</span></code></pre></div>
 <p>When accessing the files via the API simply ask for one or more station to obtain the information requested</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">get_amax</span>(<span class="fu">c</span>(<span class="dv">70005</span>,<span class="dv">72014</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">get_amax</span>(<span class="fu">c</span>(<span class="dv">70005</span>,<span class="dv">72014</span>))</span></code></pre></div>
 
   </div>
 
@@ -139,7 +139,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
