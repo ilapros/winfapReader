@@ -57,6 +57,9 @@ known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28015, as.Date("2019-10-01"), 2018
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(54102, as.Date("2019-10-01"), 2018) ## appeared in v10; in v11 the max for the year is no longer on Oct 1st; leave for those reading using old WinfapFiles
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(11002, as.Date("1976-10-01"), 1975) ## changed in v10
 known_Oct1[nrow(known_Oct1)+1,] <- data.frame(32004, as.Date("2019-10-01"), 2018) ## changed in v11
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(21024, as.Date("1981-10-01"), 1980) ## changed in v12
+known_Oct1[nrow(known_Oct1)+1,] <- data.frame(28002, as.Date("2019-10-01"), 2018) ## changed in v12
+known_Oct1 <- known_Oct1[order(known_Oct1$Station),]
 
 # known_Oct1[nrow(known_Oct1)+1,] <- data.frame(84011, as.Date("1985-10-01"), 1984)
 # usethis::use_data(known_Oct1, overwrite = TRUE)
