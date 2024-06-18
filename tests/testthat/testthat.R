@@ -1,8 +1,23 @@
 library(testthat)
 library(winfapReader)
 
+# ""
+
+api_unavailable <- function(){
+  resp1 <- httr::GET(url = "https://nrfaapps.ceh.ac.uk/nrfa/ws/station-info",
+                     query = list(station=39001, format="json-object",
+                     fields=c("id,river,location,qmed")),
+                     httr::user_agent("https://github.com/ilapros/winfapReader"))
+  resp2 <- httr::GET(url = "https://nrfaapps.ceh.ac.uk/nrfa/ws/time-series",
+                     query = list(station=45001, format="json-object",
+                     `data-type`="amax-stage"),
+                     httr::user_agent("https://github.com/ilapros/winfapReader"))
+  # if any of the two streams is not working skip tests
+  (httr::http_error(resp1) | httr::http_error(resp2))
+}
 
 test_that("read_pot works", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- 12345
   potOut <- read_pot(site_id,loc_WinFapFiles = "../..")
   expect_is(potOut$WaterYearInfo,"data.frame") ## basic check
@@ -18,6 +33,7 @@ test_that("read_pot works", {
 
 
 test_that("read_pot works with multiple stations", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- c(12345,54321)
   potOut <- read_pot(site_id,loc_WinFapFiles = "../..")
   expect_is(potOut,"list") ## basic check
@@ -27,6 +43,7 @@ test_that("read_pot works with multiple stations", {
 
 
 test_that("read_pot works - getAmax", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- 12345
   potOut <- read_pot(site_id,loc_WinFapFiles = "../..", getAmax = TRUE)
   expect_true(potOut$WaterYearInfo$amaxRejected[potOut$WaterYearInfo$WaterYear == 1974])
@@ -35,6 +52,7 @@ test_that("read_pot works - getAmax", {
 
 
 test_that("read_amax works", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- 12345
   amaxTable <- read_amax(site_id,loc_WinFapFiles = "../..")
   expect_is(amaxTable,"data.frame") ## basic check
@@ -45,6 +63,7 @@ test_that("read_amax works", {
 })
 
 test_that("read_amax works with multiple stations", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- c(12345,54321)
   amaxTable <- read_amax(site_id,loc_WinFapFiles = "../..")
   expect_is(amaxTable,"list") ## basic check
@@ -91,6 +110,7 @@ cdtrue <-
           suitPool = "NO")
 
 test_that("read_cd3 works", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- 12345
   cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
   expect_is(cd3Out,"data.frame") ## basic check
@@ -101,6 +121,7 @@ test_that("read_cd3 works", {
 })
 
 test_that("read_cd3 works for multiple stations", {
+  skip_if(api_unavailable(), "API not available")
   site_id <- c(12345,54321)
   cd3Out <- read_cd3(site_id,loc_WinFapFiles = "../..")
   expect_is(cd3Out,"list") ## basic check
@@ -108,6 +129,7 @@ test_that("read_cd3 works for multiple stations", {
 })
 
 test_that("get_amax works", {
+  skip_if(api_unavailable(), "API not available")
   a40003 <- get_amax(40003) # the Medway at Teston / East Farleigh
   multipleStations <- get_amax(c(40003, 42003))
   expect_is(a40003,"data.frame") ## basic check
@@ -121,6 +143,7 @@ test_that("get_amax works", {
 })
 
 test_that("get_pot works", {
+  skip_if(api_unavailable(), "API not available")
   p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
   expect_is(p40003,"list") ## basic check
   expect_equal(length(p40003), 3)
@@ -138,6 +161,7 @@ test_that("get_pot works", {
 
 
 test_that("get_cd works", {
+  skip_if(api_unavailable(), "API not available")
   cd40003 <- get_cd(40003) # the Medway at Teston / East Farleigh
   expect_is(cd40003,"data.frame") ## basic check
   expect_equal(nrow(cd40003), 1)

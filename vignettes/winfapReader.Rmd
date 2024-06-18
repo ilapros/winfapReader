@@ -158,7 +158,6 @@ The `rnrfa::catalogue` function allows one to pull the list of stations (and rel
 The code below for example identifies stations surrounding the city of Lancaster and then displays the annual maxima flow with red lines indicating Rejected flow values. Notice that you would need to have the `rnrfa` package installed for the code below to work. 
 
 
-
 ```{r, eval=is2}
 ## Lancaster coordinates:  54.04, -2.8
 ## let's look around the city
@@ -196,7 +195,9 @@ par(mfrow=c(1,1))
 maxflow72014 <- rnrfa::get_ts(72014, type = "amax-flow", full_info = TRUE) 
 ### the annual maxima for 72014 from winfapReader
 xx <- amaxLanc[["72014"]][,c("Date","Flow","Rejected")]
-plot(xx[,"Flow"], maxflow72014[,"amax-flow"]); abline(0,1) ### same information 
+plot(xx[,"Flow"], maxflow72014[,"amax-flow"], 
+     xlab = "data from winfapReader", ylab = "data from rnrfa"); abline(0,1)
+### same information 
 which(xx$Rejected) ## but two years should be rejected
 which(maxflow72014$rejected == 1) ## same two years
 ```
