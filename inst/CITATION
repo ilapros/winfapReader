@@ -8,4 +8,17 @@ citEntry(entry = "manual",
   journal = "{Zenodo}",
   note = "{https://www.doi.org/10.5281/zenodo.4138993}",
 textVersion = "Prosdocimi, I. and Shaw, L. (2020, October). winfapReader: an R package to interact with Peak Flow Data in the {United Kingdom} (version 0.1-2). Zenodo. doi:10.5281/zenodo.4138993")
-0
+
+bibentry(bibtype = "Misc",
+  year  = "2020",
+  month = "10",
+  author = c(person("Ilaria", "Prosdocimi",
+                    email = "prosdocimi.ilaria@gmail.com",
+                    role = c("aut", "cre"),
+                    comment = c(ORCID = "0000-0001-8565-094X")),
+             person("Luke", "Shaw",
+                     role = c("aut"))),
+  title = "winfapReader: an R package to interact with Peak Flow Data in the {United Kingdom} (version 0.1-2)",
+  journal = "{Zenodo}",
+  url = "https://www.doi.org/10.5281/zenodo.4138993",
+textVersion = "Prosdocimi, I. and Shaw, L. (2020, October). winfapReader: an R package to interact with Peak Flow Data in the {United Kingdom} (version 0.1-2). Zenodo. doi:10.5281/zenodo.4138993")

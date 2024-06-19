@@ -19,7 +19,7 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-
+    
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -53,7 +53,7 @@
 <li>
   <a href="https://github.com/ilapros/winfapReader/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-
+     
   </a>
 </li>
       </ul>
@@ -64,27 +64,26 @@
 </div>
 <!--/.navbar -->
 
-
+      
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An introduction to winfapReader</h1>
-
-
+            
+      
       <small class="dont-index">Source: <a href="https://github.com/ilapros/winfapReader/blob/HEAD/vignettes/winfapReader.Rmd" class="external-link"><code>vignettes/winfapReader.Rmd</code></a></small>
       <div class="hidden name"><code>winfapReader.Rmd</code></div>
 
     </div>
 
-
-
-
+    
+    
 <p>The <code>winfapReader</code> package contains functions to interact
 with the information on extremes of instantaneous river flow in the
 United Kingdom (UK) made available by the <a href="https://nrfa.ceh.ac.uk" class="external-link">National River Flow Archive</a> (NRFA).
 These information underlie most flood risk estimation projects in the
-UK, which are typically carried out using the <a href="https://www.ceh.ac.uk/services/flood-estimation-handbook" class="external-link">Flood
+UK, which are typically carried out using the <a href="https://www.ceh.ac.uk/our-science/projects/flood-estimation-handbook" class="external-link">Flood
 Estimation Handbook</a> (FEH) statistical method and their <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/291096/scho0608boff-e-e.pdf" class="external-link">updates</a>
 as implemented by the software <a href="https://www.hydrosolutions.co.uk/software/winfap-4/" class="external-link">WINFAP</a>.
 Consequently, the NRFA publishes and routinely updates files which are
@@ -125,7 +124,7 @@ on extremes for flood frequency estimation the NRFA maintains and
 distributes daily river flow records and several other river flow
 related variables, such as catchment averaged rainfall: the <a href="https://cran.r-project.org/package=rnrfa" class="external-link"><code>rnrfa</code></a>
 package allows one to retrieve these information and more with its
-<code><a href="https://ilapros.github.io/rnrfa/reference/gdf.html" class="external-link">rnrfa::gdf</a></code> and <code><a href="https://ilapros.github.io/rnrfa/reference/get_ts.html" class="external-link">rnrfa::get_ts</a></code> functions (see
+<code>rnrfa::gdf</code> and <code>rnrfa::get_ts</code> functions (see
 more on this at the end of the vignette). The <code>winfapReader</code>
 package focuses only on handling river flow extremes information and has
 two sets of functions:</p>
@@ -144,7 +143,7 @@ functions since these rely on the location of the WINFAP files within
 the users’ working environment. Only the use of the <code>get_*</code>
 function will be showcased below. For the annual maxima and peaks over
 threshold the two sets of functions give the same output.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ilapros.github.io/winfapReader/" class="external-link">winfapReader</a></span><span class="op">)</span></span>
 <span><span class="co">### the get_* functions only works once you are connected to the internet</span></span>
 <span><span class="co">### they also need one to have the library httr installed </span></span>
@@ -158,7 +157,7 @@ threshold the two sets of functions give the same output.</p>
 on annual maxima from the NRFA. The <code>read_amax</code> function will
 produce the same output as the <code>get_amax</code> function but is
 based on the locally saved files.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu">curl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curl/man/nslookup.html" class="external-link">has_internet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="va">amaxEx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_amax.html">get_amax</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">42003</span>,<span class="fl">72014</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">amaxEx</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">amaxEx</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "42003" "72014"</span></span>
@@ -191,7 +190,7 @@ corresponding to a station id.</p>
 peaks over threshold data from the NRFA. The <code>read_pot</code>
 function will produce the same output as the <code>get_pot</code>
 function but is based on the locally saved files.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu">curl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curl/man/nslookup.html" class="external-link">has_internet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="va">potEx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_pot.html">get_pot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">42003</span>,<span class="fl">72014</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">potEx</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">potEx</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "42003" "72014"</span></span>
@@ -210,7 +209,7 @@ recorded exceedances above the threshold in the NRFA record. In
 particular information on the exceedance date, water year, peak flow and
 river stage are given.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">p42003</span><span class="op">$</span><span class="va">tablePOT</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Station       Date WaterYear Flow Stage</span></span>
 <span><span class="co">#&gt; 1   42003 1982-10-14      1982 17.0 1.381</span></span>
@@ -230,7 +229,7 @@ rejected headers in the NRFA .PT files. The column potThreshold gives
 the information of the flow threshold used to extract the peaks for the
 station: this is a constant for each station.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">p42003</span><span class="op">$</span><span class="va">WaterYearInfo</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   WaterYear potPercComplete potThreshold</span></span>
 <span><span class="co">#&gt; 1      1982               0       14.497</span></span>
@@ -246,14 +245,14 @@ record. This range might be wider than the range of the dates in the
 <code>tablePOT</code> table since it records the period in which the
 station was operational and no threshold exceedances occurred.</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">p42003</span><span class="op">$</span><span class="va">dateRange</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "1982-10-13" "2021-10-22"</span></span></code></pre></div>
 <p>The function has an argument <code>getAmax</code> which defaults to
 <code>FALSE</code>. If <code>getAmax = TRUE</code> then information on
 the annual maxima is included in the <code>WaterYearInfo</code>
 table.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p42003withAmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_pot.html">get_pot</a></span><span class="op">(</span><span class="fl">42003</span>, getAmax <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">p42003withAmax</span><span class="op">$</span><span class="va">WaterYearInfo</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Station WaterYear   amaxDate amaxFlow amaxStage amaxRejected potPercComplete</span></span>
@@ -301,7 +300,7 @@ of the catchment descriptors can be found on the <a href="https://nrfa.ceh.ac.uk
 FEH. The function gives a slightly different set of information than the
 <code>read_cd3</code> function, due to the difference in information
 made available by the NRFA API.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu">curl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curl/man/nslookup.html" class="external-link">has_internet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="va">cdEx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cd.html">get_cd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">42003</span>,<span class="fl">72014</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cdEx</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">cdEx</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "42003" "72014"</span></span>
@@ -328,7 +327,7 @@ used in the FEH methods is output. If <code>fields="all"</code> a
 data.frame with 104 columns is output. This contains several information
 about the station and the catchment, including data availability, land
 cover information and much more.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu">curl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curl/man/nslookup.html" class="external-link">has_internet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="va">cd42003all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cd.html">get_cd</a></span><span class="op">(</span><span class="fl">42003</span>, fields <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cd42003all</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   [1] "id"                             "name"                          </span></span>
@@ -394,7 +393,7 @@ retrieved using the <code>rnrfa</code> package, although there are some
 differences in the output provided when the data of interest are the
 peaks over threshold records.</p>
 <!-- When it comes to river extremes though, the `winfapReader` functions leverage the additional information available about rejected records and periods of missing records, thus giving the user a more complete information on which parts of the extremes series are reliable. The two packages can be used in combination by those who are interested in investigating in depth the behaviour of river flow extremes in the UK.  -->
-<p>The <code><a href="https://ilapros.github.io/rnrfa/reference/catalogue.html" class="external-link">rnrfa::catalogue</a></code> function allows one to pull the
+<p>The <code>rnrfa::catalogue</code> function allows one to pull the
 list of stations (and related metadata), falling within a given bounding
 box. The metadata retrieved by the function are similar to the ones
 derived from <code><a href="../reference/get_cd.html">winfapReader::get_cd</a></code>. This function can be
@@ -404,41 +403,28 @@ example identifies stations surrounding the city of Lancaster and then
 displays the annual maxima flow with red lines indicating Rejected flow
 values. Notice that you would need to have the <code>rnrfa</code>
 package installed for the code below to work.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Lancaster coordinates:  54.04, -2.8</span></span>
 <span><span class="co">## let's look around the city</span></span>
-<span><span class="va">rivLanc</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu"><a href="https://ilapros.github.io/rnrfa/reference/catalogue.html" class="external-link">catalogue</a></span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat_min <span class="op">=</span> <span class="fl">54.04</span><span class="op">-</span><span class="fl">0.2</span>, lat_max <span class="op">=</span> <span class="fl">54.04</span><span class="op">+</span><span class="fl">0.2</span>, </span>
+<span><span class="va">rivLanc</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu">catalogue</span><span class="op">(</span>bbox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat_min <span class="op">=</span> <span class="fl">54.04</span><span class="op">-</span><span class="fl">0.2</span>, lat_max <span class="op">=</span> <span class="fl">54.04</span><span class="op">+</span><span class="fl">0.2</span>, </span>
 <span>                                        lon_min <span class="op">=</span> <span class="op">-</span><span class="fl">2.8</span><span class="op">-</span><span class="fl">0.2</span>, lon_max <span class="op">=</span> <span class="op">-</span><span class="fl">2.8</span><span class="op">+</span><span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">### let's select stations which have been deemed to be suitable for pooling</span></span>
 <span><span class="co">### that's the highest quality flag for annual maxima </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">rivLanc</span><span class="op">[</span>,<span class="st">"feh-pooling"</span><span class="op">]</span><span class="op">)</span> <span class="co">### 5 stations are suitable for pooling</span></span>
-<span><span class="co">#&gt; feh-pooling</span></span>
-<span><span class="co">#&gt; FALSE  TRUE </span></span>
-<span><span class="co">#&gt;     5     5</span></span>
 <span><span class="va">rivLanc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">rivLanc</span>,subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">rivLanc</span><span class="op">[</span>,<span class="st">"feh-pooling"</span>,drop<span class="op">=</span><span class="cn">TRUE</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rivLanc</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
-<span><span class="co">#&gt;      id name                    `catchment-area`</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="text-decoration: underline;">72</span>004 Lune at Caton                      983  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">72</span>007 Brock at upstream of A6             32  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> <span style="text-decoration: underline;">72</span>014 Conder at Galgate                   28.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> <span style="text-decoration: underline;">73</span>008 Bela at Beetham                    131  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="text-decoration: underline;">73</span>015 Keer at High Keer Weir              48</span></span>
 <span><span class="co">### notice that rnrfa outputs a tibble and not a data.frame</span></span>
 <span><span class="va">idLanc</span> <span class="op">&lt;-</span> <span class="va">rivLanc</span><span class="op">[</span>,<span class="st">"id"</span>,drop<span class="op">=</span><span class="cn">TRUE</span><span class="op">]</span> <span class="co">## a vector of ids</span></span>
 <span><span class="va">amaxLanc</span> <span class="op">&lt;-</span> <span class="fu">winfapReader</span><span class="fu">::</span><span class="fu"><a href="../reference/get_amax.html">get_amax</a></span><span class="op">(</span><span class="va">idLanc</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">amaxLanc</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "72004" "72007" "72014" "73008" "73015"</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">amaxLanc</span><span class="op">)</span></span></code></pre></div>
 <p>Now display the stations all together in a panel.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">amaxLanc</span>, </span>
 <span>       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">WaterYear</span>,<span class="va">Flow</span>,</span>
 <span>                               type<span class="op">=</span><span class="st">"h"</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Rejected</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>, </span>
 <span>                               main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">Station</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="winfapReader_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>The large events which have hit the area in 2015 can be seen in the
 flow series plots.</p>
 <p>The <code>rnrfa</code> package also allows to pull the annual maximum
@@ -446,19 +432,17 @@ flow recorded at any station. To also obtain the information about the
 water year which the NRFA has deemed to be of poor quality and therefore
 rejected set the <code>full_info</code> argument to
 <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">### the annual maxima for 72014 from rnrfa</span></span>
-<span><span class="va">maxflow72014</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu"><a href="https://ilapros.github.io/rnrfa/reference/get_ts.html" class="external-link">get_ts</a></span><span class="op">(</span><span class="fl">72014</span>, type <span class="op">=</span> <span class="st">"amax-flow"</span>, full_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
+<span><span class="va">maxflow72014</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu">get_ts</span><span class="op">(</span><span class="fl">72014</span>, type <span class="op">=</span> <span class="st">"amax-flow"</span>, full_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="co">### the annual maxima for 72014 from winfapReader</span></span>
 <span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="va">amaxLanc</span><span class="op">[[</span><span class="st">"72014"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Date"</span>,<span class="st">"Flow"</span>,<span class="st">"Rejected"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xx</span><span class="op">[</span>,<span class="st">"Flow"</span><span class="op">]</span>, <span class="va">maxflow72014</span><span class="op">[</span>,<span class="st">"amax-flow"</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">### same information </span></span></code></pre></div>
-<p><img src="winfapReader_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">xx</span><span class="op">$</span><span class="va">Rejected</span><span class="op">)</span> <span class="co">## but two years should be rejected</span></span>
-<span><span class="co">#&gt; [1]  1 25</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">maxflow72014</span><span class="op">$</span><span class="va">rejected</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="co">## same two years</span></span>
-<span><span class="co">#&gt; [1]  1 25</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xx</span><span class="op">[</span>,<span class="st">"Flow"</span><span class="op">]</span>, <span class="va">maxflow72014</span><span class="op">[</span>,<span class="st">"amax-flow"</span><span class="op">]</span>, </span>
+<span>     xlab <span class="op">=</span> <span class="st">"data from winfapReader"</span>, ylab <span class="op">=</span> <span class="st">"data from rnrfa"</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">### same information </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">xx</span><span class="op">$</span><span class="va">Rejected</span><span class="op">)</span> <span class="co">## but two years should be rejected</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">maxflow72014</span><span class="op">$</span><span class="va">rejected</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="co">## same two years</span></span></code></pre></div>
 <p>To obtain the POT records in <code>rnrfa</code> use
 <code>type = "pot-flow"</code>: using the <code>full_info = TRUE</code>
 option ensures that a rejected flag is given for the periods in which
@@ -470,32 +454,16 @@ is built using the same information used to build the
 provided in <code>WaterYearInfo</code> is useful to identify the years
 in which no POT record is found because the records are
 missing/unreliable and not because the threshold was never exceeded.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># the pot records for 75001 from rnrfa</span></span>
-<span><span class="va">pot75001</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu"><a href="https://ilapros.github.io/rnrfa/reference/get_ts.html" class="external-link">get_ts</a></span><span class="op">(</span><span class="fl">75001</span>, type <span class="op">=</span> <span class="st">"pot-flow"</span>, full_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">pot75001</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu">get_ts</span><span class="op">(</span><span class="fl">75001</span>, type <span class="op">=</span> <span class="st">"pot-flow"</span>, full_info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">pot75001</span><span class="op">[</span><span class="fl">9</span><span class="op">:</span><span class="fl">12</span>,<span class="op">]</span></span>
-<span><span class="co">#&gt;            pot-flow rejected</span></span>
-<span><span class="co">#&gt; 1975-01-27   16.243        0</span></span>
-<span><span class="co">#&gt; 1975-01-31   18.366        0</span></span>
-<span><span class="co">#&gt; 1977-02-04    7.939        0</span></span>
-<span><span class="co">#&gt; 1977-02-07    8.913        0</span></span>
 <span><span class="co"># using winfapReader</span></span>
 <span><span class="va">p75001</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_pot.html">get_pot</a></span><span class="op">(</span><span class="fl">75001</span><span class="op">)</span></span>
 <span><span class="va">p75001</span><span class="op">$</span><span class="va">tablePOT</span><span class="op">[</span><span class="fl">9</span><span class="op">:</span><span class="fl">12</span>,<span class="op">]</span></span>
-<span><span class="co">#&gt;    Station       Date WaterYear   Flow Stage</span></span>
-<span><span class="co">#&gt; 9    75001 1975-01-27      1974 16.243 0.910</span></span>
-<span><span class="co">#&gt; 10   75001 1975-01-31      1974 18.366 0.960</span></span>
-<span><span class="co">#&gt; 11   75001 1977-02-04      1976  7.939 0.676</span></span>
-<span><span class="co">#&gt; 12   75001 1977-02-07      1976  8.913 0.708</span></span>
 <span><span class="co"># the same peaks are identified</span></span>
 <span><span class="va">p75001</span><span class="op">$</span><span class="va">WaterYearInfo</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span> <span class="co">### but notice that 1975 had a low proportion missing records</span></span>
-<span><span class="co">#&gt;   WaterYear potPercComplete potThreshold</span></span>
-<span><span class="co">#&gt; 1      1973        63.28767        6.366</span></span>
-<span><span class="co">#&gt; 2      1974        98.63014        6.366</span></span>
-<span><span class="co">#&gt; 3      1975        99.18033        6.366</span></span>
-<span><span class="co">#&gt; 4      1976       100.00000        6.366</span></span>
-<span><span class="co">#&gt; 5      1977        97.80822        6.366</span></span>
 <span><span class="co">#  the lack of data in 1975 is due to all flow being low</span></span></code></pre></div>
 <p>The two packages can be used together to retrieve different type of
 information about river flow: in the example below daily gauged flow for
@@ -503,9 +471,9 @@ the Conder at Galgate (station 72014) is displayed together with annual
 maxima (which are extracted from the instantaneous river flow). The
 latter are typically larger and can be seen to start further in the past
 than the daily flow data.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### get daily data from NRFA </span></span>
-<span><span class="va">daily72014</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu"><a href="https://ilapros.github.io/rnrfa/reference/get_ts.html" class="external-link">get_ts</a></span><span class="op">(</span><span class="fl">72014</span>, type <span class="op">=</span> <span class="st">"gdf"</span><span class="op">)</span> </span>
+<span><span class="va">daily72014</span> <span class="op">&lt;-</span> <span class="fu">rnrfa</span><span class="fu">::</span><span class="fu">get_ts</span><span class="op">(</span><span class="fl">72014</span>, type <span class="op">=</span> <span class="st">"gdf"</span><span class="op">)</span> </span>
 <span><span class="co">## make daily data into data.frame </span></span>
 <span><span class="va">daily72014</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Day <span class="op">=</span> <span class="fu">zoo</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html" class="external-link">index</a></span><span class="op">(</span><span class="va">daily72014</span><span class="op">)</span>, </span>
 <span>                         DFlow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">daily72014</span><span class="op">)</span><span class="op">)</span></span>
@@ -513,7 +481,6 @@ than the daily flow data.</p>
 <span>     pch <span class="op">=</span> <span class="fl">4</span>, ylim <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.05</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">xx</span><span class="op">$</span><span class="va">Flow</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/title.html" class="external-link">title</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"The Conder at Galgate"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">daily72014</span>, type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="winfapReader_files/figure-html/dayAndAmax-1.png" width="700"></p>
 </div>
   </div>
 
@@ -538,10 +505,10 @@ than the daily flow data.</p>
       </footer>
 </div>
 
+  
 
 
-
-
+  
 
   </body>
 </html>

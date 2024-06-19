@@ -1,5 +1,6 @@
 # winfapReader 0.1-5.1
 - changes in known_Oct1 to include new events which occurred on Oct 1st which have been identified in version 12 of the winfap files 
+- changes in test functions: realized I needed them after the API broke for some days 
 
 
 # winfapReader 0.1-5

@@ -35,7 +35,7 @@ knitr::opts_chunk$set(
 ```
 
 The `winfapReader` package contains functions to interact with the information on extremes of instantaneous river flow in the United Kingdom (UK) made available by the [National River Flow Archive](https://nrfa.ceh.ac.uk) (NRFA). 
-These information underlie most flood risk estimation projects in the UK, which are typically carried out using the [Flood Estimation Handbook](https://www.ceh.ac.uk/services/flood-estimation-handbook) (FEH) statistical method and their [updates](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/291096/scho0608boff-e-e.pdf) as implemented by the software [WINFAP](https://www.hydrosolutions.co.uk/software/winfap-4/). 
+These information underlie most flood risk estimation projects in the UK, which are typically carried out using the [Flood Estimation Handbook](https://www.ceh.ac.uk/our-science/projects/flood-estimation-handbook) (FEH) statistical method and their [updates](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/291096/scho0608boff-e-e.pdf) as implemented by the software [WINFAP](https://www.hydrosolutions.co.uk/software/winfap-4/). 
 Consequently, the NRFA publishes and routinely updates files which are suitable to be read by WINFAP: the collection of these files is referred to as the peak flow dataset and can be found [here](https://nrfa.ceh.ac.uk/peak-flow-dataset). The winfapReader package allows the user to interact with three different file-types: 
 
 + The .AM files which contain the Annual Maximum (AMAX) peaks: these correspond to the largest river flow event in any given water year (which runs from October 1st to September 30th)
