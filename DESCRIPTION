@@ -1,7 +1,7 @@
 Package: winfapReader
 Type: Package
 Title: Interact with Peak Flow Data in the United Kingdom
-Version: 0.1-5.1
+Version: 0.1-5.2
 Authors@R: c(person("Ilaria", "Prosdocimi", 
                     email = "prosdocimi.ilaria@gmail.com",
                     role = c("aut", "cre"),
@@ -27,7 +27,7 @@ Suggests:
     rmarkdown, 
     zoo
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-GB

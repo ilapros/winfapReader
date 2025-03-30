@@ -1,3 +1,6 @@
+# winfapReader 0.1-5.2
+- changes in get_amax and get_pot (and in the internal read functions): this was needed to adjust to the changes in what the API outputs now
+
 # winfapReader 0.1-5.1
 - changes in known_Oct1 to include new events which occurred on Oct 1st which have been identified in version 12 of the winfap files 
 - changes in test functions: realized I needed them after the API broke for some days 

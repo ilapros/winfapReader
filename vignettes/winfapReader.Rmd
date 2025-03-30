@@ -225,6 +225,8 @@ daily72014 <- rnrfa::get_ts(72014, type = "gdf")
 ## make daily data into data.frame 
 daily72014 <- data.frame(Day = zoo::index(daily72014), 
                          DFlow = as.vector(daily72014))
+# ensure xx only has date (and no time)
+xx$Date <- lubridate::as_date(xx$Date)
 plot(xx[,c("Date","Flow")], col = ifelse(xx$Rejected, 2, 4),
      pch = 4, ylim =c(0,1.05*max(xx$Flow)))
 title(main = "The Conder at Galgate")
