@@ -14,9 +14,11 @@
 #' @importFrom lubridate leap_year
 #' @importFrom lubridate dmy
 #' @importFrom lubridate ymd
+#' @importFrom lubridate ymd_hms
 #' @importFrom lubridate date
 #' @importFrom lubridate int_overlaps
 #' @importFrom lubridate interval
+#'
 water_year <- function(date, start_month = 10){
   # Given a date in ymd lubridate form, returns the WY that date is in.
   # The XXXX Water year starts 01st start_month XXXX and ends on the last day of the month before the start_month (XXXX+1)

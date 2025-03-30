@@ -105,7 +105,8 @@ read_pot_int <- function(filetext, getAmax){
   names(WY_table) <- c("WaterYear","potPercComplete","potThreshold")
   tablePOT <- POTtable[seq(match('[POT Values]',POTtable[,1])+1,nrow(POTtable)-1),]
   names(tablePOT) <- c("Date","Flow","Stage")
-  tablePOT$Date <- dmy(tablePOT$Date)
+  if(grepl("-", tablePOT$Date[1])) tablePOT$Date <- ymd_hms(tablePOT$Date)
+    else tablePOT$Date <- dmy(tablePOT$Date)
   tablePOT$Flow <- as.numeric(tablePOT$Flow)
   tablePOT$Stage <- as.numeric(tablePOT$Stage)
   tablePOT$Station <- as.numeric(statno)
@@ -197,7 +198,9 @@ read_amax_int <- function(filetext){
   aa <- rr[(which(rr == "[AM Values]")+1):(length(rr)-1)]
   out <- cbind(station, utils::read.csv(textConnection(aa),header=FALSE, stringsAsFactors = FALSE))
   names(out) <- c("Station","Date","Flow","Stage")
-  out$Date <- lubridate::dmy(out$Date)
+  if(grepl("-", out$Date[1])) out$Date <- ymd_hms(out$Date)
+    else out$Date <- dmy(out$Date)
+  # out$Date <- lubridate::dmy(out$Date)
   out$WaterYear <- water_year(out$Date)
   #### Check if any amax should be rejected
   rejStart <- grep("[AM Rejected]",rr,fixed = TRUE)
