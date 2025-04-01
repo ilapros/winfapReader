@@ -82,12 +82,12 @@
 with the information on extremes of instantaneous river flow in the
 United Kingdom (UK) made available by the <a href="https://nrfa.ceh.ac.uk" class="external-link">National River Flow Archive</a> (NRFA).
 These information underlie most flood risk estimation projects in the
-UK, which are typically carried out using the <a href="https://www.ceh.ac.uk/our-science/projects/flood-estimation-handbook" class="external-link">Flood
+UK, which are typically carried out using the <a href="https://www.ceh.ac.uk/data/software-models/flood-estimation-handbook" class="external-link">Flood
 Estimation Handbook</a> (FEH) statistical method and their <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/291096/scho0608boff-e-e.pdf" class="external-link">updates</a>
-as implemented by the software <a href="https://www.hydrosolutions.co.uk/software/winfap-4/" class="external-link">WINFAP</a>.
+as implemented by the software <a href="https://www.hydrosolutions.co.uk/software/winfap-5/" class="external-link">WINFAP</a>.
 Consequently, the NRFA publishes and routinely updates files which are
 suitable to be read by WINFAP: the collection of these files is referred
-to as the peak flow dataset and can be found <a href="https://nrfa.ceh.ac.uk/peak-flow-dataset" class="external-link">here</a>. The
+to as the peak flow dataset and can be found <a href="https://nrfa.ceh.ac.uk/data/peak-flow-dataset" class="external-link">here</a>. The
 winfapReader package allows the user to interact with three different
 file-types:</p>
 <ul>
@@ -295,9 +295,9 @@ the information till water year 1995.</p>
 information on the station (for example its location) and on the
 catchment upstream the station itself (for example the catchment area
 and the annual mean altitude for the catchment). More detail on several
-of the catchment descriptors can be found on the <a href="https://nrfa.ceh.ac.uk/about-data" class="external-link">NRFA website</a> and in the
-FEH. The function gives a slightly different set of information than the
-<code>read_cd3</code> function, due to the difference in information
+of the catchment descriptors can be found on the <a href="https://nrfa.ceh.ac.uk/data/about-data" class="external-link">NRFA website</a> and in
+the FEH. The function gives a slightly different set of information than
+the <code>read_cd3</code> function, due to the difference in information
 made available by the NRFA API.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu">curl</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/curl/reference/nslookup.html" class="external-link">has_internet</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="va">cdEx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_cd.html">get_cd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">42003</span>,<span class="fl">72014</span><span class="op">)</span><span class="op">)</span> </span>

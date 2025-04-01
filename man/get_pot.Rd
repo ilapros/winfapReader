@@ -28,7 +28,7 @@ Note that this period might be different than the period for which annual maxima
 The function queries the NRFA API for the .PT file similar to the WINFAP file for a given stations. It then processes the file in a fashion similar to \code{\link{read_pot}}.
 }
 \examples{
-\donttest{
+\dontrun{
   ### the example take longer than 5 seconds to run
   p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
   p40003$tablePOT[p40003$tablePOT$WaterYear > 1969 &

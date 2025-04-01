@@ -258,7 +258,7 @@ get_pot_int <-function(stid, getAmax){
 #' @seealso \code{\link{read_pot}}. Information on the peaks over threshold records and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'   ### the example take longer than 5 seconds to run
 #'   p40003 <- get_pot(40003) # the Medway at Teston / East Farleigh
 #'   p40003$tablePOT[p40003$tablePOT$WaterYear > 1969 &

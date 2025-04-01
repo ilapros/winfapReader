@@ -246,7 +246,7 @@ split_or_NA <- function(x,ind=2) {
 #'
 #' @return a data.frame with information on the catchment descriptors for the station
 #' @seealso Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}.
-#' Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/feh-catchment-descriptors}
+#' Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/data/about-data/catchment-information/feh-catchment-descriptors}
 #' @export
 #' @aliases read_cd3
 read_cd3 <- function(station, loc_WinFapFiles = getwd()){

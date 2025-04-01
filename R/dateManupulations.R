@@ -3,11 +3,12 @@
 #'
 #' @param date the (vector of) dates for which the water year will be calculated
 #' @param start_month the month in which the water year starts, default is October
-#'
 #' @return The water year value
 #' @export
-#'
-#' @examples water_year(as.Date(c("2010-11-03", "2013-02-03")))
+#' @examples
+#' \dontrun{
+#' water_year(as.Date(c("2010-11-03", "2013-02-03")))
+#' }
 #' @importFrom lubridate month
 #' @importFrom utils read.csv
 #' @importFrom lubridate year
@@ -18,7 +19,6 @@
 #' @importFrom lubridate date
 #' @importFrom lubridate int_overlaps
 #' @importFrom lubridate interval
-#'
 water_year <- function(date, start_month = 10){
   # Given a date in ymd lubridate form, returns the WY that date is in.
   # The XXXX Water year starts 01st start_month XXXX and ends on the last day of the month before the start_month (XXXX+1)

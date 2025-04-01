@@ -20,5 +20,5 @@ The function reads .CD3 files once these are in a local folder: these files cont
 }
 \seealso{
 Information on the .CD3 files and river flow gauging in the UK can be found at the National River Flow Archive website \url{https://nrfa.ceh.ac.uk}.
-Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/feh-catchment-descriptors}
+Specific information on the catchment descriptors can be found at \url{https://nrfa.ceh.ac.uk/data/about-data/catchment-information/feh-catchment-descriptors}
 }
