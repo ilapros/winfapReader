@@ -1,7 +1,7 @@
 <!-- badges: start -->
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4138992.svg)](https://doi.org/10.5281/zenodo.4138992) [![CRAN Status Badge](http://www.r-pkg.org/badges/version/winfapReader)](https://cran.r-project.org/package=winfapReader) [![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/winfapReader)](https://cran.r-project.org/package=winfapReader) [![R-CMD-check](https://github.com/ilapros/winfapReader/workflows/R-CMD-check/badge.svg)](https://github.com/ilapros/winfapReader/actions)
-
+[![R-CMD-check](https://github.com/ilapros/winfapReader/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ilapros/winfapReader/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `winfapReader` allows a user to obtain data on long-term annual maxima and peaks over threshold for instantaneous river flow measurements in the UK. The user can also access the corollary catchment descriptors files which characterise the catchments upstream the gauging stations.

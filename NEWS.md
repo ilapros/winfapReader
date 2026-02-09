@@ -1,4 +1,9 @@
 # winfapReader 0.1-6
+- many internal changes to adapt to the new format of winfap files after v14  
+- one visible change is that water_year now also deals with time (since now amax files contain datetime information) 
+
+
+# winfapReader 0.1-6
 - changes in get_amax and get_pot (and in the internal read functions): this was needed to adjust to the changes in what the API outputs now
 - changes in links in many places to adapt to changes in the NRFA website 
 

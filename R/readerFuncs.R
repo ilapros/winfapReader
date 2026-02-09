@@ -31,12 +31,12 @@ read_pot <- function(station, loc_WinFapFiles = getwd(), getAmax = FALSE){
 
   if(length(station) == 1){
     ### read the station.PT file wherever it is in the loc_WinFapFiles folder
-    wherePOT <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = ".pt")
+    wherePOT <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = "\\.pt")
     if(length(wherePOT) < 1) stop("Station does not have PT files in the loc_WinFapFiles folder")
     out <- read_pot_int(wherePOT, getAmax = typeget)
   }
   if(length(station) > 1) {
-    wherePOT <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = ".pt")
+    wherePOT <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = "\\.pt")
     lwhere <- sapply(wherePOT, length)
     if(all(lwhere < 1)){
       stop(paste("Stations do not have POT files in the loc_WinFapFiles folder \n"))
@@ -63,11 +63,11 @@ read_pot_int <- function(filetext, getAmax){
   #error if table is empty
   if(is.null(beg)) stop(sprintf("no pot recorded at station %s", statno), call. = FALSE)
   # find beginning and eng year of record
-  beg <- dmy(beg); end <- dmy(end)
+  beg <- lubridate::dmy(beg); end <- lubridate::dmy(end)
   dateRange <- c(beg,end)
-  WYvec <- seq(from = ifelse(month(beg) < 10, year(beg) -1,year(beg)),
+  WYvec <- seq(from = ifelse(lubridate::month(beg) < 10, lubridate::year(beg) -1, lubridate::year(beg)),
                ### need to correct for begginign and end in different water years
-               to = ifelse(month(end) < 10, year(end) -1, year(end)))
+               to = ifelse(lubridate::month(end) < 10, lubridate::year(end) -1, lubridate::year(end)))
   WYvec <- unique(WYvec)
   # if (month(beg) < 10){ #starts in previous WY
   #   WYvec <- append(year(beg) - 1 , WYvec)
@@ -81,9 +81,9 @@ read_pot_int <- function(filetext, getAmax){
 
   #First and Last percent_complete's aren't 100% as recording is only
   #for part of WY
-  WY_1 <- ymd(paste(water_year(beg)+1,"Sep",30))
+  WY_1 <- lubridate::ymd(paste(water_year(beg)+1,"Sep",30))
   WY_table$percent_complete[1] <- gap_percent(beg, WY_1)
-  WY_2 <- ymd(paste(water_year(end), "Oct", 01))
+  WY_2 <- lubridate::ymd(paste(water_year(end), "Oct", 01))
   WY_table$percent_complete[length(WY_table$WY)] <- gap_percent(WY_2, end)
 
   ## where are the lines indicating gaps and rejected records?
@@ -105,7 +105,7 @@ read_pot_int <- function(filetext, getAmax){
   names(WY_table) <- c("WaterYear","potPercComplete","potThreshold")
   tablePOT <- POTtable[seq(match('[POT Values]',POTtable[,1])+1,nrow(POTtable)-1),]
   names(tablePOT) <- c("Date","Flow","Stage")
-  if(grepl("-", tablePOT$Date[1])) tablePOT$Date <- ymd_hms(tablePOT$Date)
+  if(grepl("-", tablePOT$Date[1])) tablePOT$Date <- lubridate::ymd_hms(tablePOT$Date)
     else tablePOT$Date <- dmy(tablePOT$Date)
   tablePOT$Flow <- as.numeric(tablePOT$Flow)
   tablePOT$Stage <- as.numeric(tablePOT$Stage)
@@ -159,12 +159,12 @@ read_pot_int <- function(filetext, getAmax){
 #' @export
 read_amax <- function(station, loc_WinFapFiles = getwd()){
   if(length(station) == 1){
-    whereAM <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = ".am")
+    whereAM <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = "\\.am")
     if(length(whereAM) < 1) stop("Station does not have AMAX files in the loc_WinFapFiles folder")
     out <- read_amax_int(whereAM)
   }
   if(length(station) > 1) {
-    whereAM <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = ".am")
+    whereAM <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = "\\.am")
     lwhere <- sapply(whereAM, length)
     if(all(lwhere < 1)){
       stop(paste("Stations do not have AMAX files in the loc_WinFapFiles folder"))
@@ -180,14 +180,18 @@ read_amax <- function(station, loc_WinFapFiles = getwd()){
   out
 }
 
-findfile <- function(station, loc_WinFapFiles, whichFile = ".am"){
+findfile <- function(station, loc_WinFapFiles, whichFile = "\\.am"){
   zerost <- station
   while(nchar(zerost) < 6) zerost <- paste0("0",zerost)
-  list.files(loc_WinFapFiles,recursive=TRUE,
-             pattern =paste0("^",station,toupper(whichFile),"|",
-                             "^",station,tolower(whichFile),"|",
-                             "^",zerost,toupper(whichFile),"|",
-                             "^",zerost,tolower(whichFile)),full.names=TRUE)
+  paste(c(station,zerost))
+  grep(pattern = tolower(whichFile),
+       tolower(
+       list.files(loc_WinFapFiles,recursive=TRUE,
+             pattern =paste0("^",station,"\\. |",
+                             "^",station,"\\.|",
+                             "^",zerost,"\\. |",
+                             "^",zerost,"\\."),full.names=TRUE)),
+       value = TRUE)
 }
 
 read_amax_int <- function(filetext){
@@ -198,8 +202,8 @@ read_amax_int <- function(filetext){
   aa <- rr[(which(rr == "[AM Values]")+1):(length(rr)-1)]
   out <- cbind(station, utils::read.csv(textConnection(aa),header=FALSE, stringsAsFactors = FALSE))
   names(out) <- c("Station","Date","Flow","Stage")
-  if(grepl("-", out$Date[1])) out$Date <- ymd_hms(out$Date)
-    else out$Date <- dmy(out$Date)
+  if(grepl("-", out$Date[1])) out$Date <- lubridate::ymd_hms(out$Date)
+    else out$Date <- lubridate::dmy(out$Date)
   # out$Date <- lubridate::dmy(out$Date)
   out$WaterYear <- water_year(out$Date)
   #### Check if any amax should be rejected
@@ -251,12 +255,12 @@ split_or_NA <- function(x,ind=2) {
 #' @aliases read_cd3
 read_cd3 <- function(station, loc_WinFapFiles = getwd()){
   if(length(station) == 1){
-    whereCD <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = ".cd3")
+    whereCD <- findfile(loc_WinFapFiles = loc_WinFapFiles,station = station,whichFile = "\\.cd3")
     if(length(whereCD) < 1) stop("Station does not have CD3 files in the loc_WinFapFiles folder")
     out <- read_cd3_int(whereCD)
   }
   if(length(station) > 1) {
-    whereCD <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = ".cd3")
+    whereCD <- lapply(X = as.list(station), findfile,loc_WinFapFiles=loc_WinFapFiles,whichFile = "\\.cd3")
     lwhere <- sapply(whereCD, length)
     if(all(lwhere < 1)){
       stop(paste("Stations do not have CD3 files in the loc_WinFapFiles folder"))
@@ -272,8 +276,10 @@ read_cd3 <- function(station, loc_WinFapFiles = getwd()){
   out
 }
 
+
 read_cd3_int <- function(filetext){
   rr <- readLines(filetext)
+  # print(rr[1:10])
   oo <- rr[(which(rr == "[STATION NUMBER]")+1)]
   zz <- rr[(which(rr == "[CDS DETAILS]")+1):(which(rr == "[CDS DETAILS]")+2)]
   oo <- c(oo,unlist(lapply(strsplit(zz,","), function(x) x[[2]])))

@@ -3,15 +3,22 @@
 #'
 #' @param date the (vector of) dates for which the water year will be calculated
 #' @param start_month the month in which the water year starts, default is October
+#' @param start_hour the time of the day in which the water year starts, default is 9
+#' @param tz time zone for the record, defaults to "UTC"
 #' @return The water year value
 #' @export
 #' @examples
 #' \dontrun{
-#' water_year(as.Date(c("2010-11-03", "2013-02-03")))
+#' water_year(c(as.POSIXct("1958-10-01 09:00:00", tz = "UTC"),
+#'              as.POSIXct("2021-10-01 12:00:00", tz = "UTC"),
+#'              as.POSIXct("1918-10-01 08:55:00", tz = "UTC")))
+#'
+#' water_year(c(as.Date("2021-01-01"),as.Date("2021-11-01"),
+#' as.Date("2019-02-01"),as.Date("1965-09-30")))
 #' }
-#' @importFrom lubridate month
 #' @importFrom utils read.csv
 #' @importFrom lubridate year
+#' @importFrom lubridate month
 #' @importFrom lubridate leap_year
 #' @importFrom lubridate dmy
 #' @importFrom lubridate ymd
@@ -19,11 +26,38 @@
 #' @importFrom lubridate date
 #' @importFrom lubridate int_overlaps
 #' @importFrom lubridate interval
-water_year <- function(date, start_month = 10){
-  # Given a date in ymd lubridate form, returns the WY that date is in.
-  # The XXXX Water year starts 01st start_month XXXX and ends on the last day of the month before the start_month (XXXX+1)
-  year(date) + ifelse(month(date) < start_month,-1,0)
+#' @importFrom lubridate as_datetime
+#' @importFrom lubridate hours
+#' @importFrom lubridate make_datetime
+water_year <- function(x, start_month = 10, start_hour = 9, tz = "UTC") {
+
+  # Normalize input to POSIXct
+  if (inherits(x, "Date")) {
+    x_dt <- lubridate::as_datetime(x, tz = tz)+ lubridate::hours(start_hour)
+  } else if (inherits(x, "POSIXt")) {
+    x_dt <- x
+  } else {
+    stop("Input must be Date or POSIXt.")
+  }
+
+  # Calendar year of the given date/time
+  yr <- lubridate::year(x_dt)
+
+  # Construct the water-year start datetime
+  wy_start <- lubridate::make_datetime(
+    year  = yr,
+    month = start_month,
+    day   = 1,
+    hour  = start_hour,
+    tz    = tz
+  )
+
+  # Determine water year
+  yr[(x_dt < wy_start)] <- yr[(x_dt < wy_start)]-1
+  yr
 }
+
+
 
 gap_percent <- function(beg, end){
   #Given 2 dates in ymd lubridate form IN THE SAME WATER YEAR, returns
