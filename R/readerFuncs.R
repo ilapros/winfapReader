@@ -183,7 +183,7 @@ read_amax <- function(station, loc_WinFapFiles = getwd()){
 findfile <- function(station, loc_WinFapFiles, whichFile = "\\.am"){
   zerost <- station
   while(nchar(zerost) < 6) zerost <- paste0("0",zerost)
-  paste(c(station,zerost))
+  # paste(c(station,zerost))
   grep(pattern = tolower(whichFile),
        tolower(
        list.files(loc_WinFapFiles,recursive=TRUE,
