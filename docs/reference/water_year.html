@@ -56,14 +56,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">water_year</span><span class="op">(</span><span class="va">x</span>, start_month <span class="op">=</span> <span class="fl">10</span>, start_hour <span class="op">=</span> <span class="fl">9</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">water_year</span><span class="op">(</span><span class="va">date</span>, start_month <span class="op">=</span> <span class="fl">10</span>, start_hour <span class="op">=</span> <span class="fl">9</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg-start-month">start_month<a class="anchor" aria-label="anchor" href="#arg-start-month"></a></dt>
+<dl><dt id="arg-date">date<a class="anchor" aria-label="anchor" href="#arg-date"></a></dt>
+<dd><p>the (vector of) dates for which the water year will be calculated</p></dd>
+
+
+<dt id="arg-start-month">start_month<a class="anchor" aria-label="anchor" href="#arg-start-month"></a></dt>
 <dd><p>the month in which the water year starts, default is October</p></dd>
 
 
@@ -73,10 +77,6 @@
 
 <dt id="arg-tz">tz<a class="anchor" aria-label="anchor" href="#arg-tz"></a></dt>
 <dd><p>time zone for the record, defaults to "UTC"</p></dd>
-
-
-<dt id="arg-date">date<a class="anchor" aria-label="anchor" href="#arg-date"></a></dt>
-<dd><p>the (vector of) dates for which the water year will be calculated</p></dd>
 
 </dl></div>
     <div id="value">

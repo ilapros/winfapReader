@@ -29,20 +29,17 @@
 #' @importFrom lubridate as_datetime
 #' @importFrom lubridate hours
 #' @importFrom lubridate make_datetime
-water_year <- function(x, start_month = 10, start_hour = 9, tz = "UTC") {
-
+water_year <- function(date, start_month = 10, start_hour = 9, tz = "UTC") {
   # Normalize input to POSIXct
-  if (inherits(x, "Date")) {
-    x_dt <- lubridate::as_datetime(x, tz = tz)+ lubridate::hours(start_hour)
-  } else if (inherits(x, "POSIXt")) {
-    x_dt <- x
+  if (inherits(date, "Date")) {
+    x_dt <- lubridate::as_datetime(date, tz = tz)+ lubridate::hours(start_hour)
+  } else if (inherits(date, "POSIXt")) {
+    x_dt <- date
   } else {
     stop("Input must be Date or POSIXt.")
   }
-
   # Calendar year of the given date/time
   yr <- lubridate::year(x_dt)
-
   # Construct the water-year start datetime
   wy_start <- lubridate::make_datetime(
     year  = yr,
@@ -51,12 +48,10 @@ water_year <- function(x, start_month = 10, start_hour = 9, tz = "UTC") {
     hour  = start_hour,
     tz    = tz
   )
-
   # Determine water year
   yr[(x_dt < wy_start)] <- yr[(x_dt < wy_start)]-1
   yr
 }
-
 
 
 gap_percent <- function(beg, end){

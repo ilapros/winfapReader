@@ -4,16 +4,16 @@
 \alias{water_year}
 \title{Derive water year value for a date}
 \usage{
-water_year(x, start_month = 10, start_hour = 9, tz = "UTC")
+water_year(date, start_month = 10, start_hour = 9, tz = "UTC")
 }
 \arguments{
+\item{date}{the (vector of) dates for which the water year will be calculated}
+
 \item{start_month}{the month in which the water year starts, default is October}
 
 \item{start_hour}{the time of the day in which the water year starts, default is 9}
 
 \item{tz}{time zone for the record, defaults to "UTC"}
-
-\item{date}{the (vector of) dates for which the water year will be calculated}
 }
 \value{
 The water year value

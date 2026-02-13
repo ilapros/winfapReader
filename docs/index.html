@@ -70,7 +70,6 @@
   <div class="contents col-md-9">
 
 
-<!-- badges: end -->
 <p><code>winfapReader</code> allows a user to obtain data on long-term annual maxima and peaks over threshold for instantaneous river flow measurements in the UK. The user can also access the corollary catchment descriptors files which characterise the catchments upstream the gauging stations.</p>
 <p>Two sets of functions are available: the <code>read_*</code> functions and the <code>get_*</code> functions. Both these sets of functions interact with annual maxima information (<code>read_amax</code> and <code>get_amax</code>), peaks over threshold information (<code>read_pot</code> and <code>get_pot</code>) and information on the catchment descriptors (<code>read_cd3</code> and <code>get_cd</code>).</p>
 <p>The read_* functions allow the user to read into their R console the data from the .AMAX, .PT and .CD3 files made available by the NRFA <em>once these have been downloaded</em> into the users’ computer. At time of writing, Version 8 and previous versions of the winfap files can be downloaded from the <a href="https://nrfa.ceh.ac.uk/peak-flow-dataset" class="external-link">NRFA website</a>. This means that users who have compiled information for sites not included in the NRFA in the form of WINFAP files will be able to load these into R. The get_* functions allow the user to interact the the NRFA data API (<a href="http://nrfa.ceh.ac.uk/costs-terms-and-conditions" class="external-link">terms and conditions</a>).</p>
