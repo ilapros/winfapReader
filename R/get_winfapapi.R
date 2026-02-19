@@ -1,90 +1,6 @@
 ##### all these function are heavily inspired by the rnrfa::nrfa_api function
 ##### thanks to Claudia Vitolo to make those accessible
 
-get_cd_int <- function(stid, fields){
-  # Set a user agent
-  ua <- httr::user_agent("https://github.com/ilapros/winfaReader")
-  ### construct call
-  root_entry_point <- "https://nrfaapps.ceh.ac.uk/nrfa/ws/"
-  url <- paste0(root_entry_point, "station-info")
-  if(!fields %in% c("feh","all")) {
-    warning("fields must be either \"feh\" or \"all\" - defaulting to feh")
-    fields <- "feh"
-  }
-  params <- list(station=stid,
-                 format="json-object",
-                 fields=switch(fields,
-                               "feh" =
-                               "id,river,location,spatial-location,feh-pooling,feh-qmed,feh-neither,benchmark,feh-descriptors,hydrometric-area,qmed",
-                               "all" = "all"))
-  resp <- httr::GET(url = url, query = params, ua)
-  # Check response
-  if (httr::http_error(resp)) {
-    if(resp$status_code == 400) message(sprintf("maybe station %s does not exist", stid))
-    # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
-    #              call. = FALSE)
-    return(NULL)
-  }
-
-  # Check output format
-  if (httr::http_type(resp) != "application/json") {
-    message("API did not return json")
-    return(NULL)
-  }
-
-  # Parse content
-  page_content <- try(httr::content(resp, "text", encoding = "UTF-8"), silent=TRUE)
-  if(inherits(page_content,"try-error")) {
-    errs <- geterrmessage()
-    message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
-    return(NULL)
-  }
-  parsed <- jsonlite::fromJSON(page_content, simplifyDataFrame = TRUE, flatten = TRUE)$data
-  #
-  if(fields == "all") {
-    ## the information for rejected periods is not reliable for POT and redundant for AMAX
-    ## best to drop it
-    parsed <- parsed[,grep(pattern = "peak-flow-rejected-periods",
-                           names(parsed),invert = TRUE)]
-    ## rejected years as a unique character object to make stations easier to stack
-    miss <- paste(parsed[,grep(pattern = "peak-flow-rejected-amax-years",names(parsed))][[1]], collapse = ", ")
-    parsed[,grep(pattern = "peak-flow-rejected-amax-years",names(parsed))] <- miss
-    names(parsed)[grep(pattern = "peak-flow-rejected-amax-years",names(parsed))] <- "peak-flow-rejected-amax-years"
-    rm(miss)
-    ### depening on whether amax are missing or not data columns are read in in a different order, so ensure all outputs have the same columns
-    parsed <- parsed[,c("id", "name", "catchment-area", "river", "location", "station-level",
-                        "measuring-authority-id", "measuring-authority-station-id", "hydrometric-area",
-                        "opened", "closed", "station-type", "bankfull-flow", "structurefull-flow",
-                        "sensitivity", "nrfa-mean-flow", "nrfa-peak-flow", "feh-pooling",
-                        "feh-qmed", "feh-neither", "nhmp", "benchmark", "live-data",
-                        "factors-affecting-runoff", "gdf-start-date", "gdf-end-date",
-                        "gdf-mean-flow", "gdf-min-flow", "gdf-first-date-of-min", "gdf-last-date-of-min",
-                        "gdf-max-flow", "gdf-first-date-of-max", "gdf-last-date-of-max",
-                        "gdf-q95-flow", "gdf-q70-flow", "gdf-q50-flow", "gdf-q10-flow",
-                        "gdf-q05-flow", "gdf-base-flow-index", "gdf-day-count", "gdf-flow-count",
-                        "gdf-percent-complete", "peak-flow-start-date", "peak-flow-end-date",
-                        "qmed", "minimum-altitude", "10-percentile-altitude", "50-percentile-altitude",
-                        "90-percentile-altitude", "maximum-altitude", "saar-1941-1970",
-                        "saar-1961-1990", "lcm2000-woodland", "lcm2000-arable-horticultural",
-                        "lcm2000-grassland", "lcm2000-mountain-heath-bog", "lcm2000-urban",
-                        "lcm2007-woodland", "lcm2007-arable-horticultural", "lcm2007-grassland",
-                        "lcm2007-mountain-heath-bog", "lcm2007-urban", "high-perm-bedrock",
-                        "moderate-perm-bedrock", "low-perm-bedrock", "mixed-perm-bedrock",
-                        "high-perm-superficial", "low-perm-superficial", "mixed-perm-superficial",
-                        "propwet", "bfihost", "farl", "dpsbar", "sprhost", "rmed-1d",
-                        "rmed-2d", "rmed-1h", "ldp", "dplbar", "altbar", "aspbar", "aspvar",
-                        "ihdtm-height", "ihdtm-catchment-area", "mean-flood-plain-depth",
-                        "mean-flood-plain-location", "mean-flood-plain-extent", "urbext-1990",
-                        "urbconc-1990", "urbloc-1990", "urbext-2000", "urbconc-2000",
-                        "urbloc-2000", "easting", "northing", "latitude", "longitude",
-                        "grid-reference.ngr", "grid-reference.easting", "grid-reference.northing",
-                        "lat-long.string", "lat-long.latitude", "lat-long.longitude",
-                        "peak-flow-rejected-amax-years")]
-  }
-  parsed
-}
-
-
 
 
 #' A function to obtain information on the station and on the catchment upstream of the station using the NRFA API
@@ -128,42 +44,6 @@ get_cd <- function(station,fields = "feh"){
 
 ######### getting amax from api -----
 
-### zz <- httr::GET("https://nrfaapps.ceh.ac.uk/nrfa/ws/time-series/39001.am?format=feh-data&data-type=amax-stage", httr::write_disk(file.path("wffls","thef4.txt"), overwrite = TRUE))
-### the code above downloads the files into the specified path
-## could be an additional functionality - not for the moment
-get_amax_int <-function(stid){
-  # Set a user agent
-  ua <- httr::user_agent("https://github.com/ilapros/winfaReader")
-  ### construct call
-  root_entry_point <- "https://nrfaapps.ceh.ac.uk/nrfa/ws/"
-  url <- paste0(root_entry_point, "time-series")
-
-  params <- list(station=stid,
-                 format="feh-data",
-                 `data-type`="amax-flow")
-  resp <- httr::GET(url = url, query = params, ua)
-  # Check response
-  if (httr::http_error(resp)) {
-    if(resp$status_code == 400) message(sprintf("maybe station %s does not exist", stid))
-    # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
-    #      call. = FALSE)
-    return(NULL)
-  }
-  # Check output format
-  if (httr::http_type(resp) != "text/csv") {
-    message("API did not return text", call. = FALSE)
-    return(NULL)
-  }
-  page_content <- try(httr::content(resp, "text", encoding = "UTF-8"))
-  if(inherits(page_content,"try-error")) {
-    errs <- geterrmessage()
-    message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
-    return(NULL)
-  }
-  read_amax_int(textConnection(page_content))
-}
-
-
 #' A function to obtain annual maxima (AMAX) data using the NRFA API
 #'
 #' The function queries the NRFA API for the .AM file similar to the WINFAP file for a given stations. It then processes the file in a fashion similar to \code{read_amax}.
@@ -205,40 +85,6 @@ get_amax <- function(station){
 
 
 ######  getting POTs from API -------
-get_pot_int <-function(stid, getAmax){
-  typeget <- ifelse(getAmax,"get","none")
-  # Set a user agent
-  ua <- httr::user_agent("https://github.com/ilapros/winfaReader")
-  ### construct call
-  root_entry_point <- "https://nrfaapps.ceh.ac.uk/nrfa/ws/"
-  url <- paste0(root_entry_point, "time-series")
-
-  params <- list(station=stid,
-                 format="feh-data",
-                 `data-type`="pot-flow")
-  resp <- httr::GET(url = url, query = params, ua)
-  # Check response
-  if (httr::http_error(resp)) {
-    if(resp$status_code == 400) message(sprintf("maybe station %s does not exist", stid))
-    # stop(sprintf("NRFA API request failed [%s]", httr::status_code(resp)),
-    #      call. = FALSE)
-    return(NULL)
-  }
-  # Check output format
-  if (httr::http_type(resp) != "text/csv") {
-    message("API did not return text", call. = FALSE)
-    return(NULL)
-  }
-  page_content <- try(httr::content(resp, "text", encoding = "UTF-8"))
-  if(inherits(page_content,"try-error")) {
-    errs <- geterrmessage()
-    message(paste("An unknwon error occurred when accessing the data - with error message:",errs))
-    return(NULL)
-  }
-  read_pot_int(textConnection(page_content), getAmax = typeget)
-}
-
-
 
 #' A function to obtain Peaks-Over-Threshold (POT) data using the NRFA API
 #'

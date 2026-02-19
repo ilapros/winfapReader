@@ -14,9 +14,9 @@ vignette: >
 ```{r,echo=FALSE}
 isRNRFA <- requireNamespace("rnrfa", quietly = TRUE)
 isZOO <- requireNamespace("zoo", quietly = TRUE)
-isHTTR <- requireNamespace("httr", quietly = TRUE)
+isHTTR2 <- requireNamespace("httr2", quietly = TRUE)
 isUTF8 <- requireNamespace("utf8", quietly = TRUE)
-is1 <- (isHTTR & isUTF8)
+is1 <- (isHTTR2 & isUTF8)
 is2 <- (is1 & isRNRFA & isZOO)
 ```
 
