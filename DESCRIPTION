@@ -21,6 +21,7 @@ Suggests:
     utf8,
     rnrfa, 
     httr2,
+    curl (>= 6.4.0),
     knitr,
     rmarkdown, 
     zoo

@@ -25,8 +25,8 @@
 #'
 #' @export
 get_cd <- function(station,fields = "feh"){
-  if (!requireNamespace("httr", quietly = TRUE)) {
-    message("Package \"httr\" is needed for this function to work. Please install it or use the read_cd3 function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.")
+  if (!requireNamespace("httr2", quietly = TRUE)) {
+    message("Package \"httr2\" is needed for this function to work. Please install it or use the read_cd3 function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.")
     return(NULL)
   }
   if (!curl::has_internet()){message("There appears to be no internet connection"); return(NULL)}
@@ -67,8 +67,8 @@ get_cd <- function(station,fields = "feh"){
 #'   summary(multipleStations$`42003`)
 #' @export
 get_amax <- function(station){
-  if (!requireNamespace("httr", quietly = TRUE)) {
-    message("Package \"httr\" is needed for this function to work. Please install it or use the read_amax function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.",
+  if (!requireNamespace("httr2", quietly = TRUE)) {
+    message("Package \"httr2\" is needed for this function to work. Please install it or use the read_amax function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.",
          call. = FALSE)
     return(NULL)
   }
@@ -124,8 +124,8 @@ get_amax <- function(station){
 #' }
 #' @export
 get_pot <- function(station, getAmax = FALSE){
-  if (!requireNamespace("httr", quietly = TRUE)) {
-    message("Package \"httr\" is needed for this function to work. Please install it or use the read_pot function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.")
+  if (!requireNamespace("httr2", quietly = TRUE)) {
+    message("Package \"httr2\" is needed for this function to work. Please install it or use the read_pot function after you have downloaded the winfap files at https://nrfa.ceh.ac.uk/peak-flow-dataset.")
     return(NULL)
   }
   if (!curl::has_internet()){message("There appears to be no internet connection"); return(NULL)}

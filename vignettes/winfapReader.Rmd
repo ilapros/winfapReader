@@ -58,10 +58,10 @@ It is difficult to showcase the use of the `read_*` functions since these rely o
 ```{r setup}
 library(winfapReader)
 ### the get_* functions only works once you are connected to the internet
-### they also need one to have the library httr installed 
-### verify if you have the library with (!requireNamespace("httr", quietly = TRUE)) 
+### they also need one to have the library httr2 installed 
+### verify if you have the library with (!requireNamespace("httr2", quietly = TRUE)) 
 ### if FALSE install it with 
-### install.packages("httr")
+### install.packages("httr2")
 ```
 
 ### The `get_amax`function
@@ -103,7 +103,7 @@ head(p42003$tablePOT)
 ## notice: several events in the 1982 no events in 1983
 ```
 
-* `WaterYearInfo`: a `data.frame` with information on the percentage of valid record in each water year in the record. The potPercComplete column is derived by calculating the percentage of days which are not included in the POT Gaps or the POT rejected headers in the NRFA .PT files. The column potThreshold gives the information of the flow threshold used to extract the peaks for the station: this is a constant for each station. 
+* `WaterYearInfo`: a `data.frame` with information on the percentage of valid record in each water year in the record. The `potPercComplete` column is derived by calculating the percentage of days which are not included in the POT Gaps or the POT rejected headers in the NRFA .PT files. The column `potThreshold` gives the information of the flow threshold used to extract the peaks for the station: this is a constant for each station. 
 
 ```{r showWaterYearInfo, eval=is1}
 head(p42003$WaterYearInfo)
@@ -139,7 +139,7 @@ c42003 <- cdEx[["42003"]]
 class(c42003); names(c42003)
 ```
 
-The function has an argument `fields` which governs the amount of information obtained from the API. If `fields = "feh"` (the default) only the basic information used in the FEH methods is output. If `fields="all"` a data.frame with 104 columns is output. This contains several information about the station and the catchment, including data availability, land cover information and much more. 
+The function has an argument `fields` which governs the amount of information obtained from the API. If `fields = "feh"` (the default), the output includes only the basic information used in the FEH methods. If `fields="all"`, the output is a data.frame with 104 columns. This contains several information about the station and the catchment, including data availability, land cover information and much more. 
 
 ```{r showCDall, eval=is1}
 if(curl::has_internet()) cd42003all <- get_cd(42003, fields = "all") 
@@ -152,7 +152,6 @@ names(cd42003all)
 The `rnrfa` package provides a unique way to query several types of data from the NRFA. Information about extremes can also be retrieved using the `rnrfa` package, although there are some differences in the output provided when the data of interest are the peaks over threshold records.  
 
 <!-- When it comes to river extremes though, the `winfapReader` functions leverage the additional information available about rejected records and periods of missing records, thus giving the user a more complete information on which parts of the extremes series are reliable. The two packages can be used in combination by those who are interested in investigating in depth the behaviour of river flow extremes in the UK.  -->
-
 
 The `rnrfa::catalogue` function allows one to pull the list of stations (and related metadata), falling within a given bounding box. The metadata retrieved by the function are similar to the ones derived from `winfapReader::get_cd`. This function can be used to identify the stations in an area for which peak flow information can be obtained with `winfapReader`. 
 The code below for example identifies stations surrounding the city of Lancaster and then displays the annual maxima flow with red lines indicating Rejected flow values. Notice that you would need to have the `rnrfa` package installed for the code below to work. 
